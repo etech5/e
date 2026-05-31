@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="site-head-title">E-TECH | Transforming Ideas Into Digital Success</title>
+<meta id="site-meta-desc" name="description" content="E-TECH specializes in Website Development, Educational Platforms, E-Commerce, Mobile Apps, UI/UX Design, and Technical Support.">
+<meta name="keywords" content="E-TECH, website development, e-commerce, mobile apps, UI/UX design, educational platforms">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23C8F53A'/%3E%3Ctext x='50' y='65' font-family='Arial' font-size='50' font-weight='bold' text-anchor='middle' fill='%230A0A0A'%3EE%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root{--primary:#C8F53A;--primary-dark:#A8D020;--dark:#0A0A0A;--dark-2:#111111;--dark-3:#1A1A1A;--gray:#888888;--gray-light:#CCCCCC;--white:#FFFFFF;--gradient-1:linear-gradient(135deg,#C8F53A 0%,#A8D020 100%);--shadow-glow:0 0 30px rgba(200,245,58,0.2);--transition:all 0.4s cubic-bezier(0.4,0,0.2,1);}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);overflow-x:hidden;line-height:1.6}
+::selection{background:var(--primary);color:var(--dark)}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--dark-2)}
+::-webkit-scrollbar-thumb{background:var(--primary);border-radius:4px}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 20px rgba(200,245,58,0.3)}50%{box-shadow:0 0 40px rgba(200,245,58,0.6)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(0.8)}to{opacity:1;transform:scale(1)}}
+.animate-on-scroll{opacity:0;transform:translateY(40px);transition:opacity 0.8s ease,transform 0.8s ease}
+.animate-on-scroll.visible{opacity:1;transform:translateY(0)}
+.delay-1{transition-delay:0.1s}
+.delay-2{transition-delay:0.2s}
+.delay-3{transition-delay:0.3s}
+.delay-4{transition-delay:0.4s}
+
+/* NAVIGATION */
+.navbar{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1rem 0;transition:var(--transition);background:transparent}
+.navbar.scrolled{background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);padding:0.7rem 0;box-shadow:0 4px 30px rgba(0,0,0,0.3)}
+.nav-container{max-width:1400px;margin:0 auto;padding:0 2rem;display:flex;justify-content:space-between;align-items:center}
+.logo{display:flex;align-items:center;gap:0.8rem;text-decoration:none}
+.logo-icon{width:45px;height:45px;border-radius:10px;object-fit:cover;display:block}
+.logo-text{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;color:var(--white);letter-spacing:-1px}
+.logo-text span{color:var(--primary)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center}
+.nav-links a{color:var(--gray-light);text-decoration:none;font-size:0.9rem;font-weight:500;transition:var(--transition);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:0;width:0;height:2px;background:var(--primary);transition:var(--transition)}
+.nav-links a:hover{color:var(--primary)}
+.nav-links a:hover::after{width:100%}
+.nav-links a.active{color:var(--primary)}
+.nav-links a.active::after{width:100%}
+.nav-cta{background:var(--gradient-1);color:var(--dark)!important;padding:0.6rem 1.5rem;border-radius:50px;font-weight:600!important;transition:var(--transition)}
+.nav-cta:hover{transform:translateY(-2px);box-shadow:var(--shadow-glow)}
+.nav-cta::after{display:none!important}
+.mobile-menu-btn{display:none;background:none;border:none;color:var(--white);font-size:1.5rem;cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(200,245,58,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(200,245,58,0.05) 0%,transparent 50%),radial-gradient(ellipse at 50% 100%,rgba(200,245,58,0.03) 0%,transparent 50%)}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,245,58,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,245,58,0.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse at center,black 30%,transparent 70%)}
+.hero-container{max-width:1400px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:2}
+.hero-content{animation:fadeInUp 1s ease}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(200,245,58,0.1);border:1px solid rgba(200,245,58,0.2);padding:0.5rem 1rem;border-radius:50px;font-size:0.85rem;color:var(--primary);margin-bottom:2rem;animation:fadeIn 1s ease 0.3s both}
+.hero-badge i{animation:spin 3s linear infinite}
+.hero-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.5rem,5vw,4.5rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-2px}
+.hero-title .highlight{background:var(--gradient-1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1.15rem;color:var(--gray);max-width:500px;margin-bottom:2.5rem;line-height:1.8}
+.hero-buttons{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:1rem 2rem;border-radius:50px;font-weight:600;font-size:0.95rem;text-decoration:none;transition:var(--transition);cursor:pointer;border:none}
+.btn-primary{background:var(--gradient-1);color:var(--dark);box-shadow:0 4px 20px rgba(200,245,58,0.3)}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 8px 30px rgba(200,245,58,0.5)}
+.btn-outline{background:transparent;color:var(--white);border:2px solid rgba(255,255,255,0.2)}
+.btn-outline:hover{border-color:var(--primary);color:var(--primary);background:rgba(200,245,58,0.05)}
+.hero-stats{display:flex;gap:2.5rem}
+.hero-stat{text-align:left}
+.hero-stat-number{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;color:var(--primary)}
+.hero-stat-label{font-size:0.85rem;color:var(--gray)}
+.hero-visual{position:relative;animation:fadeIn 1s ease 0.5s both}
+.hero-visual-inner{position:relative;width:100%;aspect-ratio:1;max-width:550px;margin:0 auto}
+.hero-3d-box{position:absolute;inset:10%;background:linear-gradient(135deg,#0A0A0A 0%,#1A1A1A 100%);border:2px solid rgba(200,245,58,0.3);border-radius:24px;transform:perspective(1000px) rotateY(-15deg) rotateX(5deg);animation:float 6s ease-in-out infinite;overflow:hidden;box-shadow:0 25px 50px rgba(0,0,0,0.5),0 0 60px rgba(200,245,58,0.1)}
+.hero-3d-box::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(200,245,58,0.1) 0%,transparent 50%)}
+.hero-3d-content{padding:2rem;height:100%;display:flex;flex-direction:column}
+.hero-3d-header{display:flex;gap:0.5rem;margin-bottom:1.5rem}
+.hero-3d-dot{width:12px;height:12px;border-radius:50%}
+.hero-3d-dot:nth-child(1){background:#FF5F57}
+.hero-3d-dot:nth-child(2){background:#FFBD2E}
+.hero-3d-dot:nth-child(3){background:#28CA41}
+.hero-3d-code{font-family:monospace;font-size:0.8rem;color:var(--primary);line-height:1.8;opacity:0.8}
+.hero-3d-code .comment{color:var(--gray)}
+.hero-3d-code .keyword{color:#FF6B9D}
+.hero-3d-code .string{color:var(--primary)}
+.hero-3d-code .function{color:#4ECDC4}
+.hero-floating-card{position:absolute;background:var(--dark-3);border:1px solid rgba(200,245,58,0.2);border-radius:16px;padding:1rem 1.5rem;backdrop-filter:blur(10px);animation:float 5s ease-in-out infinite;box-shadow:0 10px 30px rgba(0,0,0,0.3)}
+.hero-floating-card.card-1{top:10%;right:-10%;animation-delay:0s}
+.hero-floating-card.card-2{bottom:20%;left:-10%;animation-delay:1s}
+.hero-floating-icon{width:40px;height:40px;background:rgba(200,245,58,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.2rem;margin-bottom:0.5rem}
+.hero-floating-text{font-size:0.8rem;font-weight:600}
+.hero-floating-sub{font-size:0.7rem;color:var(--gray)}
+
+/* SECTIONS COMMON */
+.section{padding:8rem 0 6rem;position:relative}
+.section-header{text-align:center;max-width:700px;margin:0 auto 4.5rem}
+.section-label{display:inline-block;background:rgba(200,245,58,0.1);color:var(--primary);padding:0.4rem 1rem;border-radius:50px;font-size:0.85rem;font-weight:600;margin-bottom:1rem;border:1px solid rgba(200,245,58,0.2)}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;margin-bottom:1rem;letter-spacing:-1px}
+.section-desc{color:var(--gray);font-size:1.1rem;line-height:1.7}
+
+/* SERVICES */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2.5rem;max-width:1400px;margin:0 auto;padding:0 2rem}
+.service-card{background:var(--dark-2);border:1px solid rgba(255,255,255,0.05);padding:3rem 2.5rem;border-radius:24px;transition:var(--transition);position:relative;overflow:hidden}
+.service-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(180deg,rgba(200,245,58,0.05) 0%,transparent 100%);opacity:0;transition:var(--transition)}
+.service-card:hover{transform:translateY(-10px);border-color:rgba(200,245,58,0.3);box-shadow:var(--shadow-glow)}
+.service-card:hover::before{opacity:1}
+.service-icon{width:60px;height:60px;background:rgba(200,245,58,0.1);border-radius:16px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.8rem;margin-bottom:2rem}
+.service-title{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:1rem}
+.service-desc{color:var(--gray);font-size:0.95rem;margin-bottom:1.5rem}
+.service-link{color:var(--primary);text-decoration:none;font-weight:600;font-size:0.9rem;display:inline-flex;align-items:center;gap:0.5rem;transition:var(--transition)}
+.service-link:hover i{transform:translateX(5px)}
+
+/* PORTFOLIO */
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2.5rem;max-width:1400px;margin:0 auto;padding:0 2rem}
+.portfolio-card{background:var(--dark-2);border:1px solid rgba(255,255,255,0.05);border-radius:24px;overflow:hidden;transition:var(--transition)}
+.portfolio-card:hover{transform:translateY(-10px);border-color:rgba(200,245,58,0.3);box-shadow:var(--shadow-glow)}
+.portfolio-img-container{width:100%;aspect-ratio:16/10;overflow:hidden;position:relative}
+.portfolio-img{width:100%;height:100%;object-fit:cover;transition:var(--transition)}
+.portfolio-card:hover .portfolio-img{transform:scale(1.08)}
+.portfolio-overlay{position:absolute;inset:0;background:rgba(10,10,10,0.5);backdrop-filter:blur(3px);opacity:0;display:flex;align-items:center;justify-content:center;transition:var(--transition)}
+.portfolio-card:hover .portfolio-overlay{opacity:1}
+.portfolio-btn{width:50px;height:50px;background:var(--primary);color:var(--dark);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;text-decoration:none;transition:var(--transition)}
+.portfolio-btn:hover{transform:scale(1.1)}
+.portfolio-info{padding:2rem}
+.portfolio-cat{color:var(--primary);font-size:0.8rem;text-transform:uppercase;font-weight:700;letter-spacing:1px;margin-bottom:0.5rem}
+.portfolio-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;margin-bottom:1rem}
+
+/* PRICING */
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:2.5rem;max-width:1400px;margin:0 auto;padding:0 2rem}
+.pricing-card{background:var(--dark-2);border:1px solid rgba(255,255,255,0.05);padding:3.5rem 2.5rem 3rem;border-radius:24px;transition:var(--transition);position:relative;display:flex;flex-direction:column}
+.pricing-card.popular{border-color:rgba(200,245,58,0.4);animation:pulse-glow 4s ease-in-out infinite}
+.pricing-card.popular::after{content:'Popular';position:absolute;top:1.5rem;right:1.5rem;background:var(--gradient-1);color:var(--dark);padding:0.3rem 1rem;border-radius:50px;font-size:0.75rem;font-weight:700;text-transform:uppercase}
+.pricing-card:hover{transform:translateY(-10px);border-color:rgba(200,245,58,0.3);box-shadow:var(--shadow-glow)}
+.pricing-name{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;font-weight:700;margin-bottom:1rem;color:var(--white)}
+.pricing-price{font-family:'Space Grotesk',sans-serif;font-size:3rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem}
+.pricing-period{color:var(--gray);font-size:0.9rem;margin-bottom:2rem}
+.pricing-features{list-style:none;margin-bottom:2.5rem;display:flex;flex-direction:column;gap:1rem;flex-grow:1}
+.pricing-features li{display:flex;align-items:center;gap:0.8rem;color:var(--gray-light);font-size:0.95rem}
+.pricing-features li i{color:var(--primary)}
+
+/* CONTACT */
+.contact-container{max-width:1400px;margin:0 auto;padding:0 2rem;display:grid;grid-template-columns:1fr 1.2fr;gap:4rem}
+.contact-info{display:flex;flex-direction:column;gap:2rem}
+.contact-info-card{background:var(--dark-2);border:1px solid rgba(255,255,255,0.05);padding:2rem;border-radius:20px;display:flex;align-items:center;gap:1.5rem;transition:var(--transition)}
+.contact-info-card:hover{border-color:rgba(200,245,58,0.2);transform:translateX(5px)}
+.contact-info-icon{width:55px;height:55px;background:rgba(200,245,58,0.1);border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.4rem}
+.contact-info-content h4{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:0.3rem}
+.contact-info-content p{color:var(--gray);font-size:0.9rem}
+.contact-form-container{background:var(--dark-2);border:1px solid rgba(255,255,255,0.05);padding:3rem 2.5rem;border-radius:24px;position:relative}
+.form-group{margin-bottom:1.5rem;position:relative}
+.form-control{width:100%;background:var(--dark-3);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:1.1rem 1.3rem;color:var(--white);font-family:'Inter',sans-serif;font-size:0.95rem;transition:var(--transition);outline:none}
+.form-control:focus{border-color:var(--primary);box-shadow:0 0 15px rgba(200,245,58,0.1);background:rgba(20,20,20,0.8)}
+textarea.form-control{resize:none;height:150px}
+
+/* TOAST */
+.toast-container{position:fixed;bottom:2rem;right:2rem;z-index:9999;display:flex;flex-direction:column;gap:1rem}
+.toast{background:var(--dark-3);border:1px solid rgba(200,245,58,0.3);color:var(--white);padding:1rem 2rem;border-radius:12px;box-shadow:var(--shadow-glow);display:flex;align-items:center;gap:1rem;animation:fadeInUp 0.4s cubic-bezier(0.4,0,0.2,1);font-weight:500}
+.toast i{color:var(--primary);font-size:1.2rem}
+
+/* WHATSAPP FLOAT */
+.whatsapp-float{position:fixed;bottom:2rem;left:2rem;z-index:999;width:60px;height:60px;background:#25D366;color:#FFF;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:2rem;box-shadow:0 10px 25px rgba(37,211,102,0.4);text-decoration:none;transition:var(--transition)}
+.whatsapp-float:hover{transform:scale(1.1);box-shadow:0 15px 30px rgba(37,211,102,0.6)}
+.whatsapp-tooltip{position:absolute;left:80px;background:rgba(10,10,10,0.9);border:1px solid rgba(255,255,255,0.1);padding:0.5rem 1rem;border-radius:8px;font-size:0.8rem;white-space:nowrap;opacity:0;visibility:hidden;transition:var(--transition)}
+.whatsapp-float:hover .whatsapp-tooltip{opacity:1;visibility:visible;transform:translateX(5px)}
+
+/* MOBILE MENU */
+.mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;z-index:1100}
+.mobile-menu-btn span{display:block;width:26px;height:2.5px;background:var(--white);border-radius:2px;transition:var(--transition)}
+.mobile-menu-btn.open span:nth-child(1){transform:translateY(7.5px) rotate(45deg)}
+.mobile-menu-btn.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.mobile-menu-btn.open span:nth-child(3){transform:translateY(-7.5px) rotate(-45deg)}
+.mobile-nav{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(6,6,6,0.97);backdrop-filter:blur(20px);z-index:1050;flex-direction:column;align-items:center;justify-content:center;gap:2.5rem}
+.mobile-nav.open{display:flex;animation:fadeIn 0.3s ease}
+.mobile-nav a{color:var(--gray-light);text-decoration:none;font-family:'Space Grotesk',sans-serif;font-size:1.8rem;font-weight:700;transition:var(--transition)}
+.mobile-nav a:hover{color:var(--primary)}
+.mobile-nav .mobile-cta{background:var(--gradient-1);color:var(--dark)!important;padding:0.8rem 2.5rem;border-radius:50px;font-size:1.2rem}
+/* RESPONSIVE */
+@media(max-width:992px){
+    .hero-container{grid-template-columns:1fr;gap:3rem;text-align:center;padding-top:40px}
+    .hero-visual{display:none}
+    .hero-desc{margin:0 auto 2.5rem}
+    .hero-buttons{justify-content:center}
+    .hero-stats{justify-content:center}
+    .contact-container{grid-template-columns:1fr;gap:3rem}
+    .services-grid{grid-template-columns:1fr;padding:0 1.5rem}
+    .portfolio-grid{grid-template-columns:1fr;padding:0 1.5rem}
+    .pricing-grid{grid-template-columns:1fr;padding:0 1.5rem}
+    .nav-links{display:none}
+    .mobile-menu-btn{display:flex}
+    .section{padding:5rem 0 4rem}
+    .section-header{padding:0 1.5rem}
+    .contact-container{padding:0 1.5rem}
+}
+</style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <img src="logo.png" class="logo-icon" alt="E-TECH Logo">
+                <div class="logo-text" id="logo-text-el">E-<span>TECH</span></div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#contact" class="nav-cta">Get Started</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- MOBILE FULL-SCREEN MENU -->
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#" onclick="closeMobileMenu()">Home</a>
+        <a href="#services" onclick="closeMobileMenu()">Services</a>
+        <a href="#portfolio" onclick="closeMobileMenu()">Portfolio</a>
+        <a href="#pricing" onclick="closeMobileMenu()">Pricing</a>
+        <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+        <a href="#contact" class="mobile-cta" onclick="closeMobileMenu()">Get Started</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge" id="hero-badge-el">
+                    <i class="fa-solid fa-gear"></i> Digital Excellence Since 2015
+                </div>
+                <h1 class="hero-title" id="hero-title-el">Transforming Ideas <br><span class="highlight">Into Digital Success</span></h1>
+                <p class="hero-desc" id="hero-desc-el">We craft cutting-edge digital solutions that drive growth, engage users, and transform businesses. From stunning websites to powerful mobile apps, we bring your vision to life.</p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary"><i class="fa-solid fa-rocket"></i> Explore Services</a>
+                    <a href="#portfolio" class="btn btn-outline"><i class="fa-solid fa-eye"></i> View Our Work</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" id="stat-projects-el">250+</div>
+                        <div class="hero-stat-label">Projects Delivered</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-number" id="stat-clients-el">99%</div>
+                        <div class="hero-stat-label">Happy Clients</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="hero-visual-inner">
+                    <div class="hero-3d-box">
+                        <div class="hero-3d-content">
+                            <div class="hero-3d-header">
+                                <span class="hero-3d-dot"></span>
+                                <span class="hero-3d-dot"></span>
+                                <span class="hero-3d-dot"></span>
+                            </div>
+                            <pre class="hero-3d-code">
+<span class="comment">// E-TECH Digital Solutions</span>
+const studio = "E-TECH";
+function createSuccess(idea) {
+  return {
+    code: "Clean & Scalable",
+    design: "Pixel Perfect",
+    growth: "Exponential"
+  };
+}
+                            </pre>
+                        </div>
+                    </div>
+                    <div class="hero-floating-card card-1">
+                        <div class="hero-floating-icon"><i class="fa-solid fa-code"></i></div>
+                        <div class="hero-floating-text">Web Dev</div>
+                        <div class="hero-floating-sub">Modern Tech Stack</div>
+                    </div>
+                    <div class="hero-floating-card card-2">
+                        <div class="hero-floating-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <div class="hero-floating-text">Mobile Apps</div>
+                        <div class="hero-floating-sub">iOS & Android</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SERVICES SECTION -->
+    <section id="services" class="section">
+        <div class="section-header animate-on-scroll">
+            <span class="section-label">Our Services</span>
+            <h2 class="section-title">Solutions That Drive Results</h2>
+            <p class="section-desc">Comprehensive digital services tailored to elevate your business and exceed your expectations.</p>
+        </div>
+        <div class="services-grid animate-on-scroll" id="services-container">
+            <!-- Dynamic Services Loaded Here -->
+        </div>
+    </section>
+
+    <!-- PORTFOLIO SECTION -->
+    <section id="portfolio" class="section">
+        <div class="section-header animate-on-scroll">
+            <span class="section-label">Our Portfolio</span>
+            <h2 class="section-title">Projects Crafted with Pride</h2>
+            <p class="section-desc">A showcase of our recent works, demonstrating our design prowess and technical excellence.</p>
+        </div>
+        <div class="portfolio-grid animate-on-scroll" id="portfolio-container">
+            <!-- Dynamic Portfolio Items Loaded Here -->
+        </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="section">
+        <div class="section-header animate-on-scroll">
+            <span class="section-label">Pricing Plans</span>
+            <h2 class="section-title">Transparent & Simple Pricing</h2>
+            <p class="section-desc">Choose a plan that fits your business needs, with absolute clarity and no hidden fees.</p>
+        </div>
+        <div class="pricing-grid animate-on-scroll" id="pricing-container">
+            <!-- Dynamic Pricing Plans Loaded Here -->
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section">
+        <div class="section-header animate-on-scroll">
+            <span class="section-label">Contact Us</span>
+            <h2 class="section-title">Let's Create Something Amazing</h2>
+            <p class="section-desc">Have a project in mind or need assistance? Reach out to us, and our team will get back to you within 24 hours.</p>
+        </div>
+        <div class="contact-container animate-on-scroll">
+            <div class="contact-info">
+                <div class="contact-info-card" onclick="window.open('mailto:etechn3l3gy@gmail.com','_blank')" style="cursor:pointer">
+                    <div class="contact-info-icon"><i class="fa-solid fa-envelope"></i></div>
+                    <div class="contact-info-content">
+                        <h4>Email Us</h4>
+                        <p id="contact-email">etechn3l3gy@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-info-card" onclick="window.open('https://wa.me/201148296986','_blank')" style="cursor:pointer">
+                    <div class="contact-info-icon"><i class="fa-solid fa-phone"></i></div>
+                    <div class="contact-info-content">
+                        <h4>Call Us / WhatsApp</h4>
+                        <p id="contact-phone">+20 11 48296986</p>
+                    </div>
+                </div>
+                <div class="contact-info-card" onclick="window.open('https://instagram.com/etech.stu','_blank')" style="cursor:pointer">
+                    <div class="contact-info-icon"><i class="fa-brands fa-instagram"></i></div>
+                    <div class="contact-info-content">
+                        <h4>Instagram</h4>
+                        <p id="contact-instagram" style="color:var(--gray);">@etech.stu</p>
+                    </div>
+                </div>
+                <div class="contact-info-card" onclick="window.open('https://t.me/etech_studio','_blank')" style="cursor:pointer">
+                    <div class="contact-info-icon"><i class="fa-brands fa-telegram"></i></div>
+                    <div class="contact-info-content">
+                        <h4>Telegram</h4>
+                        <p id="contact-telegram" style="color:var(--gray);">@etech_studio</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form-container">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="form-name" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="form-email" class="form-control" placeholder="Your Email Address" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="form-phone" class="form-control" placeholder="Your Phone Number (Optional)">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="form-subject" class="form-control" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="form-message" class="form-control" placeholder="Tell us about your project..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                        <i class="fa-solid fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/201012345678" class="whatsapp-float" id="whatsapp-float-el" target="_blank">
+        <i class="fa-brands fa-whatsapp"></i>
+        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
+    </a>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // DEFAULT SITE DATA SCHEMA
+        const defaultSiteData = {
+            general: {
+                title: "E-TECH | Transforming Ideas Into Digital Success",
+                metaDesc: "E-TECH specializes in Website Development, Educational Platforms, E-Commerce, Mobile Apps, UI/UX Design, and Technical Support.",
+                logoText: "E-TECH",
+                logoLetter: "E",
+                whatsapp: "https://wa.me/201148296986",
+                heroBadge: "Digital Excellence Since 2015",
+                heroTitleNormal: "Transforming Ideas",
+                heroTitleHighlight: "Into Digital Success",
+                heroDesc: "We craft cutting-edge digital solutions that drive growth, engage users, and transform businesses. From stunning websites to powerful mobile apps, we bring your vision to life.",
+                heroProjects: "250+",
+                heroClients: "99%",
+                email: "etechn3l3gy@gmail.com",
+                phone: "+20 11 48296986",
+                instagram: "etech.stu",
+                telegram: "etech_studio"
+            },
+            services: [
+                {
+                    id: "serv_1",
+                    icon: "fa-solid fa-code",
+                    title: "Website Development",
+                    desc: "Custom, responsive websites built with modern technologies that captivate visitors and convert them into customers."
+                },
+                {
+                    id: "serv_2",
+                    icon: "fa-solid fa-graduation-cap",
+                    title: "Educational Platforms",
+                    desc: "Interactive and robust e-learning systems for schools, universities, and private instructors."
+                },
+                {
+                    id: "serv_3",
+                    icon: "fa-solid fa-cart-shopping",
+                    title: "E-Commerce Solutions",
+                    desc: "Feature-rich online stores with secure payment gateways and smooth user journeys to scale your sales."
+                }
+            ],
+            portfolio: [
+                {
+                    id: "port_1",
+                    title: "Academy E-Learning Portal",
+                    category: "E-Learning",
+                    image: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80",
+                    link: "#"
+                },
+                {
+                    id: "port_2",
+                    title: "Modern Fashion Hub",
+                    category: "E-Commerce",
+                    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&auto=format&fit=crop&q=80",
+                    link: "#"
+                },
+                {
+                    id: "port_3",
+                    title: "Fintech Mobile Wallet",
+                    category: "Mobile App",
+                    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80",
+                    link: "#"
+                }
+            ],
+            pricing: [
+                {
+                    id: "price_1",
+                    name: "Basic Plan",
+                    price: "$299",
+                    period: "one-time payment",
+                    features: ["1 Custom Landing Page", "Fully Responsive Design", "Basic SEO Setup", "WhatsApp Direct Integration", "1 Month Technical Support"]
+                },
+                {
+                    id: "price_2",
+                    name: "Professional Plan",
+                    price: "$799",
+                    period: "one-time payment",
+                    features: ["Up to 5 Dynamic Pages", "E-commerce or Booking System", "Advanced SEO Optimization", "Admin Dashboard Mockup", "3 Months Priority Support"]
+                },
+                {
+                    id: "price_3",
+                    name: "Enterprise Solution",
+                    price: "Custom",
+                    period: "contact for quote",
+                    features: ["Custom Native Applications", "Full Cloud Integration", "Dedicated Server Deployment", "Highest Security Audits", "12 Months Dedicated Support"]
+                }
+            ],
+            messages: [],
+            security: {
+                password: "2503010005etech"
+            }
+        };
+
+        // LOAD DATA FROM LOCAL STORAGE
+        let siteData = localStorage.getItem('etech_site_data');
+        if (!siteData) {
+            localStorage.setItem('etech_site_data', JSON.stringify(defaultSiteData));
+            siteData = defaultSiteData;
+        } else {
+            siteData = JSON.parse(siteData);
+            // Migrate password if it was the older default "admin"
+            if (!siteData.security || !siteData.security.password || siteData.security.password === "admin") {
+                siteData.security = { password: "2503010005etech" };
+                localStorage.setItem('etech_site_data', JSON.stringify(siteData));
+            }
+            // Migrate old contact details
+            if (!siteData.general || siteData.general.email === "info@etech-studio.com" || !siteData.general.instagram) {
+                siteData.general.email = "etechn3l3gy@gmail.com";
+                siteData.general.phone = "+20 11 48296986";
+                siteData.general.whatsapp = "https://wa.me/201148296986";
+                siteData.general.instagram = "etech.stu";
+                siteData.general.telegram = "etech_studio";
+                localStorage.setItem('etech_site_data', JSON.stringify(siteData));
+            }
+        }
+
+        // RENDER SITE DATA
+        function renderSite() {
+            const gen = siteData.general;
+
+            // Header SEO
+            document.title = gen.title;
+            const meta = document.getElementById('site-meta-desc');
+            if (meta) meta.setAttribute('content', gen.metaDesc);
+
+            // Logos
+            const logoIcon = document.getElementById('logo-icon-el');
+            const logoText = document.getElementById('logo-text-el');
+            if (logoIcon) logoIcon.innerText = gen.logoLetter;
+            if (logoText) logoText.innerHTML = `${gen.logoText.split('-')[0] || 'E'}-<span>${gen.logoText.split('-')[1] || 'TECH'}</span>`;
+
+            // Hero
+            const heroBadge = document.getElementById('hero-badge-el');
+            const heroTitle = document.getElementById('hero-title-el');
+            const heroDesc = document.getElementById('hero-desc-el');
+            const statProjects = document.getElementById('stat-projects-el');
+            const statClients = document.getElementById('stat-clients-el');
+
+            if (heroBadge) heroBadge.innerHTML = `<i class="fa-solid fa-gear"></i> ${gen.heroBadge}`;
+            if (heroTitle) heroTitle.innerHTML = `${gen.heroTitleNormal} <br><span class="highlight">${gen.heroTitleHighlight}</span>`;
+            if (heroDesc) heroDesc.innerText = gen.heroDesc;
+            if (statProjects) statProjects.innerText = gen.heroProjects;
+            if (statClients) statClients.innerText = gen.heroClients;
+
+            // Footer / Contact Info
+            const contactEmail = document.getElementById('contact-email');
+            const contactPhone = document.getElementById('contact-phone');
+            const contactInstagram = document.getElementById('contact-instagram');
+            const contactTelegram = document.getElementById('contact-telegram');
+
+            if (contactEmail) contactEmail.innerText = gen.email;
+            if (contactPhone) contactPhone.innerText = gen.phone;
+            if (contactInstagram) {
+                contactInstagram.innerText = `@${gen.instagram || 'etech.stu'}`;
+                contactInstagram.setAttribute('href', `https://instagram.com/${gen.instagram || 'etech.stu'}`);
+            }
+            if (contactTelegram) {
+                contactTelegram.innerText = `@${gen.telegram || 'etech_studio'}`;
+                contactTelegram.setAttribute('href', `https://t.me/${gen.telegram || 'etech_studio'}`);
+            }
+
+            // WhatsApp Float Link
+            const waFloat = document.getElementById('whatsapp-float-el');
+            if (waFloat) waFloat.setAttribute('href', gen.whatsapp);
+
+            // Render Services
+            const servicesContainer = document.getElementById('services-container');
+            if (servicesContainer) {
+                servicesContainer.innerHTML = '';
+                siteData.services.forEach(serv => {
+                    servicesContainer.innerHTML += `
+                        <div class="service-card">
+                            <div class="service-icon"><i class="${serv.icon}"></i></div>
+                            <h3 class="service-title">${serv.title}</h3>
+                            <p class="service-desc">${serv.desc}</p>
+                            <a href="#contact" class="service-link">Learn More <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Portfolio
+            const portfolioContainer = document.getElementById('portfolio-container');
+            if (portfolioContainer) {
+                portfolioContainer.innerHTML = '';
+                siteData.portfolio.forEach(port => {
+                    portfolioContainer.innerHTML += `
+                        <div class="portfolio-card">
+                            <div class="portfolio-img-container">
+                                <img src="${port.image}" class="portfolio-img" alt="${port.title}">
+                                <div class="portfolio-overlay">
+                                    <a href="${port.link}" class="portfolio-btn" target="_blank"><i class="fa-solid fa-link"></i></a>
+                                </div>
+                            </div>
+                            <div class="portfolio-info">
+                                <div class="portfolio-cat">${port.category}</div>
+                                <h3 class="portfolio-title">${port.title}</h3>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Pricing
+            const pricingContainer = document.getElementById('pricing-container');
+            if (pricingContainer) {
+                pricingContainer.innerHTML = '';
+                siteData.pricing.forEach((price, idx) => {
+                    const isPopular = idx === 1; // Middle one popular
+                    const popularClass = isPopular ? 'popular' : '';
+                    let featuresList = '';
+                    price.features.forEach(feat => {
+                        featuresList += `<li><i class="fa-solid fa-circle-check"></i> ${feat}</li>`;
+                    });
+
+                    pricingContainer.innerHTML += `
+                        <div class="pricing-card ${popularClass}">
+                            <h3 class="pricing-name">${price.name}</h3>
+                            <div class="pricing-price">${price.price}</div>
+                            <div class="pricing-period">${price.period}</div>
+                            <ul class="pricing-features">
+                                ${featuresList}
+                            </ul>
+                            <a href="#contact" class="btn ${isPopular ? 'btn-primary' : 'btn-outline'}" style="width: 100%; justify-content: center;">
+                                Choose Plan
+                            </a>
+                        </div>
+                    `;
+                });
+            }
+        }
+
+        // TOAST NOTIFICATION CREATOR
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(20px)';
+                toast.style.transition = 'all 0.4s ease';
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
+
+        // HANDLE CONTACT FORM SUBMISSION
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('form-name').value;
+                const email = document.getElementById('form-email').value;
+                const phone = document.getElementById('form-phone').value;
+                const subject = document.getElementById('form-subject').value;
+                const text = document.getElementById('form-message').value;
+
+                // Load fresh site data to avoid overwriting newer messages
+                let currentData = JSON.parse(localStorage.getItem('etech_site_data')) || defaultSiteData;
+                if (!currentData.messages) currentData.messages = [];
+
+                // Create message object
+                const newMessage = {
+                    id: "msg_" + Date.now(),
+                    name: name,
+                    email: email,
+                    phone: phone || "N/A",
+                    subject: subject,
+                    text: text,
+                    date: new Date().toISOString(),
+                    read: false
+                };
+
+                currentData.messages.push(newMessage);
+                localStorage.setItem('etech_site_data', JSON.stringify(currentData));
+
+                // Clear Form & Update local memory
+                contactForm.reset();
+                siteData = currentData;
+
+                showToast("Your message has been sent successfully!");
+            });
+        }
+
+        // INITIALIZE RENDER
+        renderSite();
+
+        // NAVBAR SCROLL EFFECT
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // ANIMATION ON SCROLL BY INTERSECTION OBSERVER
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Animates only once
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // === MOBILE MENU LOGIC ===
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+
+        function openMobileMenu() {
+            mobileMenuBtn.classList.add('open');
+            mobileNav.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+            mobileMenuBtn.classList.remove('open');
+            mobileNav.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                if (mobileNav.classList.contains('open')) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
