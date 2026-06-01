@@ -485,7 +485,7 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
         };
 
         // INITIAL LOAD SCHEMA
-        function loadDatabase(callback) {
+        function loadDatabase(callback, errorCallback) {
             database.ref('siteData').once('value').then((snapshot) => {
                 siteData = snapshot.val();
                 if (!siteData) {
@@ -495,7 +495,8 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
                 if (callback) callback();
             }).catch((error) => {
                 console.error("Error loading DB: ", error);
-                showToast("Network Error: Could not connect to database");
+                showToast("خطأ: يرجى التأكد من إنشاء Realtime Database بوضع الـ Test Mode");
+                if (errorCallback) errorCallback();
             });
         }
         
@@ -536,6 +537,9 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
                     document.getElementById('login-error-msg').style.display = 'block';
                     document.getElementById('login-password').value = '';
                 }
+                loginBtn.innerHTML = originalText;
+            }, () => {
+                // On error callback
                 loginBtn.innerHTML = originalText;
             });
         });
