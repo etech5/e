@@ -404,6 +404,10 @@ function createSuccess(idea) {
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div class="toast-container" id="toast-container"></div>
 
+    <!-- FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <script>
         // DEFAULT SITE DATA SCHEMA
         const defaultSiteData = {
@@ -496,28 +500,33 @@ function createSuccess(idea) {
             }
         };
 
-        // LOAD DATA FROM LOCAL STORAGE
-        let siteData = localStorage.getItem('etech_site_data');
-        if (!siteData) {
-            localStorage.setItem('etech_site_data', JSON.stringify(defaultSiteData));
-            siteData = defaultSiteData;
-        } else {
-            siteData = JSON.parse(siteData);
-            // Migrate password if it was the older default "admin"
-            if (!siteData.security || !siteData.security.password || siteData.security.password === "admin") {
-                siteData.security = { password: "2503010005etech" };
-                localStorage.setItem('etech_site_data', JSON.stringify(siteData));
+        // FIREBASE INITIALIZATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTKho1uqWYyCO4QO9XyE__k8F5fsRVIFw",
+            authDomain: "e-tech-a91b6.firebaseapp.com",
+            databaseURL: "https://e-tech-a91b6-default-rtdb.firebaseio.com",
+            projectId: "e-tech-a91b6",
+            storageBucket: "e-tech-a91b6.firebasestorage.app",
+            messagingSenderId: "456989127761",
+            appId: "1:456989127761:web:1be832c22d929c09173470",
+            measurementId: "G-QNBVBQVD9J"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        let siteData = defaultSiteData;
+
+        // FETCH DATA FROM FIREBASE (REALTIME)
+        database.ref('siteData').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                siteData = data;
+            } else {
+                database.ref('siteData').set(defaultSiteData);
+                siteData = defaultSiteData;
             }
-            // Migrate old contact details
-            if (!siteData.general || siteData.general.email === "info@etech-studio.com" || !siteData.general.instagram) {
-                siteData.general.email = "etechn3l3gy@gmail.com";
-                siteData.general.phone = "+20 11 48296986";
-                siteData.general.whatsapp = "https://wa.me/201148296986";
-                siteData.general.instagram = "etech.stu";
-                siteData.general.telegram = "etech_studio";
-                localStorage.setItem('etech_site_data', JSON.stringify(siteData));
-            }
-        }
+            renderSite();
+        });
 
         // RENDER SITE DATA
         function renderSite() {
@@ -663,11 +672,6 @@ function createSuccess(idea) {
                 const subject = document.getElementById('form-subject').value;
                 const text = document.getElementById('form-message').value;
 
-                // Load fresh site data to avoid overwriting newer messages
-                let currentData = JSON.parse(localStorage.getItem('etech_site_data')) || defaultSiteData;
-                if (!currentData.messages) currentData.messages = [];
-
-                // Create message object
                 const newMessage = {
                     id: "msg_" + Date.now(),
                     name: name,
@@ -679,19 +683,20 @@ function createSuccess(idea) {
                     read: false
                 };
 
-                currentData.messages.push(newMessage);
-                localStorage.setItem('etech_site_data', JSON.stringify(currentData));
+                if (!siteData.messages) siteData.messages = [];
+                siteData.messages.push(newMessage);
+                
+                // SAVE TO FIREBASE
+                database.ref('siteData').set(siteData);
 
-                // Clear Form & Update local memory
+                // Clear Form
                 contactForm.reset();
-                siteData = currentData;
 
                 showToast("Your message has been sent successfully!");
             });
         }
 
-        // INITIALIZE RENDER
-        renderSite();
+        // INITIALIZE RENDER IS HANDLED BY FIREBASE LISTENER
 
         // NAVBAR SCROLL EFFECT
         window.addEventListener('scroll', function() {

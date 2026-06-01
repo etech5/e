@@ -425,8 +425,26 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
     <!-- TOAST NOTIFICATIONS -->
     <div class="toast-container" id="toast-container"></div>
 
+    <!-- FIREBASE SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
     <!-- LOGIC SCRIPT -->
     <script>
+        // FIREBASE INITIALIZATION
+        const firebaseConfig = {
+            apiKey: "AIzaSyCTKho1uqWYyCO4QO9XyE__k8F5fsRVIFw",
+            authDomain: "e-tech-a91b6.firebaseapp.com",
+            databaseURL: "https://e-tech-a91b6-default-rtdb.firebaseio.com",
+            projectId: "e-tech-a91b6",
+            storageBucket: "e-tech-a91b6.firebasestorage.app",
+            messagingSenderId: "456989127761",
+            appId: "1:456989127761:web:1be832c22d929c09173470",
+            measurementId: "G-QNBVBQVD9J"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
         let siteData = {};
 
         const defaultSiteData = {
@@ -467,22 +485,31 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
         };
 
         // INITIAL LOAD SCHEMA
-        function loadDatabase() {
-            const rawData = localStorage.getItem('etech_site_data');
-            if (rawData) {
-                siteData = JSON.parse(rawData);
-            } else {
-                siteData = defaultSiteData;
-                localStorage.setItem('etech_site_data', JSON.stringify(siteData));
-            }
+        function loadDatabase(callback) {
+            database.ref('siteData').once('value').then((snapshot) => {
+                siteData = snapshot.val();
+                if (!siteData) {
+                    siteData = defaultSiteData;
+                    database.ref('siteData').set(siteData);
+                }
+                if (callback) callback();
+            }).catch((error) => {
+                console.error("Error loading DB: ", error);
+                showToast("Network Error: Could not connect to database");
+            });
         }
+        
+        // CHECK ON STARTUP
+        checkAuth();
 
         // AUTHENTICATION CHECK
         function checkAuth() {
             if (sessionStorage.getItem('etech_admin_logged_in') === 'true') {
                 document.getElementById('login-screen').style.display = 'none';
                 document.getElementById('dashboard-screen').style.display = 'grid';
-                initDashboard();
+                loadDatabase(() => {
+                    initDashboard();
+                });
             } else {
                 document.getElementById('login-screen').style.display = 'flex';
                 document.getElementById('dashboard-screen').style.display = 'none';
@@ -493,19 +520,24 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             const passInput = document.getElementById('login-password').value;
+            const loginBtn = document.querySelector('#loginForm .btn-primary');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...';
             
-            loadDatabase();
-            const realPassword = siteData.security ? siteData.security.password : "2503010005etech";
+            loadDatabase(() => {
+                const realPassword = siteData.security ? siteData.security.password : "2503010005etech";
 
-            if (passInput === realPassword) {
-                sessionStorage.setItem('etech_admin_logged_in', 'true');
-                document.getElementById('login-error-msg').style.display = 'none';
-                checkAuth();
-                showToast("Logged in successfully!");
-            } else {
-                document.getElementById('login-error-msg').style.display = 'block';
-                document.getElementById('login-password').value = '';
-            }
+                if (passInput === realPassword) {
+                    sessionStorage.setItem('etech_admin_logged_in', 'true');
+                    document.getElementById('login-error-msg').style.display = 'none';
+                    checkAuth();
+                    showToast("Logged in successfully!");
+                } else {
+                    document.getElementById('login-error-msg').style.display = 'block';
+                    document.getElementById('login-password').value = '';
+                }
+                loginBtn.innerHTML = originalText;
+            });
         });
 
         // LOGOUT
@@ -567,8 +599,12 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
 
         // SAVE DB
         function saveDatabase() {
-            localStorage.setItem('etech_site_data', JSON.stringify(siteData));
-            updateMetrics();
+            database.ref('siteData').set(siteData).then(() => {
+                updateMetrics();
+            }).catch((error) => {
+                console.error("Save failed:", error);
+                showToast("Error saving changes!");
+            });
         }
 
         // UPDATE METRIC CHIPS
@@ -590,7 +626,6 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
 
         // INITIALIZE ALL TAB DATA
         function initDashboard() {
-            loadDatabase();
             updateMetrics();
 
             // Populate General Settings Form
