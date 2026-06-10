@@ -375,7 +375,7 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
             <div id="tab-ai" class="tab-content">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                     <h3 style="font-family:'Space Grotesk'; font-size:1.3rem;">AI Machine Learning Leads</h3>
-                    <button class="btn btn-secondary" style="width:auto; padding:0.5rem 1rem;" onclick="loadAITab()"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
+                    <button class="btn btn-secondary" style="width:auto; padding:0.5rem 1rem;" onclick="refreshAILeads(this)"><i class="fa-solid fa-rotate-right"></i> Refresh</button>
                 </div>
                 <div class="items-list-grid" id="ai-admin-container">
                     <!-- Dynamically Loaded -->
@@ -1094,6 +1094,28 @@ body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--white);mi
                     console.error(err);
                 });
             }
+        };
+
+        window.refreshAILeads = function(btn) {
+            const originalHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+            btn.disabled = true;
+
+            database.ref('ai_leads').once('value').then((snapshot) => {
+                aiLeadsData = [];
+                snapshot.forEach(child => {
+                    aiLeadsData.push({ key: child.key, ...child.val() });
+                });
+                updateAIMetrics();
+                loadAITab();
+                showToast("AI Leads refreshed successfully!");
+            }).catch((err) => {
+                showToast("Failed to fetch leads.");
+                console.error(err);
+            }).finally(() => {
+                btn.innerHTML = originalHtml;
+                btn.disabled = false;
+            });
         };
 
 

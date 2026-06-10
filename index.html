@@ -1781,10 +1781,14 @@ function createSuccess(idea) {
         </button>
         <div id="ai-chat-panel">
             <div id="ai-chat-header">
-                <i class="fa-solid fa-robot"></i> E-TECH AI Assistant
-                <button onclick="toggleAIChat()"
-                    style="margin-left:auto; background:none; border:none; color:white; cursor:pointer;"><i
-                        class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleAIChatSidebar()" style="background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;"><i class="fa-solid fa-bars"></i></button>
+                <i class="fa-solid fa-robot" style="margin-left:0.5rem;"></i> E-TECH AI
+                <button onclick="createNewAIChat()" style="margin-left:auto; background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;" title="New Chat"><i class="fa-solid fa-pen-to-square"></i></button>
+                <button onclick="toggleAIChat()" style="margin-left:0.8rem; background:none; border:none; color:white; cursor:pointer; font-size:1.1rem;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="ai-chat-sidebar">
+                <div style="padding:1rem; border-bottom:1px solid rgba(255,255,255,0.05); font-weight:bold;">Chat History</div>
+                <div id="ai-chat-sessions-list"></div>
             </div>
             <div id="ai-chat-messages">
                 <div class="ai-msg ai-bot">Hello! I am the E-TECH AI Assistant. How can I help you today? / مرحباً! أنا
@@ -1853,8 +1857,72 @@ function createSuccess(idea) {
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #ai-chat-sidebar {
+            position: absolute;
+            top: 56px;
+            left: -100%;
+            width: 75%;
+            height: calc(100% - 56px);
+            background: var(--dark-3);
+            z-index: 10;
+            transition: left 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #ai-chat-sidebar.open {
+            left: 0;
+        }
+
+        #ai-chat-sessions-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        .ai-session-item {
+            padding: 0.8rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--gray-light);
+        }
+
+        .ai-session-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .ai-session-item.active {
+            background: rgba(200, 245, 58, 0.1);
+            color: var(--primary);
+        }
+
+        .ai-session-item .title {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .ai-session-item .delete-btn {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            opacity: 0.5;
+        }
+
+        .ai-session-item .delete-btn:hover {
+            opacity: 1;
         }
 
         #ai-chat-messages {
@@ -1961,25 +2029,81 @@ function createSuccess(idea) {
 
     <script>
         const GEMINI_API_KEY = "AQ.Ab8RN6LciRT-H6rdDSN8xyk3PqsLzZOIVyR4rkEV1lg5AfKEsg"; // ACTUAL KEY
-
+        let aiSessions = [];
+        let currentSessionId = null;
         let aiConversationHistory = [];
 
-        const systemInstruction = `You are the official AI Assistant and Smart Sales Agent for E-TECH.
-Company Services: Website Design & Development, Educational Platforms, E-Commerce Stores, Mobile Apps (Android & iOS), UI/UX Design, Technical Support, Custom Software.
-Your primary goals:
-1. Answer customer questions professionally.
-2. Understand customer requirements accurately.
-3. Collect all project details before forwarding to human staff.
-4. Increase conversion rates and customer satisfaction.
-5. EXTREMELY IMPORTANT: ALWAYS reply in the SAME LANGUAGE the customer is using. If the customer speaks Arabic, you MUST reply in Arabic. If they speak English, reply in English.
+        try {
+            const savedSessions = localStorage.getItem('etech_ai_sessions');
+            if (savedSessions) {
+                aiSessions = JSON.parse(savedSessions);
+            } else {
+                // Migrate old history if exists
+                const oldHistory = localStorage.getItem('etech_ai_history');
+                if (oldHistory) {
+                    const parsedOld = JSON.parse(oldHistory);
+                    if (parsedOld && parsedOld.length > 0) {
+                        const newSession = { id: Date.now().toString(), title: "Previous Chat", messages: parsedOld };
+                        aiSessions.push(newSession);
+                    }
+                    localStorage.removeItem('etech_ai_history');
+                }
+            }
+        } catch(e) {}
 
-Customer Handling Rules:
-- Always greet politely.
-- Identify the requested service.
-- Ask follow-up questions until requirements are clear (Name, Contact Info, Required Service, Project Description, Budget Range, Expected Delivery Time).
-- If information is missing, continue asking. Provide professional recommendations.
+        // Always open a New Chat by default on page load
+        if (aiSessions.length > 0 && aiSessions[0].messages.length === 0) {
+            // Reuse the empty new chat if it's already there to prevent spamming empty sessions
+            currentSessionId = aiSessions[0].id;
+            aiConversationHistory = [];
+        } else {
+            // Create a fresh new chat
+            currentSessionId = Date.now().toString();
+            aiConversationHistory = [];
+            aiSessions.unshift({ id: currentSessionId, title: "New Chat", messages: [] });
+        }
 
-CRITICAL INSTRUCTION: Once you have collected ALL required information (Name, Contact, Service, Description, Budget, Time), you MUST append a JSON block to your final message wrapped in '''json ... '''.
+        function saveAIHistory() {
+            if (!currentSessionId) return;
+            const sessionIndex = aiSessions.findIndex(s => s.id === currentSessionId);
+            if (sessionIndex !== -1) {
+                aiSessions[sessionIndex].messages = aiConversationHistory;
+                if (aiSessions[sessionIndex].title === "New Chat" && aiConversationHistory.length > 0) {
+                    const firstUserMsg = aiConversationHistory.find(m => m.role === 'user');
+                    if (firstUserMsg) {
+                        let text = firstUserMsg.parts[0].text;
+                        aiSessions[sessionIndex].title = text.length > 25 ? text.substring(0, 25) + '...' : text;
+                    }
+                }
+            } else {
+                aiSessions.push({ id: currentSessionId, title: "New Chat", messages: aiConversationHistory });
+            }
+            localStorage.setItem('etech_ai_sessions', JSON.stringify(aiSessions));
+            renderHistoryList();
+        }
+        const systemInstruction = `You are the official AI Sales Executive and Smart Consultant for E-TECH.
+Your Persona:
+- You are charismatic, exceptionally polite, empathetic, and highly persuasive.
+- You speak naturally, warmly, and with enthusiasm. You NEVER sound like a rigid robot or a simple Q&A bot.
+- You make the customer feel valued, understood, and excited about their project.
+- You use emojis naturally to make the conversation friendly and engaging.
+- You listen well and show appreciation for their ideas.
+
+Your Primary Goals & Sales Tactics:
+1. Welcome the customer warmly and build instant rapport.
+2. Gently and naturally guide the conversation to uncover their needs without making it feel like a police interrogation. NEVER ask more than ONE or TWO questions in a single message.
+3. Highlight the value and quality of E-TECH when appropriate, building trust. (e.g. "We have an amazing team that specializes in exactly this!").
+4. Naturally collect the required information (Name, Contact Info, Required Service, Project Description, Budget Range, Expected Delivery Time) throughout the conversation, step by step.
+5. If they are unsure about their budget or needs, offer gentle suggestions and assure them we have flexible solutions.
+6. EXTREMELY IMPORTANT: ALWAYS reply in the SAME LANGUAGE the customer is using.
+
+Conversation Flow Example:
+- Start with a warm welcome and ask how you can help them achieve their digital goals today.
+- When they mention an idea, praise it! (e.g., "That sounds like a fantastic project! E-TECH has a lot of experience in this area.")
+- Draw them in: Ask about their vision before asking for technical details.
+- Once they are comfortable, gently ask for their name and contact info so "our expert team can prepare a special offer for you".
+
+CRITICAL INSTRUCTION: Once you have successfully collected ALL required information (Name, Contact, Service, Description, Budget, Time) through natural conversation, you MUST append a JSON block to your final message wrapped in \`\`\`json ... \`\`\`.
 The JSON must follow this EXACT format and nothing else in the block:
 {
   "customer_name": "...",
@@ -1994,6 +2118,71 @@ The JSON must follow this EXACT format and nothing else in the block:
 
         function toggleAIChat() {
             document.getElementById('ai-chat-panel').classList.toggle('open');
+        }
+
+        function toggleAIChatSidebar() {
+            document.getElementById('ai-chat-sidebar').classList.toggle('open');
+            renderHistoryList();
+        }
+
+        function createNewAIChat() {
+            currentSessionId = Date.now().toString();
+            aiConversationHistory = [];
+            aiSessions.unshift({ id: currentSessionId, title: "New Chat", messages: [] });
+            saveAIHistory();
+            document.getElementById('ai-chat-messages').innerHTML = `<div class="ai-msg ai-bot">Hello! I am the E-TECH AI Assistant. How can I help you today? / مرحباً! أنا المساعد الذكي لشركة إي-تيك، كيف يمكنني مساعدتك اليوم؟</div>`;
+            document.getElementById('ai-chat-sidebar').classList.remove('open');
+            renderHistoryList();
+        }
+
+        function loadAISession(id) {
+            const session = aiSessions.find(s => s.id === id);
+            if (!session) return;
+            currentSessionId = id;
+            aiConversationHistory = session.messages;
+            
+            const msgsDiv = document.getElementById('ai-chat-messages');
+            if (aiConversationHistory.length === 0) {
+                msgsDiv.innerHTML = `<div class="ai-msg ai-bot">Hello! I am the E-TECH AI Assistant. How can I help you today? / مرحباً! أنا المساعد الذكي لشركة إي-تيك، كيف يمكنني مساعدتك اليوم؟</div>`;
+            } else {
+                msgsDiv.innerHTML = '';
+                aiConversationHistory.forEach(msg => {
+                    appendMessage(msg.parts[0].text, msg.role);
+                });
+            }
+            document.getElementById('ai-chat-sidebar').classList.remove('open');
+            renderHistoryList();
+        }
+
+        function deleteAISession(id, event) {
+            event.stopPropagation();
+            if (!confirm("Are you sure you want to delete this chat?")) return;
+            aiSessions = aiSessions.filter(s => s.id !== id);
+            if (currentSessionId === id) {
+                if (aiSessions.length > 0) {
+                    loadAISession(aiSessions[0].id);
+                } else {
+                    createNewAIChat();
+                }
+            } else {
+                saveAIHistory();
+            }
+        }
+
+        function renderHistoryList() {
+            const listDiv = document.getElementById('ai-chat-sessions-list');
+            if (!listDiv) return;
+            listDiv.innerHTML = '';
+            aiSessions.forEach(session => {
+                const isActive = session.id === currentSessionId ? 'active' : '';
+                listDiv.innerHTML += `
+                    <div class="ai-session-item ${isActive}" onclick="loadAISession('${session.id}')">
+                        <i class="fa-regular fa-message"></i>
+                        <span class="title">${session.title}</span>
+                        <button class="delete-btn" onclick="deleteAISession('${session.id}', event)"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
         }
 
         function handleAIChatEnter(e) {
@@ -2022,6 +2211,7 @@ The JSON must follow this EXACT format and nothing else in the block:
 
             appendMessage(text, 'user');
             aiConversationHistory.push({ role: "user", parts: [{ text: text }] });
+            saveAIHistory();
             input.value = '';
 
             const btn = document.getElementById('ai-chat-send');
@@ -2067,11 +2257,12 @@ The JSON must follow this EXACT format and nothing else in the block:
 
                 const botReply = data.candidates[0].content.parts[0].text;
                 aiConversationHistory.push({ role: "model", parts: [{ text: botReply }] });
+                saveAIHistory();
 
                 appendMessage(botReply, 'model');
 
                 // Check for JSON block
-                const jsonMatch = botReply.match(/```json([\s\S]*?)```/);
+                const jsonMatch = botReply.match(/```(?:json)?\s*(\{[\s\S]*?\})\s*```/);
                 if (jsonMatch && typeof database !== 'undefined') {
                     try {
                         const leadData = JSON.parse(jsonMatch[1]);
@@ -2093,6 +2284,18 @@ The JSON must follow this EXACT format and nothing else in the block:
                 btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i>';
             }
         }
+
+        // Load chat UI on startup if there is history
+        window.addEventListener('DOMContentLoaded', () => {
+            if (aiConversationHistory.length > 0) {
+                const msgsDiv = document.getElementById('ai-chat-messages');
+                msgsDiv.innerHTML = ''; // Clear default greeting
+                aiConversationHistory.forEach(msg => {
+                    appendMessage(msg.parts[0].text, msg.role);
+                });
+            }
+            renderHistoryList();
+        });
     </script>
 </body>
 
