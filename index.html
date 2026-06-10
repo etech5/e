@@ -1201,8 +1201,6 @@
                 font-size: 15px;
             }
         }
-
-
     </style>
 </head>
 
@@ -1419,11 +1417,6 @@ function createSuccess(idea) {
         </div>
     </section>
 
-    <!-- WHATSAPP FLOATING BUTTON -->
-    <a href="https://wa.me/201012345678" class="whatsapp-float" id="whatsapp-float-el" target="_blank">
-        <i class="fa-brands fa-whatsapp"></i>
-        <span class="whatsapp-tooltip">Chat with us on WhatsApp</span>
-    </a>
 
     <!-- TOAST NOTIFICATION CONTAINER -->
     <div class="toast-container" id="toast-container"></div>
@@ -1789,43 +1782,185 @@ function createSuccess(idea) {
         <div id="ai-chat-panel">
             <div id="ai-chat-header">
                 <i class="fa-solid fa-robot"></i> E-TECH AI Assistant
-                <button onclick="toggleAIChat()" style="margin-left:auto; background:none; border:none; color:white; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+                <button onclick="toggleAIChat()"
+                    style="margin-left:auto; background:none; border:none; color:white; cursor:pointer;"><i
+                        class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="ai-chat-messages">
-                <div class="ai-msg ai-bot">Hello! I am the E-TECH AI Assistant. How can I help you today? / مرحباً! أنا المساعد الذكي لشركة إي-تيك، كيف يمكنني مساعدتك اليوم؟</div>
+                <div class="ai-msg ai-bot">Hello! I am the E-TECH AI Assistant. How can I help you today? / مرحباً! أنا
+                    المساعد الذكي لشركة إي-تيك، كيف يمكنني مساعدتك اليوم؟</div>
             </div>
             <div id="ai-chat-input-area">
-                <input type="text" id="ai-chat-input" placeholder="Type a message..." onkeypress="handleAIChatEnter(event)">
+                <input type="text" id="ai-chat-input" placeholder="Type a message..."
+                    onkeypress="handleAIChatEnter(event)">
                 <button id="ai-chat-send" onclick="sendAIMessage()"><i class="fa-solid fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
-    
+
     <style>
-        #ai-chat-widget { position: fixed; bottom: 30px; right: 30px; z-index: 9999; font-family: 'Inter', sans-serif; }
-        #ai-chat-toggle { width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: var(--dark); font-size: 1.5rem; border: none; cursor: pointer; box-shadow: 0 5px 20px rgba(200, 245, 58, 0.4); transition: transform 0.3s ease; display: flex; align-items: center; justify-content: center; }
-        #ai-chat-toggle:hover { transform: scale(1.1); }
-        #ai-chat-panel { display: none; position: absolute; bottom: 80px; right: 0; width: 350px; height: 500px; background: var(--dark-2); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        #ai-chat-panel.open { display: flex; animation: slideUp 0.3s ease; }
-        #ai-chat-header { background: var(--dark-3); padding: 1rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        #ai-chat-messages { flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; }
-        .ai-msg { max-width: 85%; padding: 0.8rem 1rem; border-radius: 12px; font-size: 0.9rem; line-height: 1.4; word-wrap: break-word; }
-        .ai-bot { background: rgba(200, 245, 58, 0.1); border: 1px solid rgba(200, 245, 58, 0.2); color: var(--white); align-self: flex-start; border-bottom-left-radius: 4px; }
-        .ai-user { background: var(--primary); color: var(--dark); align-self: flex-end; border-bottom-right-radius: 4px; font-weight: 500; }
-        #ai-chat-input-area { padding: 1rem; background: var(--dark-3); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.5rem; }
-        #ai-chat-input { flex: 1; background: var(--dark); border: 1px solid rgba(255,255,255,0.1); border-radius: 50px; padding: 0.8rem 1rem; color: white; outline: none; transition: border-color 0.3s; }
-        #ai-chat-input:focus { border-color: var(--primary); }
-        #ai-chat-send { width: 45px; height: 45px; border-radius: 50%; background: var(--primary); border: none; color: var(--dark); cursor: pointer; transition: transform 0.2s; }
-        #ai-chat-send:hover { transform: scale(1.05); }
-        #ai-chat-send:disabled { background: var(--gray); cursor: not-allowed; transform: none; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        #ai-chat-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            font-family: 'Inter', sans-serif;
+        }
+
+        #ai-chat-toggle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: var(--dark);
+            font-size: 1.5rem;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(200, 245, 58, 0.4);
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #ai-chat-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        #ai-chat-panel {
+            display: none;
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: var(--dark-2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        #ai-chat-panel.open {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        #ai-chat-header {
+            background: var(--dark-3);
+            padding: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #ai-chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .ai-msg {
+            max-width: 85%;
+            padding: 0.8rem 1rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .ai-bot {
+            background: rgba(200, 245, 58, 0.1);
+            border: 1px solid rgba(200, 245, 58, 0.2);
+            color: var(--white);
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .ai-user {
+            background: var(--primary);
+            color: var(--dark);
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+            font-weight: 500;
+        }
+
+        #ai-chat-input-area {
+            padding: 1rem;
+            background: var(--dark-3);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        #ai-chat-input {
+            flex: 1;
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 0.8rem 1rem;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        #ai-chat-input:focus {
+            border-color: var(--primary);
+        }
+
+        #ai-chat-send {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: none;
+            color: var(--dark);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #ai-chat-send:hover {
+            transform: scale(1.05);
+        }
+
+        #ai-chat-send:disabled {
+            background: var(--gray);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         @media(max-width: 480px) {
-            #ai-chat-panel { position: fixed; inset: 0; width: 100%; height: 100%; border-radius: 0; z-index: 10000; }
+            #ai-chat-panel {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                z-index: 10000;
+            }
         }
     </style>
 
     <script>
-        const GEMINI_API_KEY = "AQ.Ab8RN6JU5wzkLGjhXEwzqvT6c53L8R_lQ5pHNF2o5p71jcfM6A"; // ACTUAL KEY
+        const GEMINI_API_KEY = "AQ.Ab8RN6LciRT-H6rdDSN8xyk3PqsLzZOIVyR4rkEV1lg5AfKEsg"; // ACTUAL KEY
 
         let aiConversationHistory = [];
 
@@ -1869,7 +2004,7 @@ The JSON must follow this EXACT format and nothing else in the block:
             const msgsDiv = document.getElementById('ai-chat-messages');
             const msgEl = document.createElement('div');
             msgEl.className = 'ai-msg ' + (sender === 'user' ? 'ai-user' : 'ai-bot');
-            
+
             // Format markdown-like text to HTML slightly (e.g. bold)
             let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
             // Remove the JSON block from UI if it exists
@@ -1883,39 +2018,39 @@ The JSON must follow this EXACT format and nothing else in the block:
         async function sendAIMessage() {
             const input = document.getElementById('ai-chat-input');
             const text = input.value.trim();
-            if(!text) return;
+            if (!text) return;
 
             appendMessage(text, 'user');
             aiConversationHistory.push({ role: "user", parts: [{ text: text }] });
             input.value = '';
-            
+
             const btn = document.getElementById('ai-chat-send');
             btn.disabled = true;
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
 
             try {
-                if(!GEMINI_API_KEY || GEMINI_API_KEY === "") {
+                if (!GEMINI_API_KEY || GEMINI_API_KEY === "") {
                     throw new Error("Please set your Gemini API Key in index.html first.");
                 }
 
                 let dynamicSystemInstruction = systemInstruction;
                 if (typeof siteData !== 'undefined' && siteData) {
                     dynamicSystemInstruction += "\n\nCRITICAL CONTEXT (KNOWLEDGE BASE):";
-                    if(siteData.general) {
+                    if (siteData.general) {
                         dynamicSystemInstruction += `\nCompany Name: ${siteData.general.title || 'E-TECH'}`;
                         dynamicSystemInstruction += `\nCompany Description: ${siteData.general.heroDesc || ''}`;
                         dynamicSystemInstruction += `\nContact Phone: ${siteData.general.phone || ''}`;
                         dynamicSystemInstruction += `\nContact Email: ${siteData.general.email || ''}`;
                     }
-                    if(siteData.services) {
+                    if (siteData.services) {
                         dynamicSystemInstruction += `\nServices Offered: ${siteData.services.map(s => s.title).join(', ')}`;
                     }
-                    if(siteData.pricing) {
+                    if (siteData.pricing) {
                         dynamicSystemInstruction += `\nPricing Plans: ${siteData.pricing.map(p => p.planName + ' (Price: ' + p.price + ')').join(' | ')}`;
                     }
                 }
 
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -1925,32 +2060,32 @@ The JSON must follow this EXACT format and nothing else in the block:
                 });
 
                 const data = await response.json();
-                
-                if(data.error) {
+
+                if (data.error) {
                     throw new Error(data.error.message || "API Error");
                 }
 
                 const botReply = data.candidates[0].content.parts[0].text;
                 aiConversationHistory.push({ role: "model", parts: [{ text: botReply }] });
-                
+
                 appendMessage(botReply, 'model');
 
                 // Check for JSON block
                 const jsonMatch = botReply.match(/```json([\s\S]*?)```/);
-                if(jsonMatch && typeof database !== 'undefined') {
+                if (jsonMatch && typeof database !== 'undefined') {
                     try {
                         const leadData = JSON.parse(jsonMatch[1]);
                         leadData.date = new Date().toISOString();
-                        
+
                         // Push to Firebase
                         const leadsRef = database.ref('ai_leads');
                         leadsRef.push(leadData);
-                    } catch(err) {
+                    } catch (err) {
                         console.error("Failed to parse AI JSON:", err);
                     }
                 }
 
-            } catch(e) {
+            } catch (e) {
                 appendMessage("System Notice: " + e.message, 'model');
                 console.error(e);
             } finally {
