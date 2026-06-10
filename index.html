@@ -2245,8 +2245,11 @@ The JSON must follow this EXACT format and nothing else in the block:
                     if (siteData.pricing) {
                         dynamicSystemInstruction += `\nPricing Plans: ${siteData.pricing.map(p => p.planName + ' (Price: ' + p.price + ')').join(' | ')}`;
                     }
-                    if (siteData.general && siteData.general.aiKnowledge) {
-                        dynamicSystemInstruction += `\nAdditional Custom Knowledge: ${siteData.general.aiKnowledge}`;
+                    if (siteData.aiRules && siteData.aiRules.length > 0) {
+                        dynamicSystemInstruction += `\n\nCRITICAL RULES TO FOLLOW:`;
+                        siteData.aiRules.forEach((rule, index) => {
+                            dynamicSystemInstruction += `\n${index + 1}. ${rule.title}: ${rule.desc}`;
+                        });
                     }
                 }
 
