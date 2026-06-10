@@ -2283,6 +2283,10 @@ The JSON must follow this EXACT format and nothing else in the block:
                     throw new Error(data.error.message || "API Error");
                 }
 
+                if (!data.choices || data.choices.length === 0) {
+                    throw new Error("Invalid response from AI API: " + JSON.stringify(data));
+                }
+
                 const botReply = data.choices[0].message.content;
                 aiConversationHistory.push({ role: "model", parts: [{ text: botReply }] });
                 saveAIHistory();
