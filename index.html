@@ -2277,7 +2277,23 @@ The JSON must follow this EXACT format and nothing else in the block:
                 }
 
             } catch (e) {
-                appendMessage("System Notice: " + e.message, 'model');
+                // If API fails, remove the user's message from history so roles don't break (must alternate user/model)
+                if (aiConversationHistory.length > 0 && aiConversationHistory[aiConversationHistory.length - 1].role === 'user') {
+                    aiConversationHistory.pop();
+                    saveAIHistory();
+                }
+
+                let friendlyMessage = "System Notice: " + e.message;
+                if (e.message.includes("Quota exceeded") || e.message.includes("429")) {
+                    const isArabic = /[\u0600-\u06FF]/.test(text);
+                    if (isArabic) {
+                        friendlyMessage = "عذراً، أواجه ضغطاً كبيراً حالياً! أرجو منك منحي دقيقة واحدة ثم حاول التحدث معي مرة أخرى.";
+                    } else {
+                        friendlyMessage = "Sorry, I am receiving too many requests right now! Please give me a minute and try talking to me again.";
+                    }
+                }
+                
+                appendMessage(friendlyMessage, 'model');
                 console.error(e);
             } finally {
                 btn.disabled = false;
