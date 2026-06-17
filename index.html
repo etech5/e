@@ -1802,6 +1802,7 @@ function createSuccess(idea) {
                     المساعد الذكي لشركة إي-تيك، كيف يمكنني مساعدتك اليوم؟</div>
             </div>
             <div id="ai-chat-input-area">
+                <button id="ai-chat-voice" onclick="startVoiceRecognition()" title="Voice Input"><i class="fa-solid fa-microphone"></i></button>
                 <input type="text" id="ai-chat-input" placeholder="Type a message..."
                     onkeypress="handleAIChatEnter(event)">
                 <button id="ai-chat-send" onclick="sendAIMessage()"><i class="fa-solid fa-paper-plane"></i></button>
@@ -1989,6 +1990,33 @@ function createSuccess(idea) {
             border-color: var(--primary);
         }
 
+        #ai-chat-voice {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        #ai-chat-voice:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        #ai-chat-voice.recording {
+            background: rgba(255, 59, 48, 0.2);
+            color: #FF3B30;
+            border-color: #FF3B30;
+            animation: pulse-glow 1.5s infinite;
+        }
+
         #ai-chat-send {
             width: 45px;
             height: 45px;
@@ -2032,6 +2060,44 @@ function createSuccess(idea) {
                 z-index: 10000;
             }
         }
+
+        /* Image Modal Styles */
+        #image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        #image-modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            animation: modalZoom 0.3s ease;
+        }
+        #image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        #image-modal-close:hover {
+            color: var(--primary);
+        }
+        @keyframes modalZoom {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
     </style>
 
     <script>
@@ -2057,6 +2123,17 @@ function createSuccess(idea) {
                 }
             }
         } catch (e) { }
+
+        function openImageModal(imgUrl) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('image-modal-content');
+            modalImg.src = imgUrl;
+            modal.style.display = 'flex';
+        }
+
+        function closeImageModal() {
+            document.getElementById('image-modal').style.display = 'none';
+        }
 
         // Always open a New Chat by default on page load
         if (aiSessions.length > 0 && aiSessions[0].messages.length === 0) {
@@ -2103,6 +2180,11 @@ Your Primary Goals & Sales Tactics:
 4. Naturally collect the required information (Name, Contact Info, Required Service, Project Description, Budget Range, Expected Delivery Time) throughout the conversation, step by step.
 5. If they are unsure about their budget or needs, offer gentle suggestions and assure them we have flexible solutions.
 6. EXTREMELY IMPORTANT: ALWAYS reply in the SAME LANGUAGE the customer is using.
+7. IDEA GENERATION & CONSULTATION: If the customer asks for a website idea, business idea, or technical advice, you MUST act as a creative consultant. Provide rich, creative, and detailed suggestions. Do NOT just ask for their contact info immediately. Brainstorm with them enthusiastically!
+8. IMAGE GENERATION: If the customer asks for a "concept image", "صورة تخيلية", "تصميم", or if it is appropriate to show them a visual representation of their idea, you MUST generate an image by outputting the following exact syntax in your message:
+[IMAGE: A highly detailed image generation prompt written in ENGLISH ONLY. If it's a website or app, describe a FLAT, FULL-SCREEN UI/UX design. DO NOT mention computers, monitors, desks, or 3D devices. We want the pure flat web design layout itself.]
+CRITICAL RULE FOR IMAGES: NEVER apologize or say you cannot generate images. DO NOT say "I am a text AI". Our system WILL convert the [IMAGE: ...] tag into a real image on the user's screen. Just output the tag confidently.
+Example: [IMAGE: A flat full-screen UI/UX design of a modern e-commerce website for a coffee shop, dark mode, rich brown and gold accents, pure digital web layout, no device, no monitor]
 
 Conversation Flow Example:
 - Start with a warm welcome and ask how you can help them achieve their digital goals today.
@@ -2122,6 +2204,47 @@ The JSON must follow this EXACT format and nothing else in the block:
   "recommended_services": ["..."],
   "next_action": "..."
 }`;
+
+        function startVoiceRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert("عذراً، متصفحك لا يدعم ميزة البحث الصوتي.");
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ar-SA'; // Default to Arabic, works well for both
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            const voiceBtn = document.getElementById('ai-chat-voice');
+            const inputField = document.getElementById('ai-chat-input');
+
+            recognition.start();
+
+            recognition.onstart = function() {
+                voiceBtn.classList.add('recording');
+                inputField.placeholder = "جاري الاستماع...";
+            };
+
+            recognition.onresult = function(event) {
+                const speechResult = event.results[0][0].transcript;
+                inputField.value = speechResult;
+                sendAIMessage();
+            };
+
+            recognition.onspeechend = function() {
+                recognition.stop();
+                voiceBtn.classList.remove('recording');
+                inputField.placeholder = "Type a message...";
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+                voiceBtn.classList.remove('recording');
+                inputField.placeholder = "Type a message...";
+            };
+        }
 
         function toggleAIChat() {
             document.getElementById('ai-chat-panel').classList.toggle('open');
@@ -2205,6 +2328,15 @@ The JSON must follow this EXACT format and nothing else in the block:
             let formattedText = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
             // Remove the JSON block from UI if it exists
             formattedText = formattedText.replace(/```json[\s\S]*?```/g, '<br><br><i style="color:var(--primary); font-size:0.8rem;">[✓] Lead Analysis Generated & Sent to Admin.</i>');
+
+            // Render Concept Images
+            formattedText = formattedText.replace(/\[IMAGE:\s*(.*?)\]/g, (match, prompt) => {
+                // Prepend and append strong web design keywords to force UI/UX output instead of physical places or devices
+                const finalPrompt = "UI UX web design layout: " + prompt.trim() + " , direct frontal flat screenshot, full screen webpage, dribbble, behance, highest quality 4k, no device, no monitor, no perspective, pure interface layout";
+                const encodedPrompt = encodeURIComponent(finalPrompt);
+                const imgUrl = `https://image.pollinations.ai/prompt/${encodedPrompt}?width=1920&height=1080&nologo=true`;
+                return `<br><img src="${imgUrl}" onclick="openImageModal('${imgUrl}')" style="width:100%; border-radius:8px; margin-top:10px; box-shadow:0 4px 10px rgba(0,0,0,0.3); cursor:pointer; transition:transform 0.2s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" alt="Concept Image"><br><i style="color:var(--gray); font-size:0.7rem;">*Click the image to enlarge*</i><br>`;
+            });
 
             msgEl.innerHTML = formattedText;
             msgsDiv.appendChild(msgEl);
@@ -2345,6 +2477,13 @@ The JSON must follow this EXACT format and nothing else in the block:
             renderHistoryList();
         });
     </script>
+
+    <!-- Image Modal -->
+    <div id="image-modal" onclick="closeImageModal()">
+        <span id="image-modal-close">&times;</span>
+        <img id="image-modal-content" onclick="event.stopPropagation();">
+    </div>
+
 </body>
 
 </html>
