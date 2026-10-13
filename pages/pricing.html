@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>باقات الأسعار والخطط | E-TECH Solutions</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #fbf7ef;
+            --bg-surface: #f4eee2;
+            --bg-surface-elevated: #ffffff;
+            --border-color: #e7dcc5;
+            --primary: #1f7a42;
+            --accent-glow: rgba(31, 122, 66, 0.12);
+            --text-main: #1c1712;
+            --text-muted: #6e6455;
+            --font-ar: 'Cairo', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Floating Navbar */
+        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
+        .navbar-bar { background: rgba(16, 19, 24, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6); }
+        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
+        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .nav-links { display: flex; gap: 0.75rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: all 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(182, 255, 0, 0.1); }
+        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
+        .btn-cta:hover { transform: scale(1.05); }
+
+        /* Hero */
+        .hero { padding: 9rem 0 3.5rem; text-align: center; }
+        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
+        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Pricing Grid */
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 6rem; align-items: stretch; }
+        .pricing-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 24px; padding: 2.5rem 2rem; display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+        .pricing-card.popular { border-color: var(--primary); box-shadow: 0 0 35px rgba(182, 255, 0, 0.15); background: linear-gradient(180deg, #141920 0%, #0d1017 100%); }
+        .popular-badge { position: absolute; top: -14px; right: 2rem; background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); font-size: 0.75rem; font-weight: 800; padding: 0.3rem 0.9rem; border-radius: 9999px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        .plan-header h3 { font-size: 1.4rem; font-weight: 800; color: #1c1712; margin-bottom: 0.5rem; }
+        .plan-header p { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 1.5rem; }
+        .price-box { display: flex; align-items: baseline; gap: 0.4rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-color); }
+        .price-currency { font-size: 1.1rem; color: var(--primary); font-weight: 700; }
+        .price-num { font-size: 3rem; font-weight: 900; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1; }
+        .price-term { font-size: 0.85rem; color: var(--text-muted); }
+
+        .features-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2.5rem; }
+        .features-list li { font-size: 0.9rem; color: #4a3e35; display: flex; align-items: center; gap: 0.6rem; }
+        .features-list li i { color: var(--primary); font-size: 0.95rem; }
+        .features-list li.disabled { color: #64748b; text-decoration: line-through; }
+        .features-list li.disabled i { color: #475569; }
+
+        .btn-plan { display: block; text-align: center; padding: 0.85rem 1.5rem; border-radius: 9999px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; }
+        .btn-plan-outline { background: transparent; border: 1px solid var(--border-color); color: #fff; }
+        .btn-plan-outline:hover { border-color: var(--primary); color: var(--primary); background: rgba(182, 255, 0, 0.05); }
+        .btn-plan-solid { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); font-weight: 800; }
+        .btn-plan-solid:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(182, 255, 0, 0.4); }
+
+        /* FAQ Section */
+        .faq-section { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 28px; padding: 3.5rem 2.5rem; margin-bottom: 6rem; }
+        .faq-title { text-align: center; margin-bottom: 2.5rem; }
+        .faq-title h2 { font-size: 2rem; font-weight: 800; color: #1c1712; margin-bottom: 0.5rem; }
+        .faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.75rem; }
+        .faq-item { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; }
+        .faq-item h4 { font-size: 1.05rem; font-weight: 700; color: #1c1712; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem; }
+        .faq-item h4 i { color: var(--primary); }
+        .faq-item p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-bar">
+            <a href="../index.html" class="brand">
+                <img src="../assets/logo.png" alt="E-TECH">
+                <span>E-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+                <li><a href="portfolio.html">المشاريع</a></li>
+                <li><a href="pricing.html" class="active">الأسعار</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <span class="hero-tag">خطط استثمارية واضحة</span>
+            <h1>باقات مرنة تناسب حجم أعمالك</h1>
+            <p>اختر الخطة المناسبة لمشروعك، مع إمكانية التخصيص الكامل والدعم الفني المستمر بدون أي مصاريف خفية.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="pricing-grid">
+            <!-- Plan 1 -->
+            <div class="pricing-card">
+                <div>
+                    <div class="plan-header">
+                        <h3>باقة الانطلاق (Starter)</h3>
+                        <p>مثالية للمواقع التعريفية والشركات الناشئة التي تبدأ أولى خطواتها الرقمية.</p>
+                    </div>
+                    <div class="price-box">
+                        <span class="price-currency">تبدأ من</span>
+                        <span class="price-num">3,900</span>
+                        <span class="price-term">ج.م / مرة واحدة</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-check"></i> موقع تعريفي من صفحة أو 5 صفحات</li>
+                        <li><i class="fa-solid fa-check"></i> تصميم عصري متجاوب 100% مع الهواتف</li>
+                        <li><i class="fa-solid fa-check"></i> دومين واستضافة سريعة مجاناً لسنة</li>
+                        <li><i class="fa-solid fa-check"></i> شهادة أمان SSL ونموذج تواصل ذكي</li>
+                        <li><i class="fa-solid fa-check"></i> تهيئة محركات البحث الأساسية SEO</li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> بوابات دفع إلكتروني</li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> تطبيق موبايل مرافق</li>
+                    </ul>
+                </div>
+                <a href="contact.html?plan=starter" class="btn-plan btn-plan-outline">اختر باقة الانطلاق</a>
+            </div>
+
+            <!-- Plan 2 (Popular) -->
+            <div class="pricing-card popular">
+                <span class="popular-badge"><i class="fa-solid fa-star"></i> الأكثر طلباً</span>
+                <div>
+                    <div class="plan-header">
+                        <h3>باقة الأعمال والمتاجر (Business)</h3>
+                        <p>الحل المتكامل للمتاجر الإلكترونية والمنصات التعليمية ذات الحركة النشطة.</p>
+                    </div>
+                    <div class="price-box">
+                        <span class="price-currency">تبدأ من</span>
+                        <span class="price-num">8,500</span>
+                        <span class="price-term">ج.م / مرة واحدة</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-check"></i> متجر إلكتروني متكامل أو منصة كورسات LMS</li>
+                        <li><i class="fa-solid fa-check"></i> ربط كامل مع بوابات الدفع (فيزا، فوري، ميزة)</li>
+                        <li><i class="fa-solid fa-check"></i> حماية الفيديو ومنع التسجيل (للمنصات)</li>
+                        <li><i class="fa-solid fa-check"></i> لوحة تحكم مخصصة لإدارة المنتجات والطلبات</li>
+                        <li><i class="fa-solid fa-check"></i> ربط مع واتساب لإشعارات العملاء الآلية</li>
+                        <li><i class="fa-solid fa-check"></i> دعم فني وصيانة مجانية لمدة 6 أشهر</li>
+                        <li class="disabled"><i class="fa-solid fa-xmark"></i> تطبيق مخصص في المتجر</li>
+                    </ul>
+                </div>
+                <a href="contact.html?plan=business" class="btn-plan btn-plan-solid">ابدأ الآن مع باقة الأعمال</a>
+            </div>
+
+            <!-- Plan 3 -->
+            <div class="pricing-card">
+                <div>
+                    <div class="plan-header">
+                        <h3>باقة المؤسسات المخصصة (Custom)</h3>
+                        <p>للأنظمة الضخمة، تطبيقات الموبايل الهجينة، والأنظمة السحابية المعقدة.</p>
+                    </div>
+                    <div class="price-box">
+                        <span class="price-currency">عرض مخصص</span>
+                        <span class="price-num">حسب</span>
+                        <span class="price-term">المواصفات</span>
+                    </div>
+                    <ul class="features-list">
+                        <li><i class="fa-solid fa-check"></i> تطبيق iOS & Android بـ Flutter/React Native</li>
+                        <li><i class="fa-solid fa-check"></i> لوحات تحكم متقدمة بمستويات صلاحيات متعددة</li>
+                        <li><i class="fa-solid fa-check"></i> سيرفرات مخصصة وبنية تحتية سحابية Cloud</li>
+                        <li><i class="fa-solid fa-check"></i> أتمتة كاملة للعمليات وربط API مع ERP/CRM</li>
+                        <li><i class="fa-solid fa-check"></i> نشر التطبيق رسمياً على App Store & Google Play</li>
+                        <li><i class="fa-solid fa-check"></i> دعم فني ومراقبة استقرار على مدار 24/7</li>
+                        <li><i class="fa-solid fa-check"></i> تدريب كامل لفريق عملك على النظام</li>
+                    </ul>
+                </div>
+                <a href="contact.html?plan=custom" class="btn-plan btn-plan-outline">طلب استشارة مخصصة</a>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+            <div class="faq-title">
+                <h2>الأسئلة الشائعة</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">كل ما تحتاج معرفته حول آليات التعاقد والدفع والتسليم</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question"></i> كم يستغرق تسليم المشروع؟</h4>
+                    <p>المواقع التعريفية تستغرق من 3 إلى 7 أيام عمل. المتاجر الإلكترونية والمنصات التعليمية من 10 إلى 20 يوم عمل وفق حجم المتطلبات.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question"></i> ما هي طرق الدفع المتاحة؟</h4>
+                    <p>نقبل التحويل البنكي، إنستاباي (InstaPay)، فودافون كاش، وبطاقات الدفع الائتمانية. ويتم الدفع على دفعات مرتبطة بمراحل الإنجاز.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question"></i> هل أمتلك الكود المصدري ولوحة التحكم بالكامل؟</h4>
+                    <p>نعم، بعد تسليم المشروع تحصل على ملكية كاملة بنسبة 100% لكافة الأكواد والموارد ولوحة التحكم دون أي التزامات حصرية مقيدة.</p>
+                </div>
+                <div class="faq-item">
+                    <h4><i class="fa-solid fa-circle-question"></i> هل تقدمون دعماً فنياً بعد التسليم؟</h4>
+                    <p>بالتأكيد، كل باقة تأتي مع فترة دعم وصيانة مجانية تشمل التحديثات الأمنية ومعالجة أي طارئ لضمان استمرارية عملك بأعلى كفاءة.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
+        </div>
+    </footer>
+</body>
+</html>

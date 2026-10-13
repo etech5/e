@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>من نحن | E-TECH Solutions</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #fbf7ef;
+            --bg-surface: #f4eee2;
+            --bg-surface-elevated: #ffffff;
+            --border-color: #e7dcc5;
+            --primary: #1f7a42;
+            --accent-glow: rgba(31, 122, 66, 0.12);
+            --text-main: #1c1712;
+            --text-muted: #6e6455;
+            --font-ar: 'Cairo', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Floating Navbar */
+        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
+        .navbar-bar { background: rgba(16, 19, 24, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6); }
+        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
+        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .nav-links { display: flex; gap: 0.75rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: all 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(182, 255, 0, 0.1); }
+        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
+        .btn-cta:hover { transform: scale(1.05); }
+
+        /* Hero */
+        .hero { padding: 9rem 0 3.5rem; text-align: center; }
+        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
+        .hero p { max-width: 680px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Story Section */
+        .story-section { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; margin-bottom: 5rem; }
+        .story-content h2 { font-size: 2rem; font-weight: 800; color: #1c1712; margin-bottom: 1.25rem; }
+        .story-content p { color: var(--text-muted); font-size: 0.98rem; line-height: 1.8; margin-bottom: 1.2rem; }
+        .story-visual { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 24px; padding: 2.5rem; text-align: center; position: relative; }
+        .story-visual img { width: 120px; height: 120px; object-fit: contain; filter: drop-shadow(0 0 25px var(--accent-glow)); margin-bottom: 1.5rem; }
+        .story-visual h3 { font-size: 1.4rem; color: #1c1712; margin-bottom: 0.5rem; }
+        .story-visual p { color: var(--primary); font-weight: 600; font-size: 0.92rem; }
+
+        /* Stats Strip */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 2.5rem 2rem; margin-bottom: 5rem; text-align: center; }
+        .stat-item h3 { font-size: 2.5rem; font-weight: 900; color: var(--primary); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1; margin-bottom: 0.4rem; }
+        .stat-item p { color: var(--text-muted); font-size: 0.88rem; font-weight: 600; }
+
+        /* Core Values */
+        .values-title { text-align: center; margin-bottom: 2.5rem; }
+        .values-title h2 { font-size: 2.2rem; font-weight: 800; color: #1c1712; margin-bottom: 0.5rem; }
+        .values-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.75rem; margin-bottom: 5rem; }
+        .value-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; padding: 2rem; transition: transform 0.2s; }
+        .value-card:hover { transform: translateY(-5px); border-color: rgba(182, 255, 0, 0.35); }
+        .value-icon { width: 50px; height: 50px; border-radius: 12px; background: rgba(182, 255, 0, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 1.2rem; }
+        .value-card h3 { font-size: 1.2rem; font-weight: 700; color: #1c1712; margin-bottom: 0.6rem; }
+        .value-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
+
+        /* Workflow */
+        .workflow-box { background: var(--bg-surface-elevated); border: 1px solid var(--border-color); border-radius: 28px; padding: 3.5rem 2.5rem; margin-bottom: 6rem; text-align: center; }
+        .workflow-box h2 { font-size: 2.2rem; font-weight: 800; color: #1c1712; margin-bottom: 0.75rem; }
+        .steps-flex { display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; flex-wrap: wrap; }
+        .step-item { flex: 1; min-width: 170px; background: rgba(8, 10, 13, 0.6); border: 1px solid var(--border-color); border-radius: 18px; padding: 1.5rem 1rem; text-align: center; position: relative; }
+        .step-num { font-size: 1.8rem; font-weight: 900; color: var(--primary); font-family: 'Plus Jakarta Sans', sans-serif; margin-bottom: 0.4rem; }
+        .step-item h4 { font-size: 1rem; font-weight: 700; color: #1c1712; margin-bottom: 0.3rem; }
+        .step-item p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 850px) {
+            .story-section { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-bar">
+            <a href="../index.html" class="brand">
+                <img src="../assets/logo.png" alt="E-TECH">
+                <span>E-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+                <li><a href="portfolio.html">المشاريع</a></li>
+                <li><a href="pricing.html">الأسعار</a></li>
+                <li><a href="about.html" class="active">من نحن</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <span class="hero-tag">رؤية مبتكرة • حلول متقدمة</span>
+            <h1>شريكك البرمجي لبناء المستقبل الرقمي</h1>
+            <p>نحن فريق شغوف بالتقنية وتطوير البرمجيات المتطورة، نبتكر حلولاً رقمية سريعة، آمنة، وقابلة للتوسع تواكب أحدث المعايير العالمية.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Story -->
+        <div class="story-section">
+            <div class="story-content">
+                <h2>نحن لا نكتب كوداً فقط، بل نبني أصولاً رقمية تنمو مع نجاحك</h2>
+                <p>تأسست E-TECH لتكون جسراً تقنياً يربط أصحاب الأعمال والمؤسسات بأحدث ما توصلت إليه صناعة الويب وتطبيقات الجوال والذكاء الاصطناعي.</p>
+                <p>نؤمن بأن البرمجيات الممتازة تجمع بين جمال التصميم وسرعة الاستجابة وأعلى درجات الأمان وحماية البيانات. لذلك نعتمد على أحدث أطر العمل الحديثة مثل Next.js، React، Flutter، والأنظمة السحابية الموزعة.</p>
+                <div style="margin-top: 2rem;">
+                    <a href="contact.html" class="btn-cta" style="padding: 0.75rem 1.8rem; font-size: 0.95rem;">تحدث مع فريقنا الهندسي &larr;</a>
+                </div>
+            </div>
+            <div class="story-visual">
+                <img src="../assets/logo.png" alt="E-TECH Brand">
+                <h3>E-TECH Solutions</h3>
+                <p>Digital Engineering & Platform Innovation</p>
+                <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 0.5rem;">
+                    <span style="font-size: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem; border-radius: 9999px;">تأسست 2023</span>
+                    <span style="font-size: 0.8rem; background: rgba(182,255,0,0.1); color: var(--primary); padding: 0.3rem 0.8rem; border-radius: 9999px;">شريك معتمد</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>+50</h3>
+                <p>مشروع تم تسليمه بنجاح</p>
+            </div>
+            <div class="stat-item">
+                <h3>99.9%</h3>
+                <p>جاهزية واستقرار الخوادم</p>
+            </div>
+            <div class="stat-item">
+                <h3>+30K</h3>
+                <p>مستخدم نشط على منصاتنا</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>متابعة ودعم فني مستمر</p>
+            </div>
+        </div>
+
+        <!-- Core Values -->
+        <div class="values-title">
+            <h2>قيمنا ومبادئنا الهندسية</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">المعايير التي تقود كل سطر برمجي نكتبه في E-TECH</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                <h3>السرعة والأداء الفائق</h3>
+                <p>نصمم بنيات تحتية محسنة تحقق درجات قصوى في مؤشرات Google Core Web Vitals لضمان أفضل تجربة للمستخدم.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3>الأمان الصارم وحماية البيانات</h3>
+                <p>نطبق بروتوكولات حماية متطورة وتشفير كامل للوسائط وقواعد البيانات ضد محاولات الاختراق والتسريب.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>التصميم العصري التفاعلي</h3>
+                <p>نركز على واجهات مستخدم استثنائية (UI/UX) تترك انطباعاً مبهراً وتبسط وصول العميل لهدفه.</p>
+            </div>
+            <div class="value-card">
+                <div class="value-icon"><i class="fa-solid fa-handshake"></i></div>
+                <h3>الشفافية والالتزام بالموعد</h3>
+                <p>جدول زمني واضح ومحدد مع إشراك العميل في كل مرحلة تجريبية حتى التسليم النهائي والتدريب.</p>
+            </div>
+        </div>
+
+        <!-- Workflow Box -->
+        <div class="workflow-box">
+            <h2>دورة العمل البرمجية لدينا</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">من الفكرة المبدئية إلى النظام المكتمل في 5 خطوات منهجية</p>
+            <div class="steps-flex">
+                <div class="step-item">
+                    <div class="step-num">01</div>
+                    <h4>الاستكشاف والتحليل</h4>
+                    <p>دراسة الاحتياجات وأهداف العمل بدقة</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">02</div>
+                    <h4>تصميم الواجهات UI/UX</h4>
+                    <p>نماذج بصرية تفاعلية قبل كتابة الكود</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">03</div>
+                    <h4>التطوير والبرمجة</h4>
+                    <p>بناء المنظومة بأحدث التقنيات وأفضل الممارسات</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">04</div>
+                    <h4>فحص الجودة والأمان</h4>
+                    <p>اختبارات سرعة وحماية واختراق صارمة</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-num">05</div>
+                    <h4>الإطلاق والدعم المستمر</h4>
+                    <p>رفع المشروع ومتابعة الأداء على مدار الساعة</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
+        </div>
+    </footer>
+</body>
+</html>

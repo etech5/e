@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خدماتنا البرمجية | E-TECH Solutions</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #fbf7ef;
+            --bg-surface: #f4eee2;
+            --bg-surface-elevated: #ffffff;
+            --border-color: #e7dcc5;
+            --primary: #1f7a42;
+            --accent-glow: rgba(31, 122, 66, 0.12);
+            --text-main: #1c1712;
+            --text-muted: #6e6455;
+            --font-ar: 'Cairo', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+        
+        /* Floating Navbar */
+        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
+        .navbar-bar { background: rgba(244, 238, 226, 0.92); backdrop-filter: blur(18px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 10px 30px rgba(28, 23, 18, 0.06); }
+        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
+        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(31, 122, 66, 0.25)); }
+        .nav-links { display: flex; gap: 1rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: color 0.2s; }
+        .nav-links a:hover { color: #1c1712; background: rgba(255, 255, 255, 0.8); }
+        .nav-links a.active { color: #ffffff !important; background: #1c1712 !important; box-shadow: 0 2px 8px rgba(28, 23, 18, 0.15); }
+        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
+        .btn-cta:hover { transform: scale(1.05); }
+
+        /* Page Hero */
+        .hero { padding: 9rem 0 3.5rem; text-align: center; }
+        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
+        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Services Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding: 2rem 0 6rem; }
+        .service-card { background: #ffffff; backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 22px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(28, 23, 18, 0.05); }
+        .service-card:hover { border-color: #1f7a42; transform: translateY(-5px); box-shadow: 0 12px 32px rgba(28, 23, 18, 0.09); }
+        .service-icon { width: 54px; height: 54px; border-radius: 14px; background: #e8f5e9; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.5rem; border: 1px solid #c8e6c9; }
+        .service-card h3 { font-size: 1.35rem; font-weight: 700; color: #1c1712; margin-bottom: 0.75rem; }
+        .service-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .feature-list li { color: #4a3e35; font-size: 0.86rem; display: flex; align-items: center; gap: 0.5rem; }
+        .feature-list li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 6px var(--primary); }
+        .card-link { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-bar">
+            <a href="../index.html" class="brand">
+                <img src="../assets/logo.png" alt="E-TECH">
+                <span>E-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="services.html" class="active">الخدمات</a></li>
+                <li><a href="portfolio.html">المشاريع</a></li>
+                <li><a href="pricing.html">الأسعار</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <span class="hero-tag">حلول رقمية متكاملة</span>
+            <h1>خدماتنا البرمجية المتقدمة</h1>
+            <p>نطور حلولاً برمجية تواكب أعلى المعايير العالمية لتمكين الشركات والمؤسسات من تحقيق التحول الرقمي والتفوق التنافسي.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="grid">
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-code"></i></div>
+                    <h3>تطوير مواقع الويب المخصصة</h3>
+                    <p>مواقع عصرية وفائقة السرعة مبنية بتقنيات React و Next.js مع تهيئة محركات البحث SEO وتوافق تام مع كافة الهواتف والشاشات.</p>
+                    <ul class="feature-list">
+                        <li>تصميم متجاوب وسرعة تحميل فائقة</li>
+                        <li>لوحة تحكم مرنة وسهلة الاستخدام</li>
+                        <li>حماية سحابية وشهادات SSL مجانية</li>
+                    </ul>
+                </div>
+                <a href="contact.html" class="card-link">ابدأ موقعك الآن &larr;</a>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                    <h3>المنصات التعليمية LMS</h3>
+                    <p>أنظمة تعليم إلكتروني شاملة للمدرسين والأكاديميات مع حماية الفيديو من التحميل، اختبارات مؤتمتة، وتقارير تفصيلية.</p>
+                    <ul class="feature-list">
+                        <li>بث فيديو مشفر ومضاد للتسريب</li>
+                        <li>بنوك أسئلة وتصحيح آلي فوري</li>
+                        <li>ربط الدفع الإلكتروني (فيزا، فوري، ميزة)</li>
+                    </ul>
+                </div>
+                <a href="educational-platforms.html" class="card-link">تفاصيل المنصات التعليمية &larr;</a>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                    <h3>المتاجر الإلكترونية وحلول التجارة</h3>
+                    <p>متاجر احترافية لبيع المنتجات الرقمية والمادية تدعم إدارة المخزون، الشحن الآلي، بوابات الدفع الإلكترونية السريعة.</p>
+                    <ul class="feature-list">
+                        <li>تجربة تسوق بنقرة واحدة سريعة</li>
+                        <li>تتبع الطلبات عبر واتساب والرسائل</li>
+                        <li>ربط مباشر مع شركات الشحن والجمارك</li>
+                    </ul>
+                </div>
+                <a href="ecommerce-solutions.html" class="card-link">تفاصيل المتاجر الإلكترونية &larr;</a>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-mobile-screen"></i></div>
+                    <h3>تطبيقات الهواتف الذكية</h3>
+                    <p>تطبيقات عالية الجودة تعمل بكفاءة على منصتي Android و iOS باستخدام Flutter و React Native مع أداء وسلاسة لا تضاهى.</p>
+                    <ul class="feature-list">
+                        <li>تطبيقات موحدة للنظامين iOS & Android</li>
+                        <li>إشعارات فورية مخصصة للعملاء</li>
+                        <li>نشر رسمي على Google Play و App Store</li>
+                    </ul>
+                </div>
+                <a href="mobile-applications.html" class="card-link">تفاصيل تطبيقات الموبايل &larr;</a>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
+                    <h3>تطوير واجهات REST APIs والأتمتة</h3>
+                    <p>بناء واجهات برمجية آمنة وسريعة للربط بين الأنظمة، مع برمجة بوتات أتمتة لتقليل تكاليف العمليات والتشغيل.</p>
+                    <ul class="feature-list">
+                        <li>تكامل مع أنظمة CRM و ERP</li>
+                        <li>بوابات API موثقة بتوثيق Swagger</li>
+                        <li>بنية تحتية سحابية على Cloudflare Workers</li>
+                    </ul>
+                </div>
+                <a href="contact.html" class="card-link">استشر خبير الأتمتة &larr;</a>
+            </div>
+
+            <div class="service-card">
+                <div>
+                    <div class="service-icon"><i class="fa-solid fa-headset"></i></div>
+                    <h3>الدعم الفني والصيانة المستمرة</h3>
+                    <p>خدمات إدارة الخوادم، النسخ الاحتياطي الدوري، التحديثات الأمنية، والمراقبة على مدار الساعة لضمان استقرار مشروعك.</p>
+                    <ul class="feature-list">
+                        <li>مراقبة السيرفرات 24/7 دون توقف</li>
+                        <li>نسخ احتياطي يومي آمن ومستقل</li>
+                        <li>تحسين وتحديث أمني مستمر للأنظمة</li>
+                    </ul>
+                </div>
+                <a href="contact.html" class="card-link">تواصل للدعم الفني &larr;</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
+        </div>
+    </footer>
+</body>
+</html>

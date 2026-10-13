@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المدونة التقنية | E-TECH Solutions</title>
+    <link rel="icon" type="image/png" href="../assets/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-base: #fbf7ef;
+            --bg-surface: #f4eee2;
+            --bg-surface-elevated: #ffffff;
+            --border-color: #e7dcc5;
+            --primary: #1f7a42;
+            --accent-glow: rgba(31, 122, 66, 0.12);
+            --text-main: #1c1712;
+            --text-muted: #6e6455;
+            --font-ar: 'Cairo', system-ui, sans-serif;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
+        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Floating Navbar */
+        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
+        .navbar-bar { background: rgba(16, 19, 24, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6); }
+        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
+        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 10px var(--accent-glow)); }
+        .nav-links { display: flex; gap: 0.75rem; list-style: none; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: all 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(182, 255, 0, 0.1); }
+        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
+        .btn-cta:hover { transform: scale(1.05); }
+
+        /* Hero */
+        .hero { padding: 9rem 0 3.5rem; text-align: center; }
+        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
+        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
+        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+
+        /* Articles Grid */
+        .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 5rem; }
+        .article-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 22px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
+        .article-card:hover { transform: translateY(-5px); border-color: rgba(182, 255, 0, 0.35); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .article-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted); }
+        .article-meta span.cat-badge { background: rgba(182, 255, 0, 0.1); color: var(--primary); font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px; }
+        .article-card h3 { font-size: 1.25rem; font-weight: 700; color: #1c1712; margin-bottom: 0.75rem; line-height: 1.5; }
+        .article-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .article-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .article-footer a { color: var(--primary); text-decoration: none; font-size: 0.88rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem; }
+
+        /* Newsletter Box */
+        .newsletter-box { background: var(--bg-surface-elevated); border: 1px solid rgba(182, 255, 0, 0.25); border-radius: 28px; padding: 3.5rem 2.5rem; margin-bottom: 6rem; text-align: center; }
+        .newsletter-box h2 { font-size: 2rem; font-weight: 800; color: #1c1712; margin-bottom: 0.5rem; }
+        .newsletter-box p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        .newsletter-form { display: flex; max-width: 500px; margin: 0 auto; gap: 0.6rem; }
+        .newsletter-input { flex-grow: 1; background: #080a0d; border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.8rem 1.4rem; color: #fff; font-family: var(--font-ar); outline: none; font-size: 0.9rem; }
+        .newsletter-input:focus { border-color: var(--primary); }
+        .newsletter-btn { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); font-weight: 800; border: none; border-radius: 9999px; padding: 0.8rem 1.8rem; cursor: pointer; font-family: var(--font-ar); transition: transform 0.2s; }
+        .newsletter-btn:hover { transform: scale(1.04); }
+
+        /* Footer */
+        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .newsletter-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-bar">
+            <a href="../index.html" class="brand">
+                <img src="../assets/logo.png" alt="E-TECH">
+                <span>E-TECH</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">الرئيسية</a></li>
+                <li><a href="services.html">الخدمات</a></li>
+                <li><a href="portfolio.html">المشاريع</a></li>
+                <li><a href="pricing.html">الأسعار</a></li>
+                <li><a href="about.html">من نحن</a></li>
+                <li><a href="contact.html">تواصل معنا</a></li>
+            </ul>
+            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="container">
+            <span class="hero-tag">رؤى وأفكار برمجية حديثة</span>
+            <h1>مدونة E-TECH الهندسية والتقنية</h1>
+            <p>مقالات وأدلة عملية لمساعدتك على اتخاذ أفضل القرارات التقنية وتطوير مشروعك الرقمي بأحدث الأدوات والمعايير.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="articles-grid">
+            <!-- Article 1 -->
+            <div class="article-card">
+                <div>
+                    <div class="article-meta">
+                        <span class="cat-badge">التعليم الإلكتروني</span>
+                        <span>12 أكتوبر 2026</span>
+                    </div>
+                    <h3>كيف تختار المنصة التعليمية المناسبة لأكاديميتك في 2026؟</h3>
+                    <p>دليل شامل يستعرض الفروقات بين المنصات الجاهزة وتطوير منصة مخصصة مع معايير حماية الفيديوهات من التسجيل والاختراق.</p>
+                </div>
+                <div class="article-footer">
+                    <a href="contact.html">استشر خبير المنصات &larr;</a>
+                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 4 دقائق</span>
+                </div>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="article-card">
+                <div>
+                    <div class="article-meta">
+                        <span class="cat-badge">التجارة الإلكترونية</span>
+                        <span>08 أكتوبر 2026</span>
+                    </div>
+                    <h3>أسرار مضاعفة مبيعات المتجر عبر تسريع وقت الاستجابة بنقرة واحدة</h3>
+                    <p>كيف تؤثر كل ثانية تأخير في سرعة تحميل متجرك على انخفاض معدل التحويل وما هي أفضل ممارسات التحسين الحديثة.</p>
+                </div>
+                <div class="article-footer">
+                    <a href="contact.html">فحص سرعة متجرك &larr;</a>
+                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 5 دقائق</span>
+                </div>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="article-card">
+                <div>
+                    <div class="article-meta">
+                        <span class="cat-badge">تطبيقات الجوال</span>
+                        <span>01 أكتوبر 2026</span>
+                    </div>
+                    <h3>مقارنة شاملة بين Flutter و React Native في المشاريع التجارية</h3>
+                    <p>أي الإطارين يوفر تكلفة تطوير أقل وأداءً أعلى لتطبيقك، وكيف تختار التقنية المناسبة لطبيعة عملك وفريقك.</p>
+                </div>
+                <div class="article-footer">
+                    <a href="contact.html">مناقشة تطبيقك &larr;</a>
+                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 6 دقائق</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter -->
+        <div class="newsletter-box">
+            <h2>اشترك في النشرة البرمجية الأسبوعية</h2>
+            <p>احصل على أحدث المقالات والنصائح التقنية لتحسين وتنمية أعمالك الرقمية مباشرة في بريدك.</p>
+            <div id="newsletterSuccess" style="display:none; color: var(--primary); font-weight:700; margin-bottom:1rem;">
+                <i class="fa-solid fa-circle-check"></i> شكراً لاشتراكك! تم تسجيل بريدك الإلكتروني بنجاح.
+            </div>
+            <form id="blogNewsletterForm" class="newsletter-form">
+                <input type="email" id="nlEmailInput" class="newsletter-input" placeholder="أدخل بريدك الإلكتروني..." required>
+                <button type="submit" class="newsletter-btn">اشتراك</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('blogNewsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('nlEmailInput');
+            const email = emailInput.value.trim();
+            if (!email) return;
+
+            try {
+                let siteData = {};
+                const stored = localStorage.getItem('etech_data');
+                if (stored) siteData = JSON.parse(stored);
+                if (!siteData.subscribers) siteData.subscribers = [];
+                if (!siteData.subscribers.includes(email)) {
+                    siteData.subscribers.push(email);
+                    localStorage.setItem('etech_data', JSON.stringify(siteData));
+                    localStorage.setItem('etech_site_data', JSON.stringify(siteData));
+                }
+            } catch(err) {
+                console.warn(err);
+            }
+
+            document.getElementById('newsletterSuccess').style.display = 'block';
+            this.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
