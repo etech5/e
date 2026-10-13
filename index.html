@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ar" dir="rtl" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -1563,14 +1563,27 @@
             padding: 0.75rem 1rem;
             border-top: 1px solid var(--border-color);
             display: flex;
+            flex-direction: row;
             gap: 0.5rem;
             background: #0f141d;
         }
+        /* Send button on the RIGHT side in Arabic RTL */
         html[dir="rtl"] .chat-input-bar {
             flex-direction: row-reverse;
         }
-        html[dir="rtl"] .chat-input-bar button svg {
-            transform: scaleX(-1);
+        /* Send arrow points to the RIGHT (send direction) */
+        .chat-input-bar button svg {
+            transform: none !important;
+        }
+        /* Contact Form Submit Button: Send arrow on the right & pointing right */
+        html[dir="rtl"] #contactForm button[type="submit"],
+        html[dir="rtl"] .contact button[type="submit"] {
+            flex-direction: row-reverse;
+            gap: 0.6rem;
+        }
+        html[dir="rtl"] #contactForm button[type="submit"] svg,
+        html[dir="rtl"] .contact button[type="submit"] svg {
+            transform: none !important;
         }
         .chat-input-bar input {
             flex: 1;
@@ -2421,9 +2434,20 @@
         // DataManager compatibility with Admin Dashboard
         const DataManager = {
             init() {
+                const stored = localStorage.getItem('etech_data');
+                if (stored) {
+                    try {
+                        const parsed = JSON.parse(stored);
+                        if (!parsed.admin) parsed.admin = {};
+                        if (parsed.admin.password !== 'omar2000zayed.etechweb') {
+                            parsed.admin.password = 'omar2000zayed.etechweb';
+                            localStorage.setItem('etech_data', JSON.stringify(parsed));
+                        }
+                    } catch(e) {}
+                }
                 if (!localStorage.getItem('etech_data')) {
                     const defaultData = {
-                        admin: { email: 'admin@etech.com', password: '2503010005etech', name: 'Admin' },
+                        admin: { email: 'admin@etech.com', password: 'omar2000zayed.etechweb', name: 'Admin' },
                         siteSettings: {
                             title: 'E-TECH | حلول برمجية ومنصات رقمية متطورة',
                             description: 'Leading digital solutions provider',
@@ -3206,12 +3230,16 @@
             }
 
             async function queryLiveAI(userText) {
+                const clean = (userText || '').trim().toLowerCase();
                 const siteSettings = (typeof DataManager !== 'undefined' && DataManager.getData().siteSettings) || {};
                 const customApiKey = siteSettings.groqApiKey || '';
+                const isArabic = /[\u0600-\u06FF]/.test(userText);
 
-                // 1. If Groq API Key is configured in Admin Settings
+                // 1. If Groq API Key is configured in Admin Settings, use live LLM
                 if (customApiKey) {
                     try {
+                        const controller = new AbortController();
+                        const timer = setTimeout(() => controller.abort(), 6000);
                         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                             method: 'POST',
                             headers: {
@@ -3223,66 +3251,177 @@
                                 messages: [
                                     {
                                         role: 'system',
-                                        content: 'You are the expert customer support agent and technical consultant for E-TECH software agency. You provide genuine, prompt, professional, and tailored answers in the customer language (Arabic or English). E-TECH builds high-end websites, e-commerce stores, LMS educational platforms, and mobile apps.'
+                                        content: 'You are the official senior technical consultant and customer success manager for E-TECH digital solutions agency. Respond authentically, warmly, and helpfully in the same language as the user query (Arabic or English). E-TECH specializes in custom web platforms, LMS education systems, high-load e-commerce, and mobile applications (iOS/Android). Direct them to WhatsApp +201148296986 when appropriate.'
                                     },
                                     { role: 'user', content: userText }
                                 ],
                                 temperature: 0.7
-                            })
+                            }),
+                            signal: controller.signal
                         });
+                        clearTimeout(timer);
                         const data = await response.json();
                         if (data.choices && data.choices[0] && data.choices[0].message) {
                             return data.choices[0].message.content;
                         }
                     } catch (e) {
-                        console.warn('Groq query failed, using live AI fallback:', e);
+                        console.warn('Groq query failed or timed out:', e);
                     }
                 }
 
-                // 2. Real Dynamic AI via Pollinations AI (POST)
-                try {
-                    const sysPrompt = currentLang === 'en'
-                        ? 'You are the official customer service agent for E-TECH software agency (specializing in custom websites, LMS platforms, e-commerce, and mobile apps). Reply enthusiastically, professionally, and provide direct helpful answers in English.'
-                        : 'أنت ممثل خدمة العملاء الرسمي لشركة E-TECH للحلول البرمجية (تطوير المواقع، المنصات التعليمية LMS، المتاجر الإلكترونية، وتطبيقات الموبايل). أجب باحترافية ولطف وبشكل حقيقي وواقعي ومباشر باللغة العربية بناءً على استفسار العميل تماماً، وشجعه على التواصل مع فريق المبيعات.';
+                // 2. Comprehensive Knowledge-Base AI Engine (Instant, tailored, rich answers)
+                // Pricing & Cost
+                if (/سعر|اسعار|أسعار|تكلف|بكم|بكام|فلوس|plan|pricing|price|cost|how much/.test(clean)) {
+                    if (isArabic) {
+                        return "خطط الأسعار في E-TECH مصممة لتناسب مختلف الاحتياجات بمرونة تامة:\n\n" +
+                               "1. باقة الانطلاق (Starter): تبدأ من 3,900 ج.م — مثالية للمواقع التعريفية وصفحات الهبوط والشركات الناشئة.\n" +
+                               "2. باقة المنصات المتقدمة (Pro): 8,900 ج.م (الأكثر طلباً) — تشمل منصات تعليمية كاملة (LMS) أو متاجر إلكترونية مع بوابات الدفع وحماية الفيديوهات.\n" +
+                               "3. الباقة المؤسسية (Enterprise): تسعير مخصص — لتطبيقات الموبايل المتقدمة والأنظمة السحابية الضخمة.\n\n" +
+                               "جميع الباقات تشمل دومين واستضافة سريعة مجاناً لسنة مع دعم فني مخصص. هل ترغب في عرض سعر مفصل لفكرة مشروعك؟";
+                    } else {
+                        return "Our pricing plans at E-TECH are built to deliver maximum value:\n\n" +
+                               "1. Starter Plan: From 3,900 EGP — Perfect for modern showcase & landing pages.\n" +
+                               "2. Pro Platform: 8,900 EGP (Most Popular) — Full LMS platform or e-commerce store with secure payment gateways & DRM video protection.\n" +
+                               "3. Enterprise Custom: Tailored pricing for high-scale mobile apps and distributed cloud systems.\n\n" +
+                               "All plans include a free domain, high-speed hosting, and dedicated technical support. Would you like a custom quote for your project?";
+                    }
+                }
 
-                    const response = await fetch('https://text.pollinations.ai/', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            messages: [
-                                { role: 'system', content: sysPrompt },
-                                { role: 'user', content: userText }
-                            ],
-                            model: 'openai',
-                            seed: Math.floor(Math.random() * 100000)
-                        })
-                    });
-                    if (response.ok) {
-                        const text = await response.text();
-                        if (text && text.trim().length > 5) {
-                            return text.trim();
+                // Educational Platforms (LMS)
+                if (/منص|تعليم|سنتر|كورس|كورسات|امتحان|طالب|طلاب|lms|education|course|exam|school/.test(clean)) {
+                    if (isArabic) {
+                        return "تعتبر المنصات التعليمية (LMS) من أقوى تخصصاتنا في E-TECH! بنينا أنظمة تخدم آلاف الطلاب مع:\n\n" +
+                               "• حماية كاملة للفيديوهات من التسجيل أو التحميل مع علامة مائية ديناميكية باسم ورقم هاتف الطالب.\n" +
+                               "• بنوك أسئلة وامتحانات إلكترونية وتصحيح فوري مع بنك درجات وإحصائيات تفصيلية.\n" +
+                               "• ربط فوري لبوابات الدفع المصرية والعربية (فودافون كاش، فوري، فيزا وميزة).\n" +
+                               "• لوحة تحكم إدارية شاملة للمدرس ومساعديه لإدارة الاشتراكات والواجبات.\n\n" +
+                               "يمكنك تجربة ديمو حي للمنصة بالتواصل معنا مباشرة عبر واتساب: +20 11 48296986.";
+                    } else {
+                        return "E-TECH is a market leader in Educational LMS Platforms. Our solutions include:\n\n" +
+                               "• Anti-screen-recording and DRM protected video streaming with dynamic student watermarks.\n" +
+                               "• Automated quizzes, assignments, and instant grading analytics.\n" +
+                               "• Native payment integration (Vodafone Cash, Fawry, Credit Cards, Meeza).\n" +
+                               "• Dedicated instructor and assistant dashboards for seamless course management.\n\n" +
+                               "Contact our team at WhatsApp: +20 11 48296986 for an interactive live demo!";
+                    }
+                }
+
+                // E-Commerce & Online Stores
+                if (/متجر|متاجر|سلة|شحن|منتج|منتجات|store|ecommerce|shop|cart|payment/.test(clean)) {
+                    if (isArabic) {
+                        return "نوفر حلول المتاجر الإلكترونية المتكاملة بأعلى معايير السرعة وتجربة الشراء السلسة:\n\n" +
+                               "• تصميم واجهة مستخدم (UI/UX) عصري وسريع التجاوب مع الهواتف الذكية.\n" +
+                               "• سلة شراء سريعة بخطوة واحدة مع ربط شركات الشحن والدفع الإلكتروني.\n" +
+                               "• لوحة تحكم عربية بالكامل لإدارة المخزون، الطلبات، الكوبونات، وتقارير المبيعات.\n" +
+                               "• تكامل مع بكسل إعلانات فيسبوك، تيك توك، وسناب شات لتحقيق أعلى عائد إعلاني (ROAS).\n\n" +
+                               "هل لديك علامة تجارية ترغب في إطلاق متجرها الرقمي؟";
+                    } else {
+                        return "We build high-converting, blazing-fast E-Commerce Stores equipped with:\n\n" +
+                               "• High-performance mobile-first UI/UX optimized for maximum conversions.\n" +
+                               "• Seamless 1-step checkout with automated payment gateways and shipping calculators.\n" +
+                               "• Robust inventory, order tracking, coupon systems, and analytics dashboard.\n" +
+                               "• Full integration with Meta, TikTok, and Google ad tracking pixels.\n\n" +
+                               "Ready to scale your online sales? Let us know what products you plan to sell!";
+                    }
+                }
+
+                // Mobile Applications
+                if (/تطبيق|ابلكيشن|موبايل|اندرويد|ايفون|flutter|react native|mobile|app|ios|android/.test(clean)) {
+                    if (isArabic) {
+                        return "فريق E-TECH يطور تطبيقات موبايل هجينة وأصلية (Flutter & React Native) تعمل على كلا النظامين (iOS و Android) بنفس الجودة العالية:\n\n" +
+                               "• تصميم واجهات أنيقة وعصرية تتوافق مع إرشادات Apple و Google.\n" +
+                               "• إشعارات تفاعلية فورية (Push Notifications) لجذب وتنشيط المستخدمين.\n" +
+                               "• أداء فائق السرعة وخفة في استهلاك البطارية والبيانات.\n" +
+                               "• إدارة عملية الرفع والنشر على App Store و Google Play بالكامل.\n\n" +
+                               "يسعدنا تحويل فكرة تطبيقك إلى نموذج عملي ناجح!";
+                    } else {
+                        return "We craft native & cross-platform Mobile Applications (iOS & Android) using Flutter & React Native:\n\n" +
+                               "• Intuitive human-interface design tailored for both platforms.\n" +
+                               "• Real-time cloud sync, offline support, and push notifications.\n" +
+                               "• End-to-end publishing on the Apple App Store and Google Play Store.\n\n" +
+                               "Let's discuss your mobile app vision!";
+                    }
+                }
+
+                // Time / Project Duration
+                if (/وقت|مدة|مده|كم يوم|تستغرق|تخلص|timeline|time|duration|how long|delivery/.test(clean)) {
+                    if (isArabic) {
+                        return "نحن نلتزم بجداول زمنية دقيقة وواضحة تضمن تسليم العمل بأعلى جودة:\n\n" +
+                               "• المواقع التعريفية وصفحات الهبوط: من 3 إلى 5 أيام عمل.\n" +
+                               "• المنصات التعليمية والمتاجر الإلكترونية: من 10 إلى 14 يوم عمل شاملة الاختبار والربط.\n" +
+                               "• تطبيقات الموبايل والأنظمة المخصصة: من 3 إلى 6 أسابيع حسب حجم الميزات.\n\n" +
+                               "نقدم أيضاً مساراً للتنفيذ العاجل (Express Delivery) للمشاريع ذات الأولوية الطارئة.";
+                    } else {
+                        return "We pride ourselves on swift, reliable project delivery milestones:\n\n" +
+                               "• Landing & Showcase Websites: 3-5 business days.\n" +
+                               "• LMS Platforms & E-Commerce Stores: 10-14 business days including full QA & testing.\n" +
+                               "• Mobile Apps & Custom Enterprise: 3-6 weeks based on feature scope.\n\n" +
+                               "Expedited delivery sprints are also available for urgent launches.";
+                    }
+                }
+
+                // Contact, WhatsApp & Location
+                if (/تواصل|رقم|واتس|واتساب|ايميل|هاتف|عنوان|اتصل|مكان|contact|phone|whatsapp|email|address|reach/.test(clean)) {
+                    if (isArabic) {
+                        return "يمكنك التواصل المباشر مع فريقنا الفني والاستشاري عبر أي من القنوات التالية:\n\n" +
+                               "📱 واتساب المباشر: +20 11 48296986\n" +
+                               "📞 اتصال هاتفي: +20 11 48296986\n" +
+                               "✉️ البريد الإلكتروني: etechn3l3gy@gmail.com\n" +
+                               "💬 أو مباشرة هنا عبر المحادثة أو نموذج التواصل أسفل الصفحة.\n\n" +
+                               "فريقنا متاح للرد على استفساراتكم على مدار الساعة!";
+                    } else {
+                        return "You can reach our leadership and engineering team instantly through:\n\n" +
+                               "📱 Direct WhatsApp: +20 11 48296986\n" +
+                               "📞 Phone: +20 11 48296986\n" +
+                               "✉️ Official Email: etechn3l3gy@gmail.com\n\n" +
+                               "We are available 24/7 to discuss your project requirements!";
+                    }
+                }
+
+                // Tech Stack & Languages
+                if (/تقني|لغات|stack|technology|tech|react|node|python|flutter|database/.test(clean)) {
+                    if (isArabic) {
+                        return "نعتمد في E-TECH على أحدث وأقوى البنى البرمجية العالمية لضمان الأمان والسرعة:\n\n" +
+                               "• الواجهات الأمامية: React.js, Next.js, Modern CSS3, TypeScript.\n" +
+                               "• الأنظمة الخلفية (Backend): Node.js, Python FastAPI, REST & GraphQL APIs.\n" +
+                               "• قواعد البيانات: PostgreSQL, Redis, Supabase, MongoDB.\n" +
+                               "• تطبيقات الجوال: Flutter, React Native.\n" +
+                               "• الحماية والاستضافة: Cloudflare, AWS, Docker مع تشفير SSL متقدم.";
+                    } else {
+                        return "At E-TECH, we build with enterprise-grade modern tech stacks:\n\n" +
+                               "• Frontend: React.js, Next.js, TypeScript, TailwindCSS.\n" +
+                               "• Backend: Node.js, Python FastAPI, Microservices.\n" +
+                               "• Databases: PostgreSQL, Redis, MongoDB.\n" +
+                               "• Mobile: Flutter, React Native (iOS & Android).\n" +
+                               "• DevOps & Security: AWS Cloud, Cloudflare DDoS shielding, SSL encryption.";
+                    }
+                }
+
+                // 3. Try Dynamic AI Web Query (Fast 3.5s timeout)
+                try {
+                    const controller = new AbortController();
+                    const timer = setTimeout(() => controller.abort(), 3500);
+                    const promptText = (isArabic ? 'أجب باحترافية واختصار كممثل خدمة عملاء لشركة E-TECH للبرمجيات: ' : 'Answer concisely as customer support for E-TECH software agency: ') + userText;
+                    const res = await fetch('https://text.pollinations.ai/' + encodeURIComponent(promptText) + '?model=openai', { signal: controller.signal });
+                    clearTimeout(timer);
+                    if (res.ok) {
+                        const txt = await res.text();
+                        if (txt && txt.trim().length > 10 && !txt.includes('<!DOCTYPE')) {
+                            return txt.trim();
                         }
                     }
-                } catch (err) {
-                    console.warn('Live AI POST error, attempting GET fallback:', err);
-                }
+                } catch(e) {}
 
-                // 3. Secondary GET fallback to Pollinations AI
-                try {
-                    const prefix = currentLang === 'en' ? 'Answer as E-TECH software support: ' : 'أجب كممثل خدمة عملاء لشركة E-TECH: ';
-                    const promptEncoded = encodeURIComponent(prefix + userText);
-                    const getRes = await fetch('https://text.pollinations.ai/' + promptEncoded + '?model=openai');
-                    if (getRes.ok) {
-                        const txt = await getRes.text();
-                        if (txt && txt.trim().length > 5) return txt.trim();
-                    }
-                } catch (err2) {
-                    console.warn('Live AI GET error:', err2);
+                // 4. Smart Contextual Fallback
+                if (isArabic) {
+                    return "أهلاً بك! نحن في E-TECH سعداء باستفسارك حول: \"" + userText + "\".\n\n" +
+                           "نحن نقدم حلولاً برمجية متكاملة تشمل المواقع التعريفية، المنصات التعليمية LMS، المتاجر الإلكترونية، وتطبيقات الموبايل بأعلى معايير الجودة والسرعة.\n\n" +
+                           "يسعدنا تقديم استشارة فنية مجانية فورية لمناقشة التفاصيل وتحديد خطة العمل المناسبة. تواصل معنا مباشرة عبر واتساب: +20 11 48296986 أو اترك بياناتك في نموذج التواصل أسفل الصفحة!";
+                } else {
+                    return "Hello! Thank you for reaching out regarding \"" + userText + "\".\n\n" +
+                           "At E-TECH, we craft high-end web platforms, LMS educational solutions, e-commerce stores, and cross-platform mobile apps.\n\n" +
+                           "We would love to provide you with a free consultation and project roadmap. Reach out directly on WhatsApp at +20 11 48296986 or submit your details in the contact form below!";
                 }
-
-                return currentLang === 'en'
-                    ? 'Thank you for contacting E-TECH! Our engineering team is excited to help you turn your project into reality with top performance and modern design. Please leave your contact details or email us at etechn3l3gy@gmail.com to get a free estimate!'
-                    : 'أهلاً بك! نحن في خدمة عملاء E-TECH نسعد جداً بتواصلك معنا. يسعدنا تقديم استشارة فنية فورية لدراسة فكرة مشروعك وتحديد التكلفة ومدة التنفيذ المناسبة لك. يمكنك أيضاً التواصل معنا عبر النموذج أسفل الصفحة أو عبر البريد etechn3l3gy@gmail.com.';
             }
 
             async function handleChatSend() {
@@ -3296,7 +3435,7 @@
                 chatInput.value = '';
                 chatMessages.scrollTop = chatMessages.scrollHeight;
 
-                if (typeof DataManager !== 'undefined') DataManager.addMessage({ text, from: 'user' });
+                if (typeof DataManager !== 'undefined') DataManager.addMessage({ name: 'زائر المحادثة الفورية', email: 'chat-visitor@etech.com', text: text, message: text, from: 'user' });
 
                 // Loading bot indicator
                 const botBubble = document.createElement('div');

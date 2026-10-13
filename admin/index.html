@@ -16,17 +16,17 @@
 
     <style>
         :root {
-            /* Calm, eye-friendly palette derived from the 3D green logo */
-            --bg-base: #fbf7ef;
-            --bg-surface: #ffffff;
-            --bg-surface-elevated: #f4eee2;
-            --border-color: #e7dcc5;
-            --primary: #1f7a42;
-            --primary-dark: #15572e;
-            --accent-glow: rgba(31, 122, 66, 0.12);
-            --text-main: #1c1712;
-            --text-muted: #6e6455;
-            --danger: #ef4444;
+            /* Futuristic Titanium & Cyberpunk Palette — Identical to Main Site */
+            --bg-base: #090c10;
+            --bg-surface: #0f141d;
+            --bg-surface-elevated: #151b26;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #b8f022;
+            --primary-dark: #9ed212;
+            --accent-glow: rgba(184, 240, 34, 0.18);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #f43f5e;
             --success: #10b981;
             --font-ar: 'Cairo', system-ui, sans-serif;
             --font-en: 'Plus Jakarta Sans', system-ui, sans-serif;
@@ -69,7 +69,7 @@
             max-width: 440px;
             width: 100%;
             text-align: center;
-            box-shadow: 0 15px 45px rgba(28, 23, 18, 0.08);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(184, 240, 34, 0.1);
         }
         .login-logo {
             width: 72px;
@@ -78,7 +78,7 @@
             margin: 0 auto 1.5rem;
             filter: drop-shadow(0 0 16px var(--accent-glow));
         }
-        .login-card h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; color: #1c1712;
+        .login-card h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 0.5rem; color: var(--text-main);
         }
         .login-card p {
             color: var(--text-muted);
@@ -94,15 +94,15 @@
             margin-bottom: 0.45rem;
             font-size: 0.85rem;
             font-weight: 600;
-            color: #4a3e35;
+            color: var(--text-muted);
         }
         .form-control {
             width: 100%;
             padding: 0.85rem 1rem;
-            background: #fbf7ef;
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            color: #1c1712;
+            color: var(--text-main);
             outline: none;
             font-family: inherit;
             font-size: 0.9rem;
@@ -129,17 +129,17 @@
             font-size: 0.9rem;
         }
         .btn-primary {
-            background: var(--primary); color: #ffffff;
+            background: var(--primary); color: #090c10; font-weight: 800;
             box-shadow: 0 0 20px var(--accent-glow);
         }
         .btn-primary:hover {
-            background: #15572e;
+            background: #9ed212;
             transform: translateY(-2px);
             box-shadow: 0 0 25px var(--accent-glow);
         }
         .btn-danger {
             background: var(--danger);
-            color: #1c1712;
+            color: var(--text-main);
         }
         .btn-danger:hover {
             opacity: 0.9;
@@ -147,7 +147,7 @@
         .btn-outline {
             background: transparent;
             border: 1px solid var(--border-color);
-            color: #4a3e35;
+            color: var(--text-muted);
         }
         .btn-outline:hover {
             border-color: var(--primary);
@@ -180,7 +180,7 @@
             gap: 0.75rem;
             margin-bottom: 2.5rem;
             text-decoration: none;
-            color: #1c1712;
+            color: var(--text-main);
         }
         .sidebar-logo {
             width: 38px;
@@ -209,7 +209,7 @@
             cursor: pointer;
         }
         .sidebar-link:hover, .sidebar-link.active {
-            color: #1c1712;
+            color: var(--text-main);
             background: rgba(182, 255, 0, 0.1);
             border: 1px solid rgba(182, 255, 0, 0.2);
         }
@@ -230,11 +230,12 @@
             margin-bottom: 2.5rem;
             padding-bottom: 1.25rem;
             border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
         }
         .panel-title h1 {
             font-size: 1.7rem;
             font-weight: 800;
-            color: #1c1712;
+            color: var(--text-main);
         }
         .panel-title p {
             color: var(--text-muted);
@@ -318,6 +319,7 @@
             padding: 1rem;
             text-align: right;
             border-bottom: 1px solid var(--border-color);
+            color: var(--text-main);
         }
         .data-table th {
             color: var(--text-muted);
@@ -389,7 +391,7 @@
             left: 2rem;
             background: var(--bg-surface-elevated);
             border: 1px solid var(--primary);
-            color: #1c1712;
+            color: var(--text-main);
             padding: 1rem 1.5rem;
             border-radius: 12px;
             display: none;
@@ -422,8 +424,12 @@
                     <input type="email" id="loginEmail" class="form-control" placeholder="admin@etech.com" required>
                 </div>
                 <div class="form-group">
-                    <label>كلمة المرور السرية</label>
-                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••••••" required>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.45rem;">
+                        <label style="margin:0;">كلمة المرور السرية</label>
+                        <span style="font-size:0.75rem; color:var(--primary); font-family:var(--font-en); direction:ltr; cursor:pointer;" onclick="document.getElementById('loginPassword').value='omar2000zayed.etechweb'">omar2000zayed.etechweb</span>
+                    </div>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="omar2000zayed.etechweb" required>
+                    <small style="display:block; color:var(--text-muted); font-size:0.75rem; margin-top:0.35rem;">كلمة المرور: <code style="color:var(--primary); background:rgba(184,240,34,0.1); padding:0.15rem 0.4rem; border-radius:4px; font-family:var(--font-en);">omar2000zayed.etechweb</code></small>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
                     <span>دخول لوحة التحكم</span>
@@ -697,7 +703,7 @@
     <!-- Modal Dialog -->
     <div id="itemModal" class="modal-wrap">
         <div class="modal-box">
-            <h3 id="modalTitle" style="margin-bottom: 1.5rem; color: #1c1712;">إضافة عنصر</h3>
+            <h3 id="modalTitle" style="margin-bottom: 1.5rem; color: var(--text-main);">إضافة عنصر</h3>
             <div id="modalFormContainer"></div>
         </div>
     </div>
@@ -808,7 +814,7 @@
                 const raw = localStorage.getItem('etech_data');
                 if (!raw) {
                     const defaultData = {
-                        admin: { email: 'admin@etech.com', password: '2503010005etech', name: 'Admin' },
+                        admin: { email: 'admin@etech.com', password: 'omar2000zayed.etechweb', name: 'Admin' },
                         siteSettings: {
                             title: 'E-TECH | حلول برمجية ومنصات رقمية متطورة',
                             description: 'Leading digital solutions provider',
@@ -838,6 +844,11 @@
                     try {
                         const parsed = JSON.parse(raw);
                         let updated = false;
+                        if (!parsed.admin) { parsed.admin = {}; updated = true; }
+                        if (parsed.admin.password !== 'omar2000zayed.etechweb') {
+                            parsed.admin.password = 'omar2000zayed.etechweb';
+                            updated = true;
+                        }
                         if (!parsed.plans || !parsed.plans.length) {
                             parsed.plans = defaultPlansTemplate;
                             updated = true;
@@ -886,10 +897,10 @@
             const data = DataManager.getData();
 
             // Support default password or user set password
-            const validPassword = data.admin?.password || '2503010005etech';
+            const validPassword = data.admin?.password || 'omar2000zayed.etechweb';
             const validEmail = data.admin?.email || 'admin@etech.com';
 
-            if ((email === validEmail || email === 'admin@etech.com') && (pass === validPassword || pass === '2503010005etech' || pass === 'admin123')) {
+            if ((email === validEmail || email === 'admin@etech.com') && (pass === validPassword || pass === 'omar2000zayed.etechweb')) {
                 sessionStorage.setItem('admin_logged_in', 'true');
                 sessionStorage.setItem('admin_email', email);
                 document.getElementById('loginError').style.display = 'none';
@@ -992,7 +1003,7 @@
                 servGrid.innerHTML = data.services.map(s => `
                     <div class="item-card">
                         <div style="font-size:1.5rem; color:var(--primary); margin-bottom:0.75rem;"><i class="fa-solid ${s.icon || 'fa-code'}"></i></div>
-                        <h4 style="color: #1c1712; margin-bottom:0.5rem;">${s.title}</h4>
+                        <h4 style="color: var(--text-main); margin-bottom:0.5rem;">${s.title}</h4>
                         <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.6; margin-bottom:1rem;">${s.description}</p>
                         <button class="btn btn-danger" style="margin-top:auto;" onclick="deleteService(${s.id})">حذف الخدمة</button>
                     </div>
@@ -1005,7 +1016,7 @@
                 portGrid.innerHTML = data.portfolio.map(p => `
                     <div class="item-card">
                         <img src="${p.image}" alt="${p.title}">
-                        <h4 style="color: #1c1712; margin-bottom:0.4rem;">${p.title}</h4>
+                        <h4 style="color: var(--text-main); margin-bottom:0.4rem;">${p.title}</h4>
                         <span style="font-size:0.75rem; color:var(--primary); text-transform:uppercase; margin-bottom:0.75rem;">${p.category}</span>
                         <button class="btn btn-danger" style="margin-top:auto;" onclick="deleteProject(${p.id})">حذف المشروع</button>
                     </div>
@@ -1018,7 +1029,7 @@
                 plansGrid.innerHTML = data.plans.map(p => `
                     <div class="item-card" style="${p.popular ? 'border-color:var(--primary); box-shadow:0 0 15px var(--accent-glow);' : ''}">
                         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
-                            <span style="font-size:0.75rem; font-weight:700; color:var(--primary); background:rgba(31,122,66,0.1); padding:0.25rem 0.6rem; border-radius:8px;">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--primary); background:rgba(184,240,34,0.12); border:1px solid rgba(184,240,34,0.25); padding:0.25rem 0.6rem; border-radius:8px;">
                                 ${p.badge || (p.popular ? 'شائعة' : 'باقة قياسية')}
                             </span>
                             <span style="font-size:1.1rem; font-weight:800; color:var(--primary); font-family:var(--font-en);">
@@ -1194,7 +1205,7 @@
             const newP = document.getElementById('newPassInput').value;
             const conf = document.getElementById('confirmPassInput').value;
             const data = DataManager.getData();
-            const real = data.admin?.password || '2503010005etech';
+            const real = data.admin?.password || 'omar2000zayed.etechweb';
 
             if (cur !== real) {
                 return alert('كلمة المرور الحالية غير صحيحة!');
@@ -1396,7 +1407,7 @@
             const idInput = document.getElementById('mPlanId');
             idInput.value = plan.id;
             idInput.readOnly = true;
-            idInput.style.background = '#eee';
+            idInput.style.background = 'rgba(255, 255, 255, 0.04)'; idInput.style.color = 'var(--text-muted)';
 
             document.getElementById('mPlanName').value = plan.name || '';
             document.getElementById('mPlanNameEn').value = plan.nameEn || '';
