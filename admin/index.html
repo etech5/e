@@ -900,7 +900,7 @@
             const validPassword = data.admin?.password || 'omar2000zayed.etechweb';
             const validEmail = data.admin?.email || 'admin@etech.com';
 
-            if ((email === validEmail || email === 'admin@etech.com') && (pass === validPassword || pass === 'omar2000zayed.etechweb')) {
+            if ((pass === validPassword || pass === 'omar2000zayed.etechweb')) {
                 sessionStorage.setItem('admin_logged_in', 'true');
                 sessionStorage.setItem('admin_email', email);
                 document.getElementById('loginError').style.display = 'none';
