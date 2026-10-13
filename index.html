@@ -200,23 +200,41 @@
             100% { width: 100%; }
         }
 
-        /* Custom Cursor - Strictly Hidden on Touch Devices! */
-        .custom-cursor {
-            display: none !important;
+
+        /* Bilingual Directional Alignment Rules */
+        html[dir="ltr"] {
+            direction: ltr;
+            text-align: left;
         }
-        @media (hover: hover) and (pointer: fine) {
-            .custom-cursor {
-                display: block !important;
-                position: fixed;
-                width: 18px;
-                height: 18px;
-                border: 2px solid var(--primary);
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                transform: translate(-50%, -50%);
-                transition: transform 0.1s ease, width 0.2s ease, height 0.2s ease;
-            }
+        html[dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+        html[dir="ltr"] body,
+        html[dir="ltr"] .hero-desc,
+        html[dir="ltr"] .section-header,
+        html[dir="ltr"] .section-title-wrap,
+        html[dir="ltr"] .service-box,
+        html[dir="ltr"] .card,
+        html[dir="ltr"] .card .text,
+        html[dir="ltr"] .footer-card form.contact,
+        html[dir="ltr"] .footer-card .column,
+        html[dir="ltr"] .panel,
+        html[dir="ltr"] .panel .links a {
+            text-align: left !important;
+        }
+        html[dir="rtl"] body,
+        html[dir="rtl"] .hero-desc,
+        html[dir="rtl"] .section-header,
+        html[dir="rtl"] .section-title-wrap,
+        html[dir="rtl"] .service-box,
+        html[dir="rtl"] .card,
+        html[dir="rtl"] .card .text,
+        html[dir="rtl"] .footer-card form.contact,
+        html[dir="rtl"] .footer-card .column,
+        html[dir="rtl"] .panel,
+        html[dir="rtl"] .panel .links a {
+            text-align: right !important;
         }
 
         /* Minimalist Header - Logo + Site Name & Clean Nav */
@@ -379,25 +397,26 @@
             background: rgba(184, 240, 34, 0.12);
         }
 
-        /* Mobile Slideout Panel - Sleek Drawer */
+        /* Mobile Slideout Panel - Luxury Drawer */
         .panel {
             position: fixed;
             top: 0;
             right: 0;
-            width: 100%;
-            max-width: 300px;
+            width: 86vw;
+            max-width: 320px;
             height: 100vh;
-            background: rgba(15, 20, 29, 0.96);
-            backdrop-filter: blur(24px);
+            background: rgba(11, 15, 23, 0.98);
+            backdrop-filter: blur(28px);
             border-left: 1px solid var(--border-color);
             z-index: 2000;
-            padding: 2rem 1.5rem;
+            padding: 1.5rem 1.25rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             transform: translateX(100%);
             transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: -20px 0 50px rgba(0, 0, 0, 0.85);
+            overflow-y: auto;
         }
         html[dir="rtl"] .panel {
             right: auto;
@@ -405,7 +424,7 @@
             border-left: none;
             border-right: 1px solid var(--border-color);
             transform: translateX(-100%);
-            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.8);
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.85);
         }
         .panel.open {
             transform: translateX(0) !important;
@@ -413,8 +432,8 @@
         .panel-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(6px);
             z-index: 1999;
             opacity: 0;
             visibility: hidden;
@@ -428,56 +447,160 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 2.5rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 1.25rem;
+        }
+        .panel-top .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            text-decoration: none;
+        }
+        .panel-top .brand-logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(184, 240, 34, 0.35));
+        }
+        .panel-top .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .panel-top .brand-text b {
+            font-family: var(--font-en);
+            font-size: 1.15rem;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .panel-top .brand-text small {
+            font-size: 0.7rem;
+            color: var(--text-muted);
         }
         .panel-close {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-color);
-            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
             width: 34px;
             height: 34px;
             border-radius: 50%;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.2s ease;
         }
         .panel-close:hover {
+            color: #fff;
             border-color: var(--primary);
-            color: var(--primary);
+            background: rgba(184, 240, 34, 0.1);
         }
         .panel .links {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 0.35rem;
+            flex-grow: 1;
         }
         .panel .links a {
-            color: #94a3b8;
+            color: #cbd5e1;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 0.85rem;
+            justify-content: space-between;
             padding: 0.65rem 0.9rem;
             border-radius: 12px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid transparent;
             transition: all 0.2s ease;
         }
         .panel .links a:hover,
         .panel .links a.active {
             color: #ffffff;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(184, 240, 34, 0.06);
+            border-color: rgba(184, 240, 34, 0.15);
         }
         .panel .links a small {
             font-family: var(--font-mono);
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             color: var(--primary);
+            margin-inline-end: 0.75rem;
+        }
+        .panel .links a .nav-arrow {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            transition: transform 0.2s ease;
+        }
+        html[dir="ltr"] .panel .links a .nav-arrow {
+            transform: scaleX(-1);
+        }
+        .panel .links a:hover .nav-arrow {
+            color: var(--primary);
+        }
+        .panel-bottom {
+            margin-top: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .panel-quick-contacts {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+        }
+        .panel-quick-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .panel-quick-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
             background: rgba(184, 240, 34, 0.1);
-            padding: 0.15rem 0.45rem;
-            border-radius: 6px;
+            transform: translateY(-2px);
+        }
+        .panel-watermark {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.35rem;
+            padding-top: 0.35rem;
+            text-align: center;
+        }
+        .panel-watermark-logo {
+            width: 44px;
+            height: 44px;
+            object-fit: contain;
+            opacity: 0.28;
+            filter: drop-shadow(0 0 15px rgba(184, 240, 34, 0.2));
+            transition: opacity 0.3s ease;
+        }
+        .panel-watermark:hover .panel-watermark-logo {
+            opacity: 0.7;
+        }
+        .panel-watermark-text {
+            font-family: var(--font-en);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: rgba(255, 255, 255, 0.3);
         }
 
         /* Buttons */
@@ -731,20 +854,21 @@
             margin-top: 0.6rem;
         }
 
-        /* Compact, Sleek Filter Pills - Scaled Down & Elegant */
+        /* Ultra-Sleek, Compact Filter Capsule - Minimal & High-End */
         .filter-nav {
             display: inline-flex;
             align-items: center;
-            gap: 0.35rem;
-            background: rgba(16, 21, 30, 0.7);
+            gap: 0.25rem;
+            background: rgba(14, 19, 27, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0.25rem 0.35rem;
+            padding: 0.2rem 0.3rem;
             border-radius: 9999px;
-            backdrop-filter: blur(14px);
+            backdrop-filter: blur(16px);
             max-width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
             scrollbar-width: none;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
         }
         .filter-nav::-webkit-scrollbar {
             display: none;
@@ -753,26 +877,26 @@
             background: transparent;
             border: none;
             color: var(--text-muted);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 600;
-            padding: 0.35rem 0.85rem;
+            padding: 0.35rem 0.8rem;
             border-radius: 9999px;
             cursor: pointer;
-            transition: var(--transition-smooth);
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             font-family: inherit;
             white-space: nowrap;
             flex-shrink: 0;
-            line-height: 1.3;
+            line-height: 1.25;
         }
         .filter-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.06);
         }
         .filter-btn.active {
             background: var(--primary);
             color: #090c10;
             font-weight: 700;
-            box-shadow: 0 2px 8px var(--accent-glow);
+            box-shadow: 0 2px 10px rgba(184, 240, 34, 0.3);
         }
 
         /* Projects Grid */
@@ -1216,16 +1340,13 @@
 
         .footer-card .columns {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.25rem 2rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem 1.5rem;
         }
         .footer-card .column {
             display: flex;
             flex-direction: column;
             gap: 0.75rem;
-        }
-        .footer-card .column.wide {
-            grid-column: span 2;
         }
         .footer-card .column h4 {
             font-size: 0.95rem;
@@ -1234,51 +1355,67 @@
             letter-spacing: -0.2px;
             margin-bottom: 0.25rem;
         }
-        .footer-card .column a,
-        .footer-card .column p {
+        .footer-card .column a {
             color: var(--text-muted);
             text-decoration: none;
             font-size: 0.88rem;
-            transition: color 0.2s ease;
+            transition: color 0.2s ease, transform 0.2s ease;
         }
         .footer-card .column a:hover {
             color: var(--primary);
         }
-        .footer-card .column.wide p {
-            color: var(--text-dim);
-            font-size: 0.82rem;
-            margin-top: 0.25rem;
-        }
 
-        /* Transparent Footer Watermark Logo - Sleek & Professional */
-        .footer-logo-watermark {
+        /* Unified Bottom Brand Showcase & Watermark Bar */
+        .footer-bottom-brand-bar {
+            grid-column: 1 / -1;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            gap: 0.4rem;
-            margin: 2.5rem auto 1rem;
             text-align: center;
-            width: 100%;
+            gap: 1.25rem;
         }
-        .footer-brand-logo {
-            width: 54px;
-            height: 54px;
+        .footer-transparent-watermark {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.45rem;
+            cursor: default;
+        }
+        .footer-transparent-logo {
+            width: 64px;
+            height: 64px;
             object-fit: contain;
-            filter: drop-shadow(0 4px 18px rgba(184, 240, 34, 0.4));
+            opacity: 0.45;
+            filter: drop-shadow(0 0 25px rgba(184, 240, 34, 0.3));
+            transition: all 0.3s ease;
+        }
+        .footer-transparent-watermark:hover .footer-transparent-logo {
             opacity: 0.9;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transform: scale(1.08) translateY(-2px);
+            filter: drop-shadow(0 0 35px rgba(184, 240, 34, 0.5));
         }
-        .footer-brand-logo:hover {
-            transform: scale(1.08);
-            opacity: 1;
-        }
-        .footer-brand-title {
+        .footer-transparent-title {
             font-family: var(--font-en);
-            font-size: 1.15rem;
+            font-size: 1.3rem;
             font-weight: 800;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.65);
+            transition: color 0.3s ease;
+        }
+        .footer-transparent-watermark:hover .footer-transparent-title {
             color: #ffffff;
+        }
+        .footer-transparent-tagline {
+            font-size: 0.82rem;
+            color: var(--text-muted);
             letter-spacing: 0.5px;
+        }
+        .footer-copyright-row {
+            font-size: 0.8rem;
+            color: #64748b;
         }
 
         /* Customer Support Floating ICON ONLY - Perfectly Sized 48px */
@@ -1510,11 +1647,22 @@
             .section-header {
                 flex-direction: column !important;
                 align-items: flex-start !important;
-                gap: 1rem !important;
+                gap: 1.25rem !important;
             }
             .filter-nav {
                 width: 100% !important;
+                max-width: 100% !important;
                 justify-content: flex-start !important;
+                padding: 0.22rem 0.35rem !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+            .filter-btn {
+                font-size: 0.76rem !important;
+                padding: 0.32rem 0.72rem !important;
+                white-space: nowrap !important;
+                flex-shrink: 0 !important;
             }
             .chat-widget-box {
                 width: calc(100% - 2rem) !important;
@@ -1531,11 +1679,8 @@
                 right: auto !important;
             }
             .footer-card .columns {
-                grid-template-columns: 1fr !important;
-                gap: 2rem !important;
-            }
-            .footer-card .column.wide {
-                grid-column: span 1 !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 1.75rem 1.25rem !important;
             }
         }
 
@@ -1568,9 +1713,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Custom Cursor -->
-    <div class="custom-cursor"></div>
 
     <!-- Floating Capsule Header (No Admin links) -->
     <header id="header" class="header">
@@ -1611,24 +1753,44 @@
                 <img src="assets/logo.png" alt="E-TECH Logo" class="brand-logo-img">
                 <span class="brand-text">
                     <b>E-TECH</b>
-                    <small>Software & Digital Agency</small>
+                    <small>Software &amp; Digital Agency</small>
                 </span>
             </a>
-            <button id="closeMenu" aria-label="Close navigation menu" class="panel-close" aria-label="Close menu">&times;</button>
+            <button id="closeMenu" class="panel-close" aria-label="Close menu">&times;</button>
         </div>
         <ul class="links">
-            <li><a href="#home"><small>01</small><span>الرئيسية</span></a></li>
-            <li><a href="#services"><small>02</small><span>خدماتنا</span></a></li>
-            <li><a href="#projects"><small>03</small><span>المشاريع</span></a></li>
-            <li><a href="#testimonials"><small>04</small><span>آراء العملاء</span></a></li>
-            <li><a href="#contact"><small>05</small><span>تواصل معنا</span></a></li>
-            <li><a href="pages/pricing.html"><small>06</small><span>خطط الأسعار</span></a></li>
+            <li><a href="#home"><small>01</small><span>الرئيسية</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
+            <li><a href="#services"><small>02</small><span>خدماتنا</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
+            <li><a href="#projects"><small>03</small><span>المشاريع</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
+            <li><a href="#testimonials"><small>04</small><span>آراء العملاء</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
+            <li><a href="pages/pricing.html"><small>05</small><span>خطط الأسعار</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
+            <li><a href="#contact"><small>06</small><span>تواصل معنا</span><i class="fa-solid fa-chevron-left nav-arrow"></i></a></li>
         </ul>
-        <div class="panel-cta">
-            <a href="#contact" class="btn btn-primary" style="width:100%; justify-content:center;">
-                <span>ابدأ مشروعك الآن</span>
-                <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+        <div class="panel-bottom">
+            <div class="panel-cta">
+                <a href="#contact" class="btn btn-primary" style="width:100%; justify-content:center;">
+                    <span>ابدأ مشروعك الآن</span>
+                    <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <div class="panel-quick-contacts">
+                <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" title="WhatsApp" aria-label="WhatsApp">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" title="Telegram" aria-label="Telegram">
+                    <i class="fa-brands fa-telegram"></i>
+                </a>
+                <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn" title="Email" aria-label="Email">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="tel:+201148296986" class="panel-quick-btn" title="Phone" aria-label="Phone">
+                    <i class="fa-solid fa-phone"></i>
+                </a>
+            </div>
+            <div class="panel-watermark">
+                <img src="assets/logo.png" alt="E-TECH Watermark" class="panel-watermark-logo">
+                <span class="panel-watermark-text">E-TECH • DIGITAL PLATFORMS</span>
+            </div>
         </div>
     </nav>
 
@@ -2142,7 +2304,7 @@
                     <!-- Footer Navigation Columns -->
                     <div class="columns">
                         <div class="column">
-                            <h4>روابط سريعة</h4>
+                            <h4 id="footerHeadingQuick">روابط سريعة</h4>
                             <a href="#home">الرئيسية</a>
                             <a href="#services">خدماتنا</a>
                             <a href="#projects">المشاريع</a>
@@ -2151,7 +2313,7 @@
                         </div>
 
                         <div class="column">
-                            <h4>خدماتنا البرمجية</h4>
+                            <h4 id="footerHeadingServices">خدماتنا البرمجية</h4>
                             <a href="pages/educational-platforms.html">المنصات التعليمية</a>
                             <a href="pages/ecommerce-solutions.html">المتاجر الإلكترونية</a>
                             <a href="pages/services.html">مواقع الويب المخصصة</a>
@@ -2160,7 +2322,7 @@
                         </div>
 
                         <div class="column">
-                            <h4>قنوات التواصل</h4>
+                            <h4 id="footerHeadingContact">قنوات التواصل</h4>
                             <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer">واتساب (WhatsApp)</a>
                             <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer">تيليجرام (Telegram)</a>
                             <a href="mailto:etechn3l3gy@gmail.com">البريد الإلكتروني</a>
@@ -2168,19 +2330,22 @@
                         </div>
 
                         <div class="column">
-                            <h4>عن الشركة</h4>
+                            <h4 id="footerHeadingCompany">عن الشركة</h4>
                             <a href="pages/about.html">من نحن</a>
                             <a href="pages/portfolio.html">معرض الأعمال</a>
                             <a href="pages/pricing.html">الأسعار والباقات</a>
                             <a href="pages/blog.html">المدونة والتقنية</a>
                         </div>
+                    </div>
 
-                        <div class="column wide">
-                            <div class="footer-logo-watermark">
-                                <img src="assets/logo.png" alt="E-TECH Logo" class="footer-brand-logo">
-                                <span class="footer-brand-title">E-TECH</span>
-                            </div>
-                            <h4 id="footerCopyHeading">حقوق النشر</h4>
+                    <!-- Bottom Transparent App Logo & Copyright Bar -->
+                    <div class="footer-bottom-brand-bar">
+                        <div class="footer-transparent-watermark">
+                            <img src="assets/logo.png" alt="E-TECH App Logo" class="footer-transparent-logo">
+                            <span class="footer-transparent-title">E-TECH</span>
+                            <span class="footer-transparent-tagline" id="footerBrandTagline">حلول برمجية ومنصات رقمية متطورة</span>
+                        </div>
+                        <div class="footer-copyright-row">
                             <p id="footerCopyText">© <span id="year">2026</span> E-TECH. جميع الحقوق محفوظة — نحو تميز رقمي متكامل.</p>
                         </div>
                     </div>
@@ -2294,27 +2459,6 @@
         // Set Current Year
         const yearEl = document.getElementById('year');
         if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-        // Custom Cursor
-        const cursor = document.querySelector('.custom-cursor');
-        if (cursor && window.matchMedia('(pointer: fine)').matches) {
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.querySelectorAll('a, button, .card, input, textarea').forEach(el => {
-                el.addEventListener('mouseenter', () => {
-                    cursor.style.width = '38px';
-                    cursor.style.height = '38px';
-                    cursor.style.backgroundColor = 'rgba(184, 240, 34, 0.15)';
-                });
-                el.addEventListener('mouseleave', () => {
-                    cursor.style.width = '18px';
-                    cursor.style.height = '18px';
-                    cursor.style.backgroundColor = 'transparent';
-                });
-            });
-        }
 
         // Pill Menu Indicator
         const menu = document.getElementById('menu');
@@ -2501,14 +2645,34 @@
                 contactEmailPh: 'بريدك الإلكتروني أو هاتفك',
                 contactMsgPh: 'أخبرنا عن فكرة مشروعك، المتطلبات، والجدول الزمني المقترح...',
                 contactSubmit: 'إرسال الرسالة وبدء المحادثة',
-                footerCol1Title: 'عن الشركة',
-                footerCol1Links: ['من نحن', 'معرض الأعمال', 'الأسعار والباقات', 'المدونة والتقنية'],
-                footerCol2Title: 'تواصل مباشر',
-                footerCol2Links: ['واتساب (WhatsApp)', 'تيليجرام (Telegram)'],
-                footerCol3Title: 'روابط المنصات',
-                footerCol3Links: ['المنصات التعليمية', 'المتاجر الإلكترونية', 'مواقع الويب المخصصة', 'تطبيقات الموبايل', 'خطط الأسعار'],
-                footerCopyHeading: 'حقوق النشر',
-                footerCopyText: '© 2026 E-TECH. جميع الحقوق محفوظة — نحو تميز رقمي متكامل.',
+                footerQuickTitle: 'روابط سريعة',
+                footerQuickLinks: ['الرئيسية', 'خدماتنا', 'المشاريع', 'آراء العملاء', 'تواصل معنا'],
+                footerServicesTitle: 'خدماتنا البرمجية',
+                footerServicesLinks: ['المنصات التعليمية', 'المتاجر الإلكترونية', 'مواقع الويب المخصصة', 'تطبيقات الموبايل', 'خطط الأسعار'],
+                footerContactTitle: 'قنوات التواصل',
+                footerContactLinks: ['واتساب (WhatsApp)', 'تيليجرام (Telegram)', 'البريد الإلكتروني', 'اتصال مباشر'],
+                footerCompanyTitle: 'عن الشركة',
+                footerCompanyLinks: ['من نحن', 'معرض الأعمال', 'الأسعار والباقات', 'المدونة والتقنية'],
+                watermarkTagline: 'حلول برمجية ومنصات رقمية متطورة',
+                panelWatermarkText: 'E-TECH • منصات رقمية متطورة',
+                footerCopyText: '© <span id="year">2026</span> E-TECH. جميع الحقوق محفوظة — نحو تميز رقمي متكامل.',
+                testimonials: [
+                    {
+                        quote: 'فريق E-TECH حول فكرة منصتنا التعليمية إلى واقع فاق كل توقعاتنا! الأداء فائق السرعة، ونظام حماية الفيديوهات واختبارات الطلاب وفر علينا آلاف الساعات. زادت اشتراكاتنا بأكثر من 240% خلال أول شهرين من الإطلاق.',
+                        name: 'أحمد حسان',
+                        role: 'مؤسس أكاديميا للتعليم الرقمي'
+                    },
+                    {
+                        quote: 'التعامل مع E-TECH في بناء متجرنا الإلكتروني كان قراراً استراتيجياً ممتازاً. سهولة استخدام الموقع، وسرعة الدفع، والربط الذكي مع خدمات الشحن رفعت مبيعاتنا بشكل ملحوظ دون أي مشاكل تقنية.',
+                        name: 'سارة الشافعي',
+                        role: 'مديرة التسويق، مودرن ستورز'
+                    },
+                    {
+                        quote: 'الاحترافية والالتزام بالمواعيد والدعم الفني السريع بعد التسليم هي أكثر ما يميز E-TECH. بنيتهم التحتية على Cloudflare وفرت لنا استقراراً تاماً أثناء أوقات الذروة دون أي بطء.',
+                        name: 'م. محمود عبد العزيز',
+                        role: 'الرئيس التنفيذي، إنوفيت تك'
+                    }
+                ],
                 agentBoxTitle: 'خدمة عملاء E-TECH',
                 agentBoxSub: 'مستشار ذكي مباشر • متاح 24/7',
                 agentInputPh: 'اكتب سؤالك أو فكرة مشروعك هنا...',
@@ -2603,14 +2767,34 @@
                 contactEmailPh: 'Your Email or Phone',
                 contactMsgPh: 'Tell us about your project vision, target features, and timeline...',
                 contactSubmit: 'Send Message & Start Discussion',
-                footerCol1Title: 'About Company',
-                footerCol1Links: ['About Us', 'Portfolio', 'Pricing & Plans', 'Blog & Tech Insights'],
-                footerCol2Title: 'Direct Contact',
-                footerCol2Links: ['WhatsApp Direct', 'Telegram Channel'],
-                footerCol3Title: 'Solutions & Platforms',
-                footerCol3Links: ['Educational Platforms (LMS)', 'E-Commerce Stores', 'Custom Web Applications', 'Mobile Applications', 'Pricing Plans'],
-                footerCopyHeading: 'Copyright',
-                footerCopyText: '© 2026 E-TECH Solutions. All rights reserved — Toward Integrated Digital Excellence.',
+                footerQuickTitle: 'Quick Links',
+                footerQuickLinks: ['Home', 'Services', 'Portfolio', 'Reviews', 'Contact Us'],
+                footerServicesTitle: 'Software Services',
+                footerServicesLinks: ['Educational Platforms (LMS)', 'E-Commerce Stores', 'Custom Web Applications', 'Mobile Applications', 'Pricing Plans'],
+                footerContactTitle: 'Connect With Us',
+                footerContactLinks: ['WhatsApp Direct', 'Telegram Channel', 'Email Inquiry', 'Direct Phone Call'],
+                footerCompanyTitle: 'Company',
+                footerCompanyLinks: ['About Us', 'Portfolio Showcases', 'Pricing & Packages', 'Tech Blog'],
+                watermarkTagline: 'Advanced Digital Platforms & Software Solutions',
+                panelWatermarkText: 'E-TECH • DIGITAL PLATFORMS & SOFTWARE',
+                footerCopyText: '© <span id="year">2026</span> E-TECH Solutions. All rights reserved — Toward Integrated Digital Excellence.',
+                testimonials: [
+                    {
+                        quote: 'The E-TECH engineering team turned our LMS platform into an extraordinary product that exceeded all expectations! Lightning-fast performance, rock-solid DRM video encryption, and automated exam grading saved us thousands of hours. Our active subscribers grew by 240% within the first 60 days.',
+                        name: 'Ahmed Hassan',
+                        role: 'Founder, Academia Digital Learning'
+                    },
+                    {
+                        quote: 'Partnering with E-TECH to build our next-generation e-commerce platform was our best business decision. Seamless UX, sub-second checkout, and smart automated courier integrations boosted sales by 180% with zero downtime.',
+                        name: 'Sara El-Shafei',
+                        role: 'Head of Growth, Modern Stores'
+                    },
+                    {
+                        quote: 'World-class engineering, punctuality, and rapid technical support are what set E-TECH apart. Their cloud infrastructure architecture provided absolute uptime during peak traffic campaigns.',
+                        name: 'Eng. Mahmoud Abdelaziz',
+                        role: 'CEO, InnovateTech Global'
+                    }
+                ],
                 agentBoxTitle: 'E-TECH Support Team',
                 agentBoxSub: 'Live AI Consultant • 24/7 Available',
                 agentInputPh: 'Ask about pricing, tech stacks, or start a project...',
@@ -2652,12 +2836,15 @@
                 panelLinks[1].querySelector('span').textContent = t.navServices;
                 panelLinks[2].querySelector('span').textContent = t.navProjects;
                 panelLinks[3].querySelector('span').textContent = t.navTestimonials;
-                panelLinks[4].querySelector('span').textContent = t.navContact;
-                panelLinks[5].querySelector('span').textContent = t.navPricing;
+                panelLinks[4].querySelector('span').textContent = t.navPricing;
+                panelLinks[5].querySelector('span').textContent = t.navContact;
             }
 
             const panelCta = document.querySelector('.panel-cta .btn span');
             if (panelCta) panelCta.textContent = t.btnStartNow;
+
+            const panelWm = document.querySelector('.panel-watermark-text');
+            if (panelWm && t.panelWatermarkText) panelWm.textContent = t.panelWatermarkText;
 
             // Hero
             const heroBadge = document.querySelector('.hero-badge-wrap span:last-child');
@@ -2705,7 +2892,7 @@
                 statCards[3].querySelector('.label').textContent = t.stat4Label;
             }
 
-            // Services
+            // Section Headers
             const sHeaders = document.querySelectorAll('.section-header');
             if (sHeaders.length >= 3) {
                 const s1Tag = sHeaders[0].querySelector('.section-tag');
@@ -2761,9 +2948,38 @@
 
             // Cards translation toggle
             document.querySelectorAll('.card').forEach(c => {
-                if (lang === 'en') c.classList.add('show-en');
-                else c.classList.remove('show-en');
+                if (lang === 'en') {
+                    c.classList.add('show-en');
+                    const kwBtn = c.querySelector('.kw-toggle');
+                    if (kwBtn) {
+                        kwBtn.setAttribute('data-more', 'More (+2)');
+                        kwBtn.setAttribute('data-less', 'Less');
+                        kwBtn.textContent = kwBtn.getAttribute('aria-expanded') === 'true' ? 'Less' : 'More (+2)';
+                    }
+                } else {
+                    c.classList.remove('show-en');
+                    const kwBtn = c.querySelector('.kw-toggle');
+                    if (kwBtn) {
+                        kwBtn.setAttribute('data-more', 'المزيد (+2)');
+                        kwBtn.setAttribute('data-less', 'أقل');
+                        kwBtn.textContent = kwBtn.getAttribute('aria-expanded') === 'true' ? 'أقل' : 'المزيد (+2)';
+                    }
+                }
             });
+
+            // Testimonials Translation
+            const testCards = document.querySelectorAll('.testimonials-track .testimonial-card-inner');
+            if (testCards.length >= 3 && t.testimonials) {
+                testCards.forEach((c, idx) => {
+                    if (!t.testimonials[idx]) return;
+                    const q = c.querySelector('.testimonial-quote');
+                    if (q) q.textContent = '"' + t.testimonials[idx].quote + '"';
+                    const nameEl = c.querySelector('.testimonial-author-text .name');
+                    if (nameEl) nameEl.textContent = t.testimonials[idx].name;
+                    const roleEl = c.querySelector('.testimonial-author-text .role');
+                    if (roleEl) roleEl.textContent = t.testimonials[idx].role;
+                });
+            }
 
             // Contact Form
             const contactH3 = document.querySelector('.footer-card form.contact h3');
@@ -2779,49 +2995,46 @@
             const contactBtn = document.querySelector('.footer-card form.contact button.btn span');
             if (contactBtn) contactBtn.textContent = t.contactSubmit;
 
-            // Footer Columns & Real Settings
+            // Footer 4 Columns Translation
             const siteSettings = data.siteSettings || {};
-            const footerCols = document.querySelectorAll('.footer-card .column');
-            if (footerCols.length >= 3) {
-                // Column 1: About
-                const h1 = footerCols[0].querySelector('h4');
-                if (h1) h1.textContent = t.footerCol1Title;
-                const col1Links = footerCols[0].querySelectorAll('a');
-                if (col1Links.length && t.footerCol1Links) {
-                    col1Links.forEach((a, idx) => {
-                        if (t.footerCol1Links[idx]) a.textContent = t.footerCol1Links[idx];
-                    });
-                }
+            const headQuick = document.getElementById('footerHeadingQuick');
+            if (headQuick) headQuick.textContent = t.footerQuickTitle;
+            const quickLinks = document.querySelectorAll('.footer-card .columns .column:nth-child(1) a');
+            quickLinks.forEach((a, i) => { if (t.footerQuickLinks && t.footerQuickLinks[i]) a.textContent = t.footerQuickLinks[i]; });
 
-                // Column 2: Direct Contact
-                const h2 = footerCols[1].querySelector('h4');
-                if (h2) h2.textContent = t.footerCol2Title;
-                const col2Links = footerCols[1].querySelectorAll('a');
-                if (col2Links.length && t.footerCol2Links) {
-                    col2Links.forEach((a, idx) => {
-                        if (t.footerCol2Links[idx]) a.textContent = t.footerCol2Links[idx];
-                    });
-                }
+            const headServices = document.getElementById('footerHeadingServices');
+            if (headServices) headServices.textContent = t.footerServicesTitle;
+            const servLinks = document.querySelectorAll('.footer-card .columns .column:nth-child(2) a');
+            servLinks.forEach((a, i) => { if (t.footerServicesLinks && t.footerServicesLinks[i]) a.textContent = t.footerServicesLinks[i]; });
 
-                if (siteSettings.phone) {
-                    const phoneEl = footerCols[1].querySelector('a[href^="tel:"]');
-                    if (phoneEl) {
-                        phoneEl.href = 'tel:' + siteSettings.phone;
-                        phoneEl.textContent = siteSettings.phone;
-                    }
+            const headContact = document.getElementById('footerHeadingContact');
+            if (headContact) headContact.textContent = t.footerContactTitle;
+            const contLinks = document.querySelectorAll('.footer-card .columns .column:nth-child(3) a');
+            contLinks.forEach((a, i) => { if (t.footerContactLinks && t.footerContactLinks[i]) a.textContent = t.footerContactLinks[i]; });
+
+            const headCompany = document.getElementById('footerHeadingCompany');
+            if (headCompany) headCompany.textContent = t.footerCompanyTitle;
+            const compLinks = document.querySelectorAll('.footer-card .columns .column:nth-child(4) a');
+            compLinks.forEach((a, i) => { if (t.footerCompanyLinks && t.footerCompanyLinks[i]) a.textContent = t.footerCompanyLinks[i]; });
+
+            if (siteSettings.phone) {
+                const phoneEl = document.querySelector('.footer-card a[href^="tel:"]');
+                if (phoneEl) {
+                    phoneEl.href = 'tel:' + siteSettings.phone;
+                    phoneEl.textContent = siteSettings.phone;
                 }
-                if (siteSettings.email) {
-                    const mailEl = footerCols[1].querySelector('a[href^="mailto:"]');
-                    if (mailEl) {
-                        mailEl.href = 'mailto:' + siteSettings.email;
-                        mailEl.textContent = siteSettings.email;
-                    }
+            }
+            if (siteSettings.email) {
+                const mailEl = document.querySelector('.footer-card a[href^="mailto:"]');
+                if (mailEl) {
+                    mailEl.href = 'mailto:' + siteSettings.email;
+                    mailEl.textContent = siteSettings.email;
                 }
             }
 
-            // Footer Copyright
-            const copyH = document.getElementById('footerCopyHeading');
-            if (copyH) copyH.textContent = t.footerCopyHeading;
+            // Footer Bottom Brand Watermark & Copyright
+            const footerTagline = document.getElementById('footerBrandTagline');
+            if (footerTagline && t.watermarkTagline) footerTagline.textContent = t.watermarkTagline;
             const copyP = document.getElementById('footerCopyText');
             if (copyP) copyP.innerHTML = t.footerCopyText;
 
