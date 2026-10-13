@@ -1566,6 +1566,12 @@
             gap: 0.5rem;
             background: #0f141d;
         }
+        html[dir="rtl"] .chat-input-bar {
+            flex-direction: row-reverse;
+        }
+        html[dir="rtl"] .chat-input-bar button svg {
+            transform: scaleX(-1);
+        }
         .chat-input-bar input {
             flex: 1;
             background: rgba(255, 255, 255, 0.05);
@@ -1592,6 +1598,7 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition-smooth);
+            flex-shrink: 0;
         }
         .chat-input-bar button:hover {
             background: #d4ff4d;
@@ -1631,12 +1638,32 @@
                 font-size: 0.95rem !important;
             }
             .hero-actions {
-                flex-direction: column !important;
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 0.5rem !important;
                 width: 100% !important;
+                max-width: 440px !important;
+                margin-left: auto !important;
+                margin-right: auto !important;
+                padding: 0 0.25rem !important;
             }
             .hero-actions .btn {
-                width: 100% !important;
+                flex: 1 1 0 !important;
+                width: auto !important;
+                padding: 0.72rem 0.55rem !important;
+                font-size: 0.8rem !important;
+                font-weight: 700 !important;
+                white-space: nowrap !important;
                 justify-content: center !important;
+                border-radius: 9999px !important;
+                letter-spacing: -0.2px !important;
+            }
+            .hero-actions .btn svg {
+                width: 12px !important;
+                height: 12px !important;
+                flex-shrink: 0 !important;
             }
             .projects-grid {
                 grid-template-columns: 1fr !important;

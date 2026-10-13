@@ -452,6 +452,7 @@
                     <li><a class="sidebar-link active" data-tab="overview"><i class="fa-solid fa-chart-pie"></i> نظرة عامة</a></li>
                     <li><a class="sidebar-link" data-tab="services"><i class="fa-solid fa-code"></i> إدارة الخدمات</a></li>
                     <li><a class="sidebar-link" data-tab="portfolio"><i class="fa-solid fa-folder-open"></i> إدارة المشاريع</a></li>
+                    <li><a class="sidebar-link" data-tab="plans"><i class="fa-solid fa-tags"></i> إدارة خطط الأسعار</a></li>
                     <li><a class="sidebar-link" data-tab="messages"><i class="fa-solid fa-envelope"></i> رسائل العملاء</a></li>
                     <li><a class="sidebar-link" data-tab="subscribers"><i class="fa-solid fa-users"></i> المشتركون</a></li>
                     <li><a class="sidebar-link" data-tab="apikey"><i class="fa-solid fa-key"></i> إعدادات الـ API Key</a></li>
@@ -507,6 +508,13 @@
                         </div>
                     </div>
                     <div class="metric-box">
+                        <div class="metric-icon"><i class="fa-solid fa-tags"></i></div>
+                        <div class="metric-data">
+                            <h3 id="statPlans">0</h3>
+                            <p>باقات الأسعار</p>
+                        </div>
+                    </div>
+                    <div class="metric-box">
                         <div class="metric-icon"><i class="fa-solid fa-users"></i></div>
                         <div class="metric-data">
                             <h3 id="statSubscribers">0</h3>
@@ -553,6 +561,20 @@
                     </button>
                 </div>
                 <div class="items-grid" id="portfolioGrid"></div>
+            </div>
+
+            <!-- TAB 3.5: PLANS -->
+            <div id="tab-plans" class="content-section">
+                <div class="section-bar">
+                    <div>
+                        <h3 style="margin-bottom:0.3rem;">إدارة خطط وباقات الأسعار</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">تحكم كامل في أسعار الباقات، ميزاتها، وحالتها وتظهر مباشرة في صفحة خطط الأسعار للزوار</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="openAddPlanModal()">
+                        <i class="fa-solid fa-plus"></i> إضافة باقة جديدة
+                    </button>
+                </div>
+                <div class="items-grid" id="plansGrid"></div>
             </div>
 
             <!-- TAB 4: MESSAGES -->
@@ -687,10 +709,104 @@
     </div>
 
     <script>
+        // Default Plans Template
+        const defaultPlansTemplate = [
+            {
+                id: 'starter',
+                name: 'باقة الانطلاق (Starter)',
+                nameEn: 'Starter Plan',
+                badge: '',
+                price: '3,900',
+                currency: 'ج.م',
+                period: 'مرة واحدة',
+                periodEn: 'one-time',
+                desc: 'مثالية للمواقع التعريفية والشركات الناشئة التي تبدأ أولى خطواتها الرقمية.',
+                descEn: 'Perfect for landing pages, showcase websites, and emerging businesses.',
+                features: [
+                    'موقع تعريفي من صفحة أو 5 صفحات',
+                    'تصميم عصري متجاوب 100% مع الهواتف',
+                    'دومين واستضافة سريعة مجاناً لسنة',
+                    'لوحة تحكم سهلة لإدارة المحتوى',
+                    'ربط وسائل التواصل ونموذج اتصال سريع',
+                    'دعم فني وتحديثات لمدة شهرين مجاناً'
+                ],
+                featuresEn: [
+                    '1-5 Custom designed landing & showcase pages',
+                    '100% Mobile responsive & ultra fast layout',
+                    'Free domain + premium cloud hosting for 1 year',
+                    'User-friendly lightweight CMS control panel',
+                    'Direct WhatsApp & interactive contact forms',
+                    '2 Months complementary technical support'
+                ],
+                popular: false
+            },
+            {
+                id: 'pro',
+                name: 'باقة المنصات المتقدمة (Pro)',
+                nameEn: 'Professional Platform',
+                badge: 'الأكثر طلباً • Most Popular',
+                price: '8,900',
+                currency: 'ج.م',
+                period: 'مرة واحدة',
+                periodEn: 'one-time',
+                desc: 'الحل الشامل للمنصات التعليمية (LMS)، المتاجر الإلكترونية، والأنظمة التفاعلية.',
+                descEn: 'The full-scale solution for educational platforms (LMS), e-commerce stores, and high-performance web applications.',
+                features: [
+                    'منصة تعليمية متكاملة (كورسات، امتحانات، طلاب) أو متجر إلكتروني',
+                    'بوابات دفع إلكتروني (فودافون كاش، فيزا، فوري، ميزة)',
+                    'لوحة تحكم إدارية احترافية شاملة ومحمية بالكامل',
+                    'حماية الفيديوهات من التحميل أو تسجيل الشاشة',
+                    'نظام اختبارات وتصحيح تلقائي وكوبونات خصم',
+                    'إشعارات فورية عبر الواتساب والبريد الإلكتروني',
+                    'دعم فني متواصل وتحديثات أمنية لمدة 6 أشهر'
+                ],
+                featuresEn: [
+                    'Full LMS (Courses, Students, Exams) or High-load E-Commerce Store',
+                    'Integrated Payment Gateways (Vodafone Cash, Cards, Fawry, Meeza)',
+                    'Comprehensive protected Admin & Analytics dashboard',
+                    'DRM protected anti-recording video streaming',
+                    'Automated quizzes, grading & discount coupons',
+                    'Instant WhatsApp & email notifications',
+                    '6 months dedicated technical support'
+                ],
+                popular: true
+            },
+            {
+                id: 'enterprise',
+                name: 'باقة الأنظمة المخصصة (Enterprise Custom)',
+                nameEn: 'Enterprise Custom',
+                badge: 'مخصص • Bespoke',
+                price: 'حسب المتطلبات',
+                currency: '',
+                period: 'عقد مخصص',
+                periodEn: 'custom contract',
+                desc: 'حلول مؤسسية شاملة وتطبيقات موبايل وأنظمة سحابية ضخمة مصممة خصيصاً للشركات.',
+                descEn: 'Comprehensive bespoke enterprise solutions, cross-platform mobile apps, and distributed cloud architectures.',
+                features: [
+                    'تطبيقات جوال iOS & Android مع نظام ويب متكامل',
+                    'بنية سحابية موزعة فائقة التحمل (Microservices)',
+                    'واجهات برمجية API مخصصة وتكامل مع أنظمة ERP',
+                    'اتفاقية مستوى الخدمة SLA مع ضمان جاهزية 99.9%',
+                    'أمان وحماية سيبرانية متقدمة وفحص أمني دوري',
+                    'فريق دعم فني وتقني مخصص متاح على مدار الساعة 24/7'
+                ],
+                featuresEn: [
+                    'Full iOS & Android mobile apps + web system',
+                    'High-scale distributed microservices cloud architecture',
+                    'Custom APIs & ERP/CRM integrations',
+                    '99.9% Uptime SLA agreement',
+                    'Advanced cybersecurity & penetration testing',
+                    '24/7 dedicated engineering support team'
+                ],
+                popular: false
+            }
+        ];
+
         // DataManager Persistence System
         const DataManager = {
             init() {
-                if (!localStorage.getItem('etech_data')) {
+                const raw = localStorage.getItem('etech_data');
+                if (!raw) {
                     const defaultData = {
                         admin: { email: 'admin@etech.com', password: '2503010005etech', name: 'Admin' },
                         siteSettings: {
@@ -712,11 +828,26 @@
                             { id: 2, title: 'متجر مودرن الإلكتروني', category: 'store', image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80', link: 'pages/ecommerce-solutions.html' },
                             { id: 3, title: 'بوابة تك فينتشرز', category: 'web', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80', link: 'pages/portfolio.html' }
                         ],
+                        plans: defaultPlansTemplate,
                         testimonials: [],
                         messages: [],
                         subscribers: []
                     };
                     localStorage.setItem('etech_data', JSON.stringify(defaultData));
+                } else {
+                    try {
+                        const parsed = JSON.parse(raw);
+                        let updated = false;
+                        if (!parsed.plans || !parsed.plans.length) {
+                            parsed.plans = defaultPlansTemplate;
+                            updated = true;
+                        }
+                        if (updated) {
+                            localStorage.setItem('etech_data', JSON.stringify(parsed));
+                        }
+                    } catch (e) {
+                        console.error('Error parsing etech_data:', e);
+                    }
                 }
             },
             getData() { return JSON.parse(localStorage.getItem('etech_data') || '{}'); },
@@ -783,6 +914,7 @@
             overview: { title: 'نظرة عامة على النظام', sub: 'متابعة الإحصائيات ورسائل الزوار والتحكم الكامل في المحتوى' },
             services: { title: 'إدارة الخدمات', sub: 'إضافة وتعديل وحذف الخدمات المعروضة على الموقع' },
             portfolio: { title: 'إدارة المشاريع', sub: 'تعديل معرض الأعمال وربط روابط المشاريع' },
+            plans: { title: 'إدارة خطط وباقات الأسعار', sub: 'إضافة وتعديل وحذف باقات الأسعار المعروضة في صفحة الخطط ومزامنتها لحظياً' },
             messages: { title: 'رسائل العملاء', sub: 'متابعة كافة الاستفسارات الواردة عبر نموذج الاتصال' },
             subscribers: { title: 'المشتركون', sub: 'قائمة العملاء المشتركين في النشرة البريدية' },
             apikey: { title: 'إعدادات الـ API Key', sub: 'تفعيل واختبار مفتاح Groq AI للرد الذكي التفاعلي' },
@@ -815,6 +947,9 @@
             document.getElementById('statMessages').textContent = data.messages?.length || 0;
             document.getElementById('statServices').textContent = data.services?.length || 0;
             document.getElementById('statPortfolio').textContent = data.portfolio?.length || 0;
+            if (document.getElementById('statPlans')) {
+                document.getElementById('statPlans').textContent = data.plans?.length || 0;
+            }
             document.getElementById('statSubscribers').textContent = data.subscribers?.length || 0;
 
             // Overview Messages
@@ -873,6 +1008,40 @@
                         <h4 style="color: #1c1712; margin-bottom:0.4rem;">${p.title}</h4>
                         <span style="font-size:0.75rem; color:var(--primary); text-transform:uppercase; margin-bottom:0.75rem;">${p.category}</span>
                         <button class="btn btn-danger" style="margin-top:auto;" onclick="deleteProject(${p.id})">حذف المشروع</button>
+                    </div>
+                `).join('');
+            }
+
+            // Plans Grid
+            const plansGrid = document.getElementById('plansGrid');
+            if (plansGrid && data.plans) {
+                plansGrid.innerHTML = data.plans.map(p => `
+                    <div class="item-card" style="${p.popular ? 'border-color:var(--primary); box-shadow:0 0 15px var(--accent-glow);' : ''}">
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.75rem;">
+                            <span style="font-size:0.75rem; font-weight:700; color:var(--primary); background:rgba(31,122,66,0.1); padding:0.25rem 0.6rem; border-radius:8px;">
+                                ${p.badge || (p.popular ? 'شائعة' : 'باقة قياسية')}
+                            </span>
+                            <span style="font-size:1.1rem; font-weight:800; color:var(--primary); font-family:var(--font-en);">
+                                ${p.price} ${p.currency || ''} <small style="font-size:0.75rem; color:var(--text-muted);">/ ${p.period}</small>
+                            </span>
+                        </div>
+                        <h4 style="color:#1c1712; font-size:1.05rem; margin-bottom:0.3rem;">${p.name}</h4>
+                        <p style="color:var(--text-muted); font-size:0.82rem; margin-bottom:0.75rem; line-height:1.5;">${p.desc}</p>
+                        <div style="font-size:0.8rem; color:#4a3e35; margin-bottom:1rem; border-top:1px dashed var(--border-color); padding-top:0.75rem;">
+                            <b>المميزات (${p.features ? p.features.length : 0}):</b>
+                            <ul style="padding-right:1.2rem; margin-top:0.35rem; font-size:0.78rem; line-height:1.5; color:var(--text-muted);">
+                                ${(p.features || []).slice(0, 3).map(f => `<li>${f}</li>`).join('')}
+                                ${p.features && p.features.length > 3 ? `<li>... و ${p.features.length - 3} ميزات أخرى</li>` : ''}
+                            </ul>
+                        </div>
+                        <div style="display:flex; gap:0.5rem; margin-top:auto;">
+                            <button class="btn btn-outline" style="flex:1; padding:0.4rem 0.6rem; font-size:0.82rem;" onclick="openEditPlanModal('${p.id}')">
+                                <i class="fa-solid fa-pen-to-square"></i> تعديل
+                            </button>
+                            <button class="btn btn-danger" style="flex:1; padding:0.4rem 0.6rem; font-size:0.82rem;" onclick="deletePlan('${p.id}')">
+                                <i class="fa-solid fa-trash"></i> حذف
+                            </button>
+                        </div>
                     </div>
                 `).join('');
             }
@@ -1126,6 +1295,186 @@
                 showToast('تمت إضافة المشروع للمعرض بنجاح.');
             });
         };
+
+        // Delete Plan Handler
+        window.deletePlan = function(id) {
+            if (!confirm('هل أنت متأكد من رغبتك في حذف هذه الخطة السعرية؟')) return;
+            const data = DataManager.getData();
+            data.plans = (data.plans || []).filter(p => p.id !== id);
+            DataManager.saveData(data);
+            loadDashboardData();
+            showToast('تم حذف الخطة السعرية بنجاح.');
+        };
+
+        // Open Add Plan Modal
+        window.openAddPlanModal = function() {
+            const cont = document.getElementById('modalFormContainer');
+            document.getElementById('modalTitle').textContent = 'إضافة باقة أسعار جديدة';
+            cont.innerHTML = `
+                <form id="planForm">
+                    <input type="hidden" id="planFormMode" value="add">
+                    <div class="form-group">
+                        <label>معرّف الباقة (ID بالإنجليزية فريد)</label>
+                        <input type="text" id="mPlanId" class="form-control" required placeholder="مثال: starter, custom-lms" dir="ltr">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم الباقة (عربي)</label>
+                        <input type="text" id="mPlanName" class="form-control" required placeholder="مثال: باقة المتاجر الإلكترونية">
+                    </div>
+                    <div class="form-group">
+                        <label>اسم الباقة (إنجليزي EN)</label>
+                        <input type="text" id="mPlanNameEn" class="form-control" placeholder="E-Commerce Store Plan" dir="ltr">
+                    </div>
+                    <div style="display:flex; gap:0.75rem;">
+                        <div class="form-group" style="flex:2;">
+                            <label>السعر (أو نص السعر)</label>
+                            <input type="text" id="mPlanPrice" class="form-control" required placeholder="مثال: 5,500 أو حسب المتطلبات">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>العملة</label>
+                            <input type="text" id="mPlanCurrency" class="form-control" placeholder="ج.م" value="ج.م">
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:0.75rem;">
+                        <div class="form-group" style="flex:1;">
+                            <label>دورة الدفع (عربي)</label>
+                            <input type="text" id="mPlanPeriod" class="form-control" placeholder="مرة واحدة / سنوياً" value="مرة واحدة">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>دورة الدفع (EN)</label>
+                            <input type="text" id="mPlanPeriodEn" class="form-control" placeholder="one-time / annually" value="one-time" dir="ltr">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>شارة التمييز (Badge إضافية - اختياري)</label>
+                        <input type="text" id="mPlanBadge" class="form-control" placeholder="مثال: الأكثر طلباً أو خصم 20%">
+                    </div>
+                    <div class="form-group">
+                        <label>وصف الباقة (عربي)</label>
+                        <textarea id="mPlanDesc" class="form-control" rows="2" required placeholder="وصف موجز للفئة المستهدفة..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>وصف الباقة (إنجليزي EN)</label>
+                        <textarea id="mPlanDescEn" class="form-control" rows="2" placeholder="Brief target description..." dir="ltr"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>المميزات (عربي - اكتب كل ميزة في سطر منفصل)</label>
+                        <textarea id="mPlanFeatures" class="form-control" rows="4" required placeholder="موقع متجاوب 100%&#10;دومين واستضافة مجانية&#10;دعم فني مخصص"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>المميزات (إنجليزي EN - كل ميزة في سطر)</label>
+                        <textarea id="mPlanFeaturesEn" class="form-control" rows="4" placeholder="100% Mobile responsive&#10;Free domain & hosting&#10;Dedicated tech support" dir="ltr"></textarea>
+                    </div>
+                    <div class="form-group" style="display:flex; align-items:center; gap:0.6rem; margin-top:0.5rem;">
+                        <input type="checkbox" id="mPlanPopular" style="width:18px; height:18px; accent-color:var(--primary); cursor:pointer;">
+                        <label for="mPlanPopular" style="margin:0; cursor:pointer;">تمييز كباقة رئيسية / شائعة (Popular Highlight)</label>
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex:1;">حفظ الباقة</button>
+                        <button type="button" class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+                    </div>
+                </form>
+            `;
+            document.getElementById('itemModal').classList.add('active');
+            
+            document.getElementById('planForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                savePlanSubmit();
+            });
+        };
+
+        // Open Edit Plan Modal
+        window.openEditPlanModal = function(id) {
+            const data = DataManager.getData();
+            const plan = (data.plans || []).find(p => p.id === id);
+            if (!plan) return alert('الخطة غير موجودة!');
+
+            openAddPlanModal();
+            document.getElementById('modalTitle').textContent = 'تعديل باقة: ' + plan.name;
+            document.getElementById('planFormMode').value = 'edit';
+            
+            const idInput = document.getElementById('mPlanId');
+            idInput.value = plan.id;
+            idInput.readOnly = true;
+            idInput.style.background = '#eee';
+
+            document.getElementById('mPlanName').value = plan.name || '';
+            document.getElementById('mPlanNameEn').value = plan.nameEn || '';
+            document.getElementById('mPlanPrice').value = plan.price || '';
+            document.getElementById('mPlanCurrency').value = plan.currency !== undefined ? plan.currency : 'ج.م';
+            document.getElementById('mPlanPeriod').value = plan.period || '';
+            document.getElementById('mPlanPeriodEn').value = plan.periodEn || '';
+            document.getElementById('mPlanBadge').value = plan.badge || '';
+            document.getElementById('mPlanDesc').value = plan.desc || '';
+            document.getElementById('mPlanDescEn').value = plan.descEn || '';
+            document.getElementById('mPlanFeatures').value = (plan.features || []).join('\n');
+            document.getElementById('mPlanFeaturesEn').value = (plan.featuresEn || []).join('\n');
+            document.getElementById('mPlanPopular').checked = !!plan.popular;
+        };
+
+        function savePlanSubmit() {
+            const mode = document.getElementById('planFormMode').value;
+            const id = document.getElementById('mPlanId').value.trim();
+            const name = document.getElementById('mPlanName').value.trim();
+            const nameEn = document.getElementById('mPlanNameEn').value.trim() || name;
+            const price = document.getElementById('mPlanPrice').value.trim();
+            const currency = document.getElementById('mPlanCurrency').value.trim();
+            const period = document.getElementById('mPlanPeriod').value.trim();
+            const periodEn = document.getElementById('mPlanPeriodEn').value.trim() || period;
+            const badge = document.getElementById('mPlanBadge').value.trim();
+            const desc = document.getElementById('mPlanDesc').value.trim();
+            const descEn = document.getElementById('mPlanDescEn').value.trim() || desc;
+            
+            const features = document.getElementById('mPlanFeatures').value
+                .split('\n')
+                .map(s => s.trim())
+                .filter(s => s.length > 0);
+            
+            const featuresEn = document.getElementById('mPlanFeaturesEn').value
+                .split('\n')
+                .map(s => s.trim())
+                .filter(s => s.length > 0);
+
+            const popular = document.getElementById('mPlanPopular').checked;
+
+            const data = DataManager.getData();
+            if (!data.plans) data.plans = [];
+
+            const planObj = {
+                id,
+                name,
+                nameEn,
+                badge,
+                price,
+                currency,
+                period,
+                periodEn,
+                desc,
+                descEn,
+                features,
+                featuresEn: featuresEn.length ? featuresEn : features,
+                popular
+            };
+
+            if (mode === 'add') {
+                if (data.plans.some(p => p.id === id)) {
+                    return alert('هذا المعرّف (ID) مستخدم بالفعل، يرجى كتابة معرّف آخر!');
+                }
+                data.plans.push(planObj);
+            } else {
+                const idx = data.plans.findIndex(p => p.id === id);
+                if (idx !== -1) {
+                    data.plans[idx] = planObj;
+                } else {
+                    data.plans.push(planObj);
+                }
+            }
+
+            DataManager.saveData(data);
+            closeModal();
+            loadDashboardData();
+            showToast('تم حفظ الباقة بنجاح!');
+        }
 
         window.closeModal = function() {
             document.getElementById('itemModal').classList.remove('active');
