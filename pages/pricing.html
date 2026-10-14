@@ -1345,22 +1345,41 @@
 
         DataManager.init();
 
+        function formatTelegramUrl(input) {
+            if (!input) return 'https://t.me/etech_solutions';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('t.me/')) return 'https://' + input;
+            return 'https://t.me/' + input;
+        }
+
+        function formatInstagramUrl(input) {
+            if (!input) return 'https://instagram.com/etech_solutions';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('instagram.com/')) return 'https://' + input;
+            return 'https://instagram.com/' + input;
+        }
+
         // Bind dynamic contact channels
         function bindDynamicChannels() {
             const data = DataManager.getData();
             const s = data.siteSettings || {};
             if (s.whatsapp) {
-                const waHref = 'https://wa.me/' + s.whatsapp;
+                const cleanWa = s.whatsapp.replace(/[^0-9]/g, '');
+                const waHref = 'https://wa.me/' + cleanWa;
                 const pWa = document.getElementById('panelLinkWhatsapp'); if (pWa) pWa.href = waHref;
                 const fWa = document.getElementById('fLinkWhatsapp'); if (fWa) fWa.href = waHref;
             }
             if (s.telegram) {
-                const telHref = s.telegram.startsWith('http') ? s.telegram : ('https://' + s.telegram);
+                const telHref = formatTelegramUrl(s.telegram);
                 const pTel = document.getElementById('panelLinkTelegram'); if (pTel) pTel.href = telHref;
                 const fTel = document.getElementById('fLinkTelegram'); if (fTel) fTel.href = telHref;
             }
             if (s.instagram) {
-                const instaHref = s.instagram.startsWith('http') ? s.instagram : ('https://' + s.instagram);
+                const instaHref = formatInstagramUrl(s.instagram);
                 const pInsta = document.getElementById('panelLinkInstagram'); if (pInsta) pInsta.href = instaHref;
                 const fInsta = document.getElementById('fLinkInstagram'); if (fInsta) fInsta.href = instaHref;
             }
@@ -1374,6 +1393,10 @@
             }
         }
         bindDynamicChannels();
+        window.addEventListener('storage', () => {
+            bindDynamicChannels();
+            renderPlans(currentLang);
+        });
 
         // Render Plans Dynamically
         function renderPlans(lang) {

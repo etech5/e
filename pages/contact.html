@@ -1094,47 +1094,80 @@
 
         DataManager.init();
 
-        // Populate dynamic contact details from DataManager
-        const siteData = DataManager.getData();
-        const settings = siteData.siteSettings || {};
-        if (settings.phone) {
-            const pVal = document.getElementById('valPhone');
-            if (pVal) pVal.textContent = settings.phone;
-            const cPhone = document.getElementById('cardPhone');
-            if (cPhone) cPhone.href = 'tel:' + settings.phone;
+        function formatTelegramUrl(input) {
+            if (!input) return 'https://t.me/etech_solutions';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('t.me/')) return 'https://' + input;
+            return 'https://t.me/' + input;
         }
-        if (settings.email) {
-            const eVal = document.getElementById('valEmail');
-            if (eVal) eVal.textContent = settings.email;
-            const cEmail = document.getElementById('cardEmail');
-            if (cEmail) cEmail.href = 'mailto:' + settings.email;
+
+        function formatInstagramUrl(input) {
+            if (!input) return 'https://instagram.com/etech_solutions';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('instagram.com/')) return 'https://' + input;
+            return 'https://instagram.com/' + input;
         }
-        if (settings.whatsapp) {
-            const btnWa = document.getElementById('btnWa');
-            if (btnWa) btnWa.href = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('مرحباً E-TECH، أود الاستفسار عن مشروع برمجي جديد')}`;
-            const pWa = document.getElementById('panelLinkWhatsapp');
-            if (pWa) pWa.href = `https://wa.me/${settings.whatsapp}`;
-            const fWa = document.getElementById('fLinkWhatsapp');
-            if (fWa) fWa.href = `https://wa.me/${settings.whatsapp}`;
+
+        function syncContactDetails() {
+            const siteData = DataManager.getData();
+            const settings = siteData.siteSettings || {};
+            if (settings.phone) {
+                const pVal = document.getElementById('valPhone');
+                if (pVal) pVal.textContent = settings.phone;
+                const cPhone = document.getElementById('cardPhone');
+                if (cPhone) cPhone.href = 'tel:' + settings.phone;
+            }
+            if (settings.email) {
+                const eVal = document.getElementById('valEmail');
+                if (eVal) eVal.textContent = settings.email;
+                const cEmail = document.getElementById('cardEmail');
+                if (cEmail) cEmail.href = 'mailto:' + settings.email;
+            }
+            if (settings.whatsapp) {
+                const cleanWa = settings.whatsapp.replace(/[^0-9]/g, '');
+                const btnWa = document.getElementById('btnWa');
+                if (btnWa) btnWa.href = `https://wa.me/${cleanWa}?text=${encodeURIComponent('مرحباً E-TECH، أود الاستفسار عن مشروع برمجي جديد')}`;
+                const pWa = document.getElementById('panelLinkWhatsapp');
+                if (pWa) pWa.href = `https://wa.me/${cleanWa}`;
+                const fWa = document.getElementById('fLinkWhatsapp');
+                if (fWa) fWa.href = `https://wa.me/${cleanWa}`;
+            }
+            if (settings.telegram) {
+                const telHref = formatTelegramUrl(settings.telegram);
+                const cTele = document.getElementById('cardTelegram');
+                if (cTele) cTele.href = telHref;
+                const pTele = document.getElementById('panelLinkTelegram');
+                if (pTele) pTele.href = telHref;
+                const fTele = document.getElementById('fLinkTelegram');
+                if (fTele) fTele.href = telHref;
+                const valTele = document.getElementById('valTelegram');
+                if (valTele) {
+                    const handle = settings.telegram.replace(/^https?:\/\/t\.me\//, '').replace('@', '');
+                    if (handle) valTele.textContent = '@' + handle;
+                }
+            }
+            if (settings.instagram) {
+                const instaHref = formatInstagramUrl(settings.instagram);
+                const cInsta = document.getElementById('cardInstagram');
+                if (cInsta) cInsta.href = instaHref;
+                const pInsta = document.getElementById('panelLinkInstagram');
+                if (pInsta) pInsta.href = instaHref;
+                const fInsta = document.getElementById('fLinkInstagram');
+                if (fInsta) fInsta.href = instaHref;
+                const valInsta = document.getElementById('valInstagram');
+                if (valInsta) {
+                    const handle = settings.instagram.replace(/^https?:\/\/instagram\.com\//, '').replace('@', '');
+                    if (handle) valInsta.textContent = '@' + handle;
+                }
+            }
         }
-        if (settings.telegram) {
-            const telHref = settings.telegram.startsWith('http') ? settings.telegram : ('https://' + settings.telegram);
-            const cTele = document.getElementById('cardTelegram');
-            if (cTele) cTele.href = telHref;
-            const pTele = document.getElementById('panelLinkTelegram');
-            if (pTele) pTele.href = telHref;
-            const fTele = document.getElementById('fLinkTelegram');
-            if (fTele) fTele.href = telHref;
-        }
-        if (settings.instagram) {
-            const instaHref = settings.instagram.startsWith('http') ? settings.instagram : ('https://' + settings.instagram);
-            const cInsta = document.getElementById('cardInstagram');
-            if (cInsta) cInsta.href = instaHref;
-            const pInsta = document.getElementById('panelLinkInstagram');
-            if (pInsta) pInsta.href = instaHref;
-            const fInsta = document.getElementById('fLinkInstagram');
-            if (fInsta) fInsta.href = instaHref;
-        }
+
+        syncContactDetails();
+        window.addEventListener('storage', syncContactDetails);
 
         // Auto select plan from URL query if present
         const urlParams = new URLSearchParams(window.location.search);

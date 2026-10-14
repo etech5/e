@@ -459,7 +459,9 @@
                     <li><a class="sidebar-link active" data-tab="overview"><i class="fa-solid fa-chart-pie"></i> نظرة عامة</a></li>
                     <li><a class="sidebar-link" data-tab="services"><i class="fa-solid fa-code"></i> إدارة الخدمات</a></li>
                     <li><a class="sidebar-link" data-tab="portfolio"><i class="fa-solid fa-folder-open"></i> إدارة المشاريع</a></li>
-                    <li><a class="sidebar-link" data-tab="plans"><i class="fa-solid fa-tags"></i> إدارة خطط الأسعار</a></li>
+                    <li><a class="sidebar-link" data-tab="testimonials"><i class="fa-solid fa-comments"></i> آراء العملاء</a></li>
+                    <li><a class="sidebar-link" data-tab="stats"><i class="fa-solid fa-chart-line"></i> أرقام وإحصائيات</a></li>
+                    <li><a class="sidebar-link" data-tab="plans"><i class="fa-solid fa-tags"></i> خطط الأسعار</a></li>
                     <li><a class="sidebar-link" data-tab="messages"><i class="fa-solid fa-envelope"></i> رسائل العملاء</a></li>
                     <li><a class="sidebar-link" data-tab="subscribers"><i class="fa-solid fa-users"></i> المشتركون</a></li>
                     <li><a class="sidebar-link" data-tab="apikey"><i class="fa-solid fa-key"></i> إعدادات الـ API Key</a></li>
@@ -522,6 +524,13 @@
                         </div>
                     </div>
                     <div class="metric-box">
+                        <div class="metric-icon"><i class="fa-solid fa-comments"></i></div>
+                        <div class="metric-data">
+                            <h3 id="statTestimonials">0</h3>
+                            <p>آراء العملاء</p>
+                        </div>
+                    </div>
+                    <div class="metric-box">
                         <div class="metric-icon"><i class="fa-solid fa-users"></i></div>
                         <div class="metric-data">
                             <h3 id="statSubscribers">0</h3>
@@ -568,6 +577,115 @@
                     </button>
                 </div>
                 <div class="items-grid" id="portfolioGrid"></div>
+            </div>
+
+            <!-- TAB 3.1: TESTIMONIALS -->
+            <div id="tab-testimonials" class="content-section">
+                <div class="section-bar">
+                    <div>
+                        <h3 style="margin-bottom:0.3rem;">إدارة آراء وتقييمات العملاء (Testimonials)</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">تحكم كامل في شهادات وآراء العملاء المعروضة على الصفحة الرئيسية للموقع</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="openAddTestimonialModal()">
+                        <i class="fa-solid fa-plus"></i> إضافة رأي عميل جديد
+                    </button>
+                </div>
+                <div class="items-grid" id="testimonialsGrid"></div>
+            </div>
+
+            <!-- TAB 3.2: SITE STATS -->
+            <div id="tab-stats" class="content-section">
+                <div class="section-bar">
+                    <div>
+                        <h3 style="margin-bottom:0.3rem;">إدارة أرقام وإحصائيات الموقع (Stats Strip)</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">الأرقام البارزة المعروضة أسفل الهيرو في الصفحة الرئيسية (المشاريع، الجاهزية، الدعم، والرضا)</p>
+                    </div>
+                </div>
+                <form id="siteStatsForm" style="max-width: 750px;">
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-trophy"></i> الرقم 1: عدد المشاريع المنجزة
+                        </h4>
+                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:1rem;">
+                            <div class="form-group">
+                                <label>الرقم / القيمة (مثال: +50 أو 500+)</label>
+                                <input type="text" id="statProjectsNum" class="form-control" dir="ltr" required>
+                            </div>
+                            <div class="form-group">
+                                <label>النص بالعربية</label>
+                                <input type="text" id="statProjectsLabelAr" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>النص بالإنجليزية (English Label)</label>
+                            <input type="text" id="statProjectsLabelEn" class="form-control" dir="ltr">
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-bolt"></i> الرقم 2: الجاهزية وسرعة النظام
+                        </h4>
+                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:1rem;">
+                            <div class="form-group">
+                                <label>الرقم / القيمة (مثال: 99.9%)</label>
+                                <input type="text" id="statUptimeNum" class="form-control" dir="ltr" required>
+                            </div>
+                            <div class="form-group">
+                                <label>النص بالعربية</label>
+                                <input type="text" id="statUptimeLabelAr" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>النص بالإنجليزية (English Label)</label>
+                            <input type="text" id="statUptimeLabelEn" class="form-control" dir="ltr">
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-headset"></i> الرقم 3: ساعات وتوافر الدعم الفني
+                        </h4>
+                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:1rem;">
+                            <div class="form-group">
+                                <label>الرقم / القيمة (مثال: 24/7)</label>
+                                <input type="text" id="statSupportNum" class="form-control" dir="ltr" required>
+                            </div>
+                            <div class="form-group">
+                                <label>النص بالعربية</label>
+                                <input type="text" id="statSupportLabelAr" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>النص بالإنجليزية (English Label)</label>
+                            <input type="text" id="statSupportLabelEn" class="form-control" dir="ltr">
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-heart"></i> الرقم 4: نسبة رضا وثقة العملاء
+                        </h4>
+                        <div style="display:grid; grid-template-columns: 1fr 2fr; gap:1rem;">
+                            <div class="form-group">
+                                <label>الرقم / القيمة (مثال: 100% أو 99.4%)</label>
+                                <input type="text" id="statSatisfactionNum" class="form-control" dir="ltr" required>
+                            </div>
+                            <div class="form-group">
+                                <label>النص بالعربية</label>
+                                <input type="text" id="statSatisfactionLabelAr" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>النص بالإنجليزية (English Label)</label>
+                            <input type="text" id="statSatisfactionLabelEn" class="form-control" dir="ltr">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" style="padding:0.85rem 2.5rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> حفظ أرقام وإحصائيات الموقع
+                    </button>
+                </form>
             </div>
 
             <!-- TAB 3.5: PLANS -->
@@ -891,7 +1009,46 @@
                             { id: 3, title: 'بوابة تك فينتشرز', category: 'web', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80', link: 'pages/portfolio.html' }
                         ],
                         plans: defaultPlansTemplate,
-                        testimonials: [],
+                        siteStats: {
+                            projectsNum: '+50',
+                            projectsLabelAr: 'مشروع تقني مكتمل',
+                            projectsLabelEn: 'Completed Projects',
+                            uptimeNum: '99.9%',
+                            uptimeLabelAr: 'جاهزية وسرعة فائقة',
+                            uptimeLabelEn: 'System Uptime & Speed',
+                            supportNum: '24/7',
+                            supportLabelAr: 'دعم واستشارات فنية',
+                            supportLabelEn: 'Technical Support',
+                            satisfactionNum: '100%',
+                            satisfactionLabelAr: 'رضا تام لعملائنا',
+                            satisfactionLabelEn: 'Client Satisfaction'
+                        },
+                        testimonials: [
+                            {
+                                id: 1,
+                                name: 'أحمد حسان',
+                                role: 'مؤسس أكاديميا للتعليم الرقمي',
+                                quote: 'فريق E-TECH حول فكرة منصتنا التعليمية إلى واقع فاق كل توقعاتنا! الأداء فائق السرعة، ونظام حماية الفيديوهات واختبارات الطلاب وفر علينا آلاف الساعات. زادت اشتراكاتنا بأكثر من 240% خلال أول شهرين من الإطلاق.',
+                                stars: 5,
+                                image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80'
+                            },
+                            {
+                                id: 2,
+                                name: 'سارة الشافعي',
+                                role: 'مديرة التسويق، مودرن ستورز',
+                                quote: 'التعامل مع E-TECH في بناء متجرنا الإلكتروني كان قراراً استراتيجياً ممتازاً. سهولة استخدام الموقع، وسرعة الدفع، والربط الذكي مع خدمات الشحن رفعت مبيعاتنا بشكل ملحوظ دون أي مشاكل تقنية.',
+                                stars: 5,
+                                image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80'
+                            },
+                            {
+                                id: 3,
+                                name: 'م. محمود عبد العزيز',
+                                role: 'الرئيس التنفيذي، إنوفيت تك',
+                                quote: 'الاحترافية والالتزام بالمواعيد والدعم الفني السريع بعد التسليم هي أكثر ما يميز E-TECH. بنيتهم التحتية على Cloudflare وفرت لنا استقراراً تاماً أثناء أوقات الذروة دون أي بطء.',
+                                stars: 5,
+                                image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&q=80'
+                            }
+                        ],
                         messages: [],
                         subscribers: []
                     };
@@ -916,6 +1073,52 @@
                         }
                         if (!parsed.siteSettings.instagram) {
                             parsed.siteSettings.instagram = 'https://instagram.com/etech_solutions';
+                            updated = true;
+                        }
+                        if (!parsed.siteStats) {
+                            parsed.siteStats = {
+                                projectsNum: '+50',
+                                projectsLabelAr: 'مشروع تقني مكتمل',
+                                projectsLabelEn: 'Completed Projects',
+                                uptimeNum: '99.9%',
+                                uptimeLabelAr: 'جاهزية وسرعة فائقة',
+                                uptimeLabelEn: 'System Uptime & Speed',
+                                supportNum: '24/7',
+                                supportLabelAr: 'دعم واستشارات فنية',
+                                supportLabelEn: 'Technical Support',
+                                satisfactionNum: '100%',
+                                satisfactionLabelAr: 'رضا تام لعملائنا',
+                                satisfactionLabelEn: 'Client Satisfaction'
+                            };
+                            updated = true;
+                        }
+                        if (!parsed.testimonials || !parsed.testimonials.length) {
+                            parsed.testimonials = [
+                                {
+                                    id: 1,
+                                    name: 'أحمد حسان',
+                                    role: 'مؤسس أكاديميا للتعليم الرقمي',
+                                    quote: 'فريق E-TECH حول فكرة منصتنا التعليمية إلى واقع فاق كل توقعاتنا! الأداء فائق السرعة، ونظام حماية الفيديوهات واختبارات الطلاب وفر علينا آلاف الساعات. زادت اشتراكاتنا بأكثر من 240% خلال أول شهرين من الإطلاق.',
+                                    stars: 5,
+                                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&q=80'
+                                },
+                                {
+                                    id: 2,
+                                    name: 'سارة الشافعي',
+                                    role: 'مديرة التسويق، مودرن ستورز',
+                                    quote: 'التعامل مع E-TECH في بناء متجرنا الإلكتروني كان قراراً استراتيجياً ممتازاً. سهولة استخدام الموقع، وسرعة الدفع، والربط الذكي مع خدمات الشحن رفعت مبيعاتنا بشكل ملحوظ دون أي مشاكل تقنية.',
+                                    stars: 5,
+                                    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&q=80'
+                                },
+                                {
+                                    id: 3,
+                                    name: 'م. محمود عبد العزيز',
+                                    role: 'الرئيس التنفيذي، إنوفيت تك',
+                                    quote: 'الاحترافية والالتزام بالمواعيد والدعم الفني السريع بعد التسليم هي أكثر ما يميز E-TECH. بنيتهم التحتية على Cloudflare وفرت لنا استقراراً تاماً أثناء أوقات الذروة دون أي بطء.',
+                                    stars: 5,
+                                    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&q=80'
+                                }
+                            ];
                             updated = true;
                         }
                         if (updated) {
@@ -1152,6 +1355,60 @@
             document.getElementById('setSiteTelegram').value = settings.telegram || 'https://t.me/etech_solutions';
             document.getElementById('setSiteInstagram').value = settings.instagram || 'https://instagram.com/etech_solutions';
             updateSocialPreviewLinks();
+
+            // Populate Testimonials Grid
+            const testList = data.testimonials || [];
+            const statTestEl = document.getElementById('statTestimonials');
+            if (statTestEl) statTestEl.textContent = testList.length;
+            const testGrid = document.getElementById('testimonialsGrid');
+            if (testGrid) {
+                if (testList.length === 0) {
+                    testGrid.innerHTML = '<p style="color:var(--text-muted); grid-column:1/-1; text-align:center;">لا توجد آراء عملاء مضافة بعد. أضف رأيك الأول الآن!</p>';
+                } else {
+                    testGrid.innerHTML = testList.map(t => `
+                        <div class="item-card">
+                            <div style="display:flex; align-items:center; gap:0.75rem; margin-bottom:0.75rem;">
+                                <img src="${t.image || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100'}" alt="${t.name}" style="width:48px; height:48px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);">
+                                <div>
+                                    <h4 style="font-size:1rem; color:var(--text-main); margin-bottom:0.2rem;">${t.name}</h4>
+                                    <p style="font-size:0.8rem; color:var(--text-muted);">${t.role || 'عميل معتمد'}</p>
+                                </div>
+                            </div>
+                            <div style="color:var(--primary); font-size:0.85rem; margin-bottom:0.6rem;">
+                                ${'<i class="fa-solid fa-star"></i>'.repeat(t.stars || 5)}
+                            </div>
+                            <p style="font-size:0.88rem; color:var(--text-muted); line-height:1.5; margin-bottom:1rem;">"${t.quote}"</p>
+                            <div class="item-actions">
+                                <button class="btn btn-outline" style="padding:0.4rem 0.8rem; font-size:0.8rem;" onclick="openEditTestimonialModal(${t.id})">
+                                    <i class="fa-solid fa-pen"></i> تعديل
+                                </button>
+                                <button class="btn btn-danger" style="padding:0.4rem 0.8rem; font-size:0.8rem;" onclick="deleteTestimonial(${t.id})">
+                                    <i class="fa-solid fa-trash"></i> حذف
+                                </button>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            // Populate Site Stats Form
+            const stats = data.siteStats || {};
+            const setVal = (id, val, def) => { const el = document.getElementById(id); if (el) el.value = val || def; };
+            setVal('statProjectsNum', stats.projectsNum, '+50');
+            setVal('statProjectsLabelAr', stats.projectsLabelAr, 'مشروع تقني مكتمل');
+            setVal('statProjectsLabelEn', stats.projectsLabelEn, 'Completed Projects');
+
+            setVal('statUptimeNum', stats.uptimeNum, '99.9%');
+            setVal('statUptimeLabelAr', stats.uptimeLabelAr, 'جاهزية وسرعة فائقة');
+            setVal('statUptimeLabelEn', stats.uptimeLabelEn, 'System Uptime & Speed');
+
+            setVal('statSupportNum', stats.supportNum, '24/7');
+            setVal('statSupportLabelAr', stats.supportLabelAr, 'دعم واستشارات فنية');
+            setVal('statSupportLabelEn', stats.supportLabelEn, 'Technical Support');
+
+            setVal('statSatisfactionNum', stats.satisfactionNum, '100%');
+            setVal('statSatisfactionLabelAr', stats.satisfactionLabelAr, 'رضا تام لعملائنا');
+            setVal('statSatisfactionLabelEn', stats.satisfactionLabelEn, 'Client Satisfaction');
         }
 
         // Delete handlers
@@ -1215,7 +1472,7 @@
             showToast('تم حفظ الـ API Key بنجاح!');
         });
 
-        // Test API Key Live
+        // Test API Key Live with dynamic model fallback
         document.getElementById('testApiKeyBtn').addEventListener('click', async () => {
             const key = document.getElementById('inputApiKey').value.trim();
             const statusEl = document.getElementById('apiKeyStatus');
@@ -1224,49 +1481,97 @@
                 return;
             }
 
-            statusEl.innerHTML = '<span style="color:var(--primary)"><i class="fa-solid fa-spinner fa-spin"></i> جاري الاتصال بخوادم الذكاء الاصطناعي...</span>';
+            statusEl.innerHTML = '<span style="color:var(--primary)"><i class="fa-solid fa-spinner fa-spin"></i> جاري فحص المفتاح واختبار الموديلات المتاحة على حسابك في Groq...</span>';
 
-            try {
-                const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${key}`
-                    },
-                    body: JSON.stringify({
-                        model: 'llama-3.3-70b-versatile',
-                        messages: [{ role: 'user', content: 'ping' }],
-                        max_tokens: 5
-                    })
-                });
-                const resData = await res.json();
-                if (res.ok && resData.choices) {
-                    statusEl.innerHTML = '<span style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> الـ API Key يعمل بكفاءة وبشكل صحيح 100%!</span>';
-                } else {
-                    statusEl.innerHTML = `<span style="color:var(--danger)"><i class="fa-solid fa-circle-xmark"></i> خطأ من السيرفر: ${resData.error?.message || 'المفتاح غير صالح أو منتهي'}</span>`;
+            const candidateModels = [
+                'llama-3.1-8b-instant',
+                'llama-3.3-70b-versatile',
+                'llama-3.1-70b-versatile',
+                'llama3-8b-8192',
+                'llama3-70b-8192',
+                'gemma2-9b-it'
+            ];
+
+            let workingModel = null;
+            let lastError = null;
+
+            for (const model of candidateModels) {
+                try {
+                    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${key}`
+                        },
+                        body: JSON.stringify({
+                            model: model,
+                            messages: [{ role: 'user', content: 'Hello' }],
+                            max_tokens: 5
+                        })
+                    });
+                    const resData = await res.json();
+                    if (res.ok && resData.choices && resData.choices.length > 0) {
+                        workingModel = model;
+                        break;
+                    } else if (resData.error && resData.error.message) {
+                        lastError = resData.error.message;
+                    }
+                } catch(e) {
+                    lastError = e.message;
                 }
-            } catch (err) {
-                statusEl.innerHTML = `<span style="color:var(--danger)">فشل الاتصال: ${err.message}</span>`;
+            }
+
+            if (workingModel) {
+                const data = DataManager.getData();
+                if (!data.siteSettings) data.siteSettings = {};
+                data.siteSettings.groqApiKey = key;
+                data.siteSettings.groqModel = workingModel;
+                DataManager.saveData(data);
+
+                statusEl.innerHTML = `<span style="color:var(--success)"><i class="fa-solid fa-circle-check"></i> تم التحقق بنجاح! المفتاح صالح ويعمل 100% (تم ربطه بموديل: <b>${workingModel}</b>)</span>`;
+                showToast('المفتاح صالح وتم حفظه بنجاح!');
+            } else {
+                statusEl.innerHTML = `<span style="color:var(--danger)"><i class="fa-solid fa-circle-xmark"></i> خطأ من السيرفر: ${lastError || 'المفتاح غير صالح أو منتهي الصلاحية'}</span>`;
             }
         });
 
+        function formatTelegramUrl(input) {
+            if (!input) return '';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('t.me/')) return 'https://' + input;
+            return 'https://t.me/' + input;
+        }
+
+        function formatInstagramUrl(input) {
+            if (!input) return '';
+            input = input.trim();
+            if (input.startsWith('http://') || input.startsWith('https://')) return input;
+            if (input.startsWith('@')) input = input.substring(1);
+            if (input.startsWith('instagram.com/')) return 'https://' + input;
+            return 'https://instagram.com/' + input;
+        }
+
         function updateSocialPreviewLinks() {
-            const teleVal = (document.getElementById('setSiteTelegram')?.value || '').trim();
+            const teleRaw = (document.getElementById('setSiteTelegram')?.value || '').trim();
+            const teleVal = formatTelegramUrl(teleRaw);
             const prevTele = document.getElementById('previewTelegramLink');
             if (prevTele) {
                 if (teleVal) {
-                    prevTele.href = teleVal.startsWith('http') ? teleVal : ('https://' + teleVal);
+                    prevTele.href = teleVal;
                     prevTele.style.display = 'inline-flex';
                 } else {
                     prevTele.style.display = 'none';
                 }
             }
 
-            const instaVal = (document.getElementById('setSiteInstagram')?.value || '').trim();
+            const instaRaw = (document.getElementById('setSiteInstagram')?.value || '').trim();
+            const instaVal = formatInstagramUrl(instaRaw);
             const prevInsta = document.getElementById('previewInstagramLink');
             if (prevInsta) {
                 if (instaVal) {
-                    prevInsta.href = instaVal.startsWith('http') ? instaVal : ('https://' + instaVal);
+                    prevInsta.href = instaVal;
                     prevInsta.style.display = 'inline-flex';
                 } else {
                     prevInsta.style.display = 'none';
@@ -1281,20 +1586,169 @@
         document.getElementById('siteSettingsForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const data = DataManager.getData();
+            const teleFormatted = formatTelegramUrl(document.getElementById('setSiteTelegram').value);
+            const instaFormatted = formatInstagramUrl(document.getElementById('setSiteInstagram').value);
+            
             data.siteSettings = {
                 ...data.siteSettings,
                 title: document.getElementById('setSiteTitle').value,
                 description: document.getElementById('setSiteDesc').value,
                 phone: document.getElementById('setSitePhone').value,
                 email: document.getElementById('setSiteEmail').value,
-                whatsapp: document.getElementById('setSiteWhatsapp').value,
-                telegram: document.getElementById('setSiteTelegram').value.trim(),
-                instagram: document.getElementById('setSiteInstagram').value.trim()
+                whatsapp: document.getElementById('setSiteWhatsapp').value.replace(/[^0-9]/g, ''),
+                telegram: teleFormatted,
+                instagram: instaFormatted
             };
             DataManager.saveData(data);
+            document.getElementById('setSiteTelegram').value = teleFormatted;
+            document.getElementById('setSiteInstagram').value = instaFormatted;
             updateSocialPreviewLinks();
             showToast('تم حفظ إعدادات الموقع وروابط التواصل بنجاح.');
         });
+
+        // Save Site Stats
+        document.getElementById('siteStatsForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const data = DataManager.getData();
+            data.siteStats = {
+                projectsNum: document.getElementById('statProjectsNum').value.trim(),
+                projectsLabelAr: document.getElementById('statProjectsLabelAr').value.trim(),
+                projectsLabelEn: document.getElementById('statProjectsLabelEn').value.trim(),
+
+                uptimeNum: document.getElementById('statUptimeNum').value.trim(),
+                uptimeLabelAr: document.getElementById('statUptimeLabelAr').value.trim(),
+                uptimeLabelEn: document.getElementById('statUptimeLabelEn').value.trim(),
+
+                supportNum: document.getElementById('statSupportNum').value.trim(),
+                supportLabelAr: document.getElementById('statSupportLabelAr').value.trim(),
+                supportLabelEn: document.getElementById('statSupportLabelEn').value.trim(),
+
+                satisfactionNum: document.getElementById('statSatisfactionNum').value.trim(),
+                satisfactionLabelAr: document.getElementById('statSatisfactionLabelAr').value.trim(),
+                satisfactionLabelEn: document.getElementById('statSatisfactionLabelEn').value.trim()
+            };
+            DataManager.saveData(data);
+            showToast('تم حفظ أرقام وإحصائيات الموقع بنجاح!');
+        });
+
+        // Testimonial Modal Handlers
+        window.deleteTestimonial = function(id) {
+            if (!confirm('هل تريد بالتأكيد حذف هذا التقييم؟')) return;
+            const data = DataManager.getData();
+            data.testimonials = (data.testimonials || []).filter(t => t.id !== id);
+            DataManager.saveData(data);
+            loadDashboardData();
+            showToast('تم حذف رأي العميل.');
+        };
+
+        window.openAddTestimonialModal = function() {
+            const cont = document.getElementById('modalFormContainer');
+            document.getElementById('modalTitle').textContent = 'إضافة رأي وتقييم عميل جديد';
+            cont.innerHTML = `
+                <form id="addTestForm">
+                    <div class="form-group">
+                        <label>اسم العميل</label>
+                        <input type="text" id="mTestName" class="form-control" required placeholder="مثال: أحمد حسان">
+                    </div>
+                    <div class="form-group">
+                        <label>وظيفة / صفة العميل</label>
+                        <input type="text" id="mTestRole" class="form-control" placeholder="مثال: مؤسس أكاديميا للتعليم الرقمي">
+                    </div>
+                    <div class="form-group">
+                        <label>التقييم بالنجوم</label>
+                        <select id="mTestStars" class="form-control">
+                            <option value="5">⭐⭐⭐⭐⭐ (5 نجوم ممتاز)</option>
+                            <option value="4">⭐⭐⭐⭐ (4 نجوم رائع)</option>
+                            <option value="3">⭐⭐⭐ (3 نجوم جيد)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>نص الرأي أو التجربة</label>
+                        <textarea id="mTestQuote" class="form-control" rows="3" required placeholder="اكتب نص تقييم العميل..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الصورة الرمزية (اختياري)</label>
+                        <input type="url" id="mTestImage" class="form-control" dir="ltr" placeholder="https://images.unsplash.com/...">
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex:1;">حفظ الرأي</button>
+                        <button type="button" class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+                    </div>
+                </form>
+            `;
+            document.getElementById('itemModal').classList.add('active');
+            document.getElementById('addTestForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const data = DataManager.getData();
+                if (!data.testimonials) data.testimonials = [];
+                data.testimonials.push({
+                    id: Date.now(),
+                    name: document.getElementById('mTestName').value.trim(),
+                    role: document.getElementById('mTestRole').value.trim(),
+                    stars: parseInt(document.getElementById('mTestStars').value) || 5,
+                    quote: document.getElementById('mTestQuote').value.trim(),
+                    image: document.getElementById('mTestImage').value.trim() || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=150'
+                });
+                DataManager.saveData(data);
+                closeModal();
+                loadDashboardData();
+                showToast('تمت إضافة رأي العميل بنجاح.');
+            });
+        };
+
+        window.openEditTestimonialModal = function(id) {
+            const data = DataManager.getData();
+            const item = (data.testimonials || []).find(t => t.id === id);
+            if (!item) return;
+
+            const cont = document.getElementById('modalFormContainer');
+            document.getElementById('modalTitle').textContent = 'تعديل رأي العميل';
+            cont.innerHTML = `
+                <form id="editTestForm">
+                    <div class="form-group">
+                        <label>اسم العميل</label>
+                        <input type="text" id="mTestName" class="form-control" required value="${item.name}">
+                    </div>
+                    <div class="form-group">
+                        <label>وظيفة / صفة العميل</label>
+                        <input type="text" id="mTestRole" class="form-control" value="${item.role || ''}">
+                    </div>
+                    <div class="form-group">
+                        <label>التقييم بالنجوم</label>
+                        <select id="mTestStars" class="form-control">
+                            <option value="5" ${item.stars === 5 ? 'selected' : ''}>⭐⭐⭐⭐⭐ (5 نجوم ممتاز)</option>
+                            <option value="4" ${item.stars === 4 ? 'selected' : ''}>⭐⭐⭐⭐ (4 نجوم رائع)</option>
+                            <option value="3" ${item.stars === 3 ? 'selected' : ''}>⭐⭐⭐ (3 نجوم جيد)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>نص الرأي أو التجربة</label>
+                        <textarea id="mTestQuote" class="form-control" rows="3" required>${item.quote}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط الصورة الرمزية (Avatar URL)</label>
+                        <input type="url" id="mTestImage" class="form-control" dir="ltr" value="${item.image || ''}">
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:1.5rem;">
+                        <button type="submit" class="btn btn-primary" style="flex:1;">حفظ التعديلات</button>
+                        <button type="button" class="btn btn-outline" onclick="closeModal()">إلغاء</button>
+                    </div>
+                </form>
+            `;
+            document.getElementById('itemModal').classList.add('active');
+            document.getElementById('editTestForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                item.name = document.getElementById('mTestName').value.trim();
+                item.role = document.getElementById('mTestRole').value.trim();
+                item.stars = parseInt(document.getElementById('mTestStars').value) || 5;
+                item.quote = document.getElementById('mTestQuote').value.trim();
+                item.image = document.getElementById('mTestImage').value.trim() || item.image;
+                DataManager.saveData(data);
+                closeModal();
+                loadDashboardData();
+                showToast('تم تحديث رأي العميل بنجاح.');
+            });
+        };
 
         // Change Password Form
         document.getElementById('securityForm').addEventListener('submit', (e) => {

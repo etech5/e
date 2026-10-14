@@ -3,82 +3,400 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض أعمالنا | E-TECH Solutions</title>
+    <title>معرض الأعمال والخبرات | E-TECH Solutions</title>
     <link rel="icon" type="image/png" href="../assets/logo.png">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --bg-base: #fbf7ef;
-            --bg-surface: #f4eee2;
-            --bg-surface-elevated: #ffffff;
-            --border-color: #e7dcc5;
-            --primary: #1f7a42;
-            --accent-glow: rgba(31, 122, 66, 0.12);
-            --text-main: #1c1712;
-            --text-muted: #6e6455;
+            /* Futuristic Titanium & Cyberpunk Palette — Identical to Main Site */
+            --bg-base: #090c10;
+            --bg-surface: #0f141d;
+            --bg-surface-elevated: #151b26;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(184, 240, 34, 0.25);
+            --primary: #b8f022;
+            --primary-dark: #9ed212;
+            --accent-glow: rgba(184, 240, 34, 0.18);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --danger: #f43f5e;
             --font-ar: 'Cairo', system-ui, sans-serif;
+            --font-en: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
-        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+        body {
+            font-family: var(--font-ar);
+            background: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glowing Background Effect */
+        .ambient-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 15% 15%, rgba(184, 240, 34, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(184, 240, 34, 0.04) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
 
         /* Floating Navbar */
-        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
-        .navbar-bar { background: rgba(16, 19, 24, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6); }
-        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
-        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 10px var(--accent-glow)); }
-        .nav-links { display: flex; gap: 0.75rem; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: all 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(182, 255, 0, 0.1); }
-        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
-        .btn-cta:hover { transform: scale(1.05); }
+        .navbar {
+            position: fixed;
+            top: 1.25rem;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        .navbar-bar {
+            background: rgba(15, 20, 29, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.5rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 980px;
+            width: 100%;
+            box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        .brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            background: rgba(184, 240, 34, 0.1);
+        }
+        .btn-cta {
+            background: var(--primary);
+            color: #090c10;
+            box-shadow: 0 0 20px var(--accent-glow);
+            padding: 0.5rem 1.3rem;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .btn-cta:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
 
         /* Hero */
-        .hero { padding: 9rem 0 3rem; text-align: center; }
-        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
-        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
-        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+        .hero {
+            padding: 9.5rem 0 3.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .hero-badge-wrap {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1.1rem;
+            background: rgba(184, 240, 34, 0.08);
+            border: 1px solid rgba(184, 240, 34, 0.25);
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.25rem;
+            color: var(--text-main);
+        }
+        .hero h1 .gradient-text {
+            background: linear-gradient(135deg, #fff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero h1 .accent-text {
+            color: var(--primary);
+            text-shadow: 0 0 25px var(--accent-glow);
+        }
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
 
         /* Filter Tabs */
-        .filters { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 3rem; }
-        .filter-btn { background: var(--bg-surface); border: 1px solid var(--border-color); color: var(--text-muted); padding: 0.5rem 1.2rem; border-radius: 9999px; font-size: 0.88rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: var(--font-ar); }
-        .filter-btn:hover, .filter-btn.active { color: #080a0d; background: var(--primary); border-color: var(--primary); box-shadow: 0 0 15px rgba(182, 255, 0, 0.3); }
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+        }
+        .filter-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 0.6rem 1.4rem;
+            border-radius: 9999px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: var(--font-ar);
+        }
+        .filter-btn:hover, .filter-btn.active {
+            color: #090c10;
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
 
         /* Projects Grid */
-        .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; padding-bottom: 6rem; }
-        .project-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 20px; overflow: hidden; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; }
-        .project-card:hover { transform: translateY(-6px); border-color: rgba(182, 255, 0, 0.35); box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(182, 255, 0, 0.08); }
-        .project-preview { position: relative; height: 210px; background: linear-gradient(135deg, #161a22, #0d1017); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .project-preview .icon-badge { font-size: 3.5rem; color: var(--primary); filter: drop-shadow(0 0 15px var(--accent-glow)); transition: transform 0.3s; }
-        .project-card:hover .project-preview .icon-badge { transform: scale(1.1); }
-        .project-type-tag { position: absolute; top: 1rem; right: 1rem; background: rgba(8, 10, 13, 0.85); backdrop-filter: blur(8px); border: 1px solid var(--border-color); color: var(--primary); font-size: 0.75rem; font-weight: 700; padding: 0.3rem 0.75rem; border-radius: 9999px; }
-        .project-body { padding: 1.75rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .project-body h3 { font-size: 1.3rem; font-weight: 700; color: #1c1712; margin-bottom: 0.6rem; }
-        .project-body p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 1.25rem; }
-        .tags-list { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.5rem; }
-        .tag-pill { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.06); color: #4a3e35; font-size: 0.76rem; padding: 0.25rem 0.6rem; border-radius: 6px; }
-        .card-actions { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1rem; }
-        .card-actions a { color: var(--primary); font-size: 0.88rem; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
-        .card-actions a:hover { text-decoration: underline; }
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 2rem;
+            padding-bottom: 6rem;
+        }
+        .project-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        }
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(184, 240, 34, 0.4);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.6), 0 0 30px var(--accent-glow);
+        }
+        .project-preview {
+            position: relative;
+            height: 220px;
+            background: linear-gradient(135deg, #131822, #090c10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .project-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .project-card:hover .project-preview img {
+            transform: scale(1.08);
+        }
+        .project-preview .icon-badge {
+            font-size: 3.5rem;
+            color: var(--primary);
+            filter: drop-shadow(0 0 15px var(--accent-glow));
+            transition: transform 0.3s;
+        }
+        .project-card:hover .project-preview .icon-badge {
+            transform: scale(1.1);
+        }
+        .project-type-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(9, 12, 16, 0.85);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--primary);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            z-index: 2;
+        }
+        .project-body {
+            padding: 1.75rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .project-body h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.6rem;
+        }
+        .project-body p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+        .tags-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1.5rem;
+        }
+        .tag-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            padding: 0.28rem 0.7rem;
+            border-radius: 8px;
+        }
+        .card-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1rem;
+        }
+        .card-actions a {
+            color: var(--primary);
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: var(--transition);
+        }
+        .card-actions a:hover {
+            color: #fff;
+            transform: translateX(-4px);
+        }
+
+        /* Floating Social Dock */
+        .floating-social-dock {
+            position: fixed;
+            bottom: 2rem;
+            left: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            z-index: 999;
+        }
+        .dock-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: #fff;
+            background: rgba(15, 20, 29, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        .dock-btn:hover {
+            transform: translateY(-4px) scale(1.1);
+        }
+        .dock-whatsapp:hover { background: #25D366; color: #fff; box-shadow: 0 0 20px rgba(37, 211, 102, 0.5); border-color: #25D366; }
+        .dock-telegram:hover { background: #229ED9; color: #fff; box-shadow: 0 0 20px rgba(34, 158, 217, 0.5); border-color: #229ED9; }
+        .dock-instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); color: #fff; box-shadow: 0 0 20px rgba(225, 48, 108, 0.5); border-color: transparent; }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--primary); text-decoration: none; }
-        
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: var(--bg-surface);
+            position: relative;
+            z-index: 1;
+        }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 700; }
+        footer a:hover { text-decoration: underline; }
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .hero h1 { font-size: 2.3rem; }
             .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
+    <div class="ambient-glow"></div>
+
+    <!-- Floating Social Dock -->
+    <div class="floating-social-dock">
+        <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="dock-btn dock-whatsapp" id="dockWhatsapp" title="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="dock-btn dock-telegram" id="dockTelegram" title="Telegram">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" class="dock-btn dock-instagram" id="dockInstagram" title="Instagram">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+    <!-- Floating Navbar -->
     <nav class="navbar">
         <div class="navbar-bar">
             <a href="../index.html" class="brand">
-                <img src="../assets/logo.png" alt="E-TECH">
+                <img src="../assets/logo.png" alt="E-TECH Logo">
                 <span>E-TECH</span>
             </a>
             <ul class="nav-links">
@@ -89,199 +407,237 @@
                 <li><a href="about.html">من نحن</a></li>
                 <li><a href="contact.html">تواصل معنا</a></li>
             </ul>
-            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+            <a href="contact.html" class="btn-cta">اطلب مشروعك الآن</a>
         </div>
     </nav>
 
+    <!-- Hero -->
     <div class="hero">
         <div class="container">
-            <span class="hero-tag">معرض الأعمال والخبرات</span>
-            <h1>مشاريعنا وقصص النجاح</h1>
-            <p>نفخر بتنفيذ حلول رقمية متميزة حققت نتائج ملموسة لعملائنا في مختلف القطاعات من التعليم والتجارة وحتى الخدمات اللوجستية.</p>
+            <div class="hero-badge-wrap">
+                <i class="fa-solid fa-code-branch"></i>
+                <span>معرض الأعمال والابتكارات الرقمية 2026</span>
+            </div>
+            <h1>
+                <span class="gradient-text">مشاريع استثنائية</span><br>
+                <span class="accent-text">وقصص نجاح حقيقية</span>
+            </h1>
+            <p>نفخر بتنفيذ وتطوير منصات برمجية فائقة السرعة، متاجر إلكترونية مربحة، ومنظومات تعليمية ذكية تخدم آلاف المستخدمين يومياً بأعلى كفاءة وأمان.</p>
         </div>
     </div>
 
+    <!-- Container & Filters -->
     <div class="container">
         <div class="filters">
             <button class="filter-btn active" data-filter="all">جميع المشاريع</button>
-            <button class="filter-btn" data-filter="lms">منصات تعليمية</button>
-            <button class="filter-btn" data-filter="ecommerce">متاجر إلكترونية</button>
-            <button class="filter-btn" data-filter="web">مواقع ومنصات ويب</button>
-            <button class="filter-btn" data-filter="mobile">تطبيقات هواتف</button>
+            <button class="filter-btn" data-filter="edu">منصات تعليمية LMS</button>
+            <button class="filter-btn" data-filter="store">متاجر إلكترونية</button>
+            <button class="filter-btn" data-filter="web">مواقع ومنصات مخصصة</button>
+            <button class="filter-btn" data-filter="mobile">تطبيقات الموبايل</button>
         </div>
 
-        <div class="projects-grid" id="projectsContainer">
-            <!-- Project 1 -->
-            <div class="project-card" data-category="lms">
-                <div class="project-preview">
-                    <span class="project-type-tag">منصة تعليمية</span>
-                    <i class="fa-solid fa-graduation-cap icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>أكاديميا برو | منصة تعليمية ذكية</h3>
-                        <p>نظام متكامل للمدرسين والمراكز التعليمية يضم حماية متقدمة للفيديو ضد التسريب مع نظام بنك أسئلة وتصحيح فوري.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">Next.js</span>
-                            <span class="tag-pill">HLS Video DRM</span>
-                            <span class="tag-pill">Fawry & Paymob</span>
-                            <span class="tag-pill">بث مباشر</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">+25,000 طالب نشط</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 2 -->
-            <div class="project-card" data-category="ecommerce">
-                <div class="project-preview">
-                    <span class="project-type-tag">متجر إلكتروني</span>
-                    <i class="fa-solid fa-bag-shopping icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>نوفا ستور | متجر عطور وإلكترونيات</h3>
-                        <p>متجر إلكتروني فائق السرعة يدعم تعدد العملات واللغات، وتتبع شحنات الشحن الآلي مع شركة بوسطة وأرامكس.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">React</span>
-                            <span class="tag-pill">Stripe & Tabby</span>
-                            <span class="tag-pill">إدارة المخزون</span>
-                            <span class="tag-pill">أتمتة الفواتير</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">معدل تحويل +38%</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 3 -->
-            <div class="project-card" data-category="web">
-                <div class="project-preview">
-                    <span class="project-type-tag">منصة عقارية</span>
-                    <i class="fa-solid fa-building icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>إيجار هوب | منصة تسويق العقارات</h3>
-                        <p>بوابة إلكترونية متطورة للبحث عن العقارات مع خريطة تفاعلية ونظام فلترة ذكي وجولات افتراضية 360 درجة.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">Vue.js</span>
-                            <span class="tag-pill">Mapbox API</span>
-                            <span class="tag-pill">Tailored Search</span>
-                            <span class="tag-pill">لوحة إدارة الملاك</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">+1,200 عقار معتمد</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 4 -->
-            <div class="project-card" data-category="mobile">
-                <div class="project-preview">
-                    <span class="project-type-tag">تطبيق جوال</span>
-                    <i class="fa-solid fa-mobile-screen-button icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>فلك دليفري | تطبيق توصيل سريع</h3>
-                        <p>تطبيق موبايل هجين لنظامي iOS و Android يتيح تتبع السائق في الوقت الفعلي مع محفظة رقمية مدمجة ونظام إشعارات ذكي.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">Flutter</span>
-                            <span class="tag-pill">Firebase Realtime</span>
-                            <span class="tag-pill">Google Maps SDK</span>
-                            <span class="tag-pill">الدفع بنقرة</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">4.9 <i class="fa-solid fa-star" style="color:var(--primary); font-size:0.75rem;"></i> على المتاجر</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 5 -->
-            <div class="project-card" data-category="web">
-                <div class="project-preview">
-                    <span class="project-type-tag">أداة أتمتة</span>
-                    <i class="fa-solid fa-bolt icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>سينك بوت | بوابة الأتمتة وواتساب CRM</h3>
-                        <p>نظام إدارة علاقات عملاء مخصص يرسل تنبيهات الطلبات وفواتير الشراء تلقائياً إلى واتساب العملاء مع رد آلي مدعوم بالذكاء الاصطناعي.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">Node.js</span>
-                            <span class="tag-pill">WhatsApp Cloud API</span>
-                            <span class="tag-pill">AI Automation</span>
-                            <span class="tag-pill">Webhooks</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">توفير 70% من وقت الدعم</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Project 6 -->
-            <div class="project-card" data-category="lms">
-                <div class="project-preview">
-                    <span class="project-type-tag">منصة تدريب مهني</span>
-                    <i class="fa-solid fa-award icon-badge"></i>
-                </div>
-                <div class="project-body">
-                    <div>
-                        <h3>سكيلز ماتريكس | بوابة الشهادات المهنية</h3>
-                        <p>نظام امتحانات موثق ومؤتمت يصدر شهادات رقمية مشفرة بـ QR Code مع إمكانية التحقق الفوري من صحة الاعتماد.</p>
-                        <div class="tags-list">
-                            <span class="tag-pill">TypeScript</span>
-                            <span class="tag-pill">Automated Certs</span>
-                            <span class="tag-pill">QR Verification</span>
-                            <span class="tag-pill">PDF Generator</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <a href="contact.html">اطلب مشروع مماثل &larr;</a>
-                        <span style="font-size: 0.8rem; color: #9ca3af;">+8,000 شهادة تم إصدارها</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Dynamic Projects Grid -->
+        <div class="projects-grid" id="projectsContainer"></div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
+            <p style="margin-bottom:0.5rem;">© 2026 E-TECH Solutions. جميع الحقوق محفوظة — نحو تميز رقمي متكامل.</p>
+            <p><a href="../index.html">العودة للصفحة الرئيسية</a> | <a href="pricing.html">خطط الأسعار</a> | <a href="contact.html">تواصل معنا</a></p>
         </div>
     </footer>
 
     <script>
-        // Simple filter tabs logic
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        const cards = document.querySelectorAll('.project-card');
+        // DataManager Persistence System
+        const DataManager = {
+            getData() { return JSON.parse(localStorage.getItem('etech_data') || '{}'); }
+        };
 
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                const cat = btn.getAttribute('data-filter');
+        const defaultProjects = [
+            {
+                id: 1,
+                title: 'أكاديميا برو | منصة تعليمية ذكية LMS',
+                category: 'edu',
+                description: 'منظومة تعليمية متكاملة تضم مشغل فيديو مشفر ضد التحميل والتسريب، بنوك أسئلة تفاعلية، امتحانات مؤقتة، وربط آلي مع فوري وباي موب.',
+                tags: ['Next.js', 'HLS DRM Video', 'Paymob', 'امتحانات مؤتمتة'],
+                metric: '+25,000 طالب نشط',
+                image: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&q=80',
+                icon: 'fa-graduation-cap'
+            },
+            {
+                id: 2,
+                title: 'نوفا ستور | متجر عطور وإلكترونيات فاخر',
+                category: 'store',
+                description: 'متجر إلكتروني ذكي فائق السرعة يدعم تعدد العملات، ربط الشحن الآلي مع بوسطة وأرامكس، وأتمتة إرسال الفواتير وإشعارات الواتساب.',
+                tags: ['React', 'Stripe & Tabby', 'أتمتة المخزون', 'WhatsApp Bot'],
+                metric: 'معدل تحويل +38%',
+                image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+                icon: 'fa-shopping-cart'
+            },
+            {
+                id: 3,
+                title: 'إيجار هوب | منصة تسويق العقارات الذكية',
+                category: 'web',
+                description: 'بوابة رقمية متطورة للبحث عن العقارات بخريطة تفاعلية وفلترة ذكية وجولات افتراضية ولوحة تحكم احترافية لإدارة الملاك والوسطاء.',
+                tags: ['Vue.js', 'Mapbox API', 'Advanced Filter', 'لوحة إدارة'],
+                metric: '+1,200 عقار معتمد',
+                image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+                icon: 'fa-building'
+            },
+            {
+                id: 4,
+                title: 'فلك دليفري | تطبيق توصيل فوري وإشراف',
+                category: 'mobile',
+                description: 'تطبيق موبايل هجين لنظامي iOS و Android يتيح تتبع السائق في الوقت الفعلي مع محفظة رقمية مدمجة ونظام إشعارات ذكي عبر Firebase.',
+                tags: ['Flutter', 'Firebase Realtime', 'Google Maps', 'One-Click Checkout'],
+                metric: 'تقييم 4.9 ★ على المتاجر',
+                image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80',
+                icon: 'fa-mobile-screen'
+            },
+            {
+                id: 5,
+                title: 'سينك بوت | بوابة الأتمتة وواتساب CRM',
+                category: 'web',
+                description: 'نظام إدارة علاقات عملاء مخصص يرسل تنبيهات الطلبات وفواتير الشراء تلقائياً إلى واتساب العملاء مع رد آلي مدعوم بالذكاء الاصطناعي.',
+                tags: ['Node.js', 'WhatsApp Cloud API', 'AI Automation', 'Webhooks'],
+                metric: 'توفير 70% من وقت الدعم',
+                image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+                icon: 'fa-bolt'
+            },
+            {
+                id: 6,
+                title: 'سكيلز ماتريكس | بوابة الشهادات المهنية',
+                category: 'edu',
+                description: 'نظام امتحانات موثق ومؤتمت يصدر شهادات رقمية مشفرة بـ QR Code مع إمكانية التحقق الفوري من صحة الاعتماد ومكافحة التزوير.',
+                tags: ['TypeScript', 'Automated Certs', 'QR Verification', 'PDF Generator'],
+                metric: '+8,000 شهادة تم إصدارها',
+                image: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80',
+                icon: 'fa-award'
+            }
+        ];
 
-                cards.forEach(card => {
-                    if (cat === 'all' || card.getAttribute('data-category') === cat) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
+        function renderPortfolio() {
+            const data = DataManager.getData();
+            const customProjects = data.portfolio || [];
+            
+            // Map custom projects to format
+            const customMapped = customProjects.map((p, idx) => ({
+                id: p.id || (100 + idx),
+                title: p.title,
+                category: p.category || 'web',
+                description: p.description || 'مشروع رقمي متميز تم تطويره وتنفيذه بواسطة فريق E-TECH بأحدث التقنيات وأعلى معايير الأداء.',
+                tags: p.tags || ['E-TECH Engineering', 'Full-Stack', 'High Performance'],
+                metric: p.metric || 'مشروع معتمد 100%',
+                image: p.image || 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+                icon: p.category === 'edu' ? 'fa-graduation-cap' : (p.category === 'store' ? 'fa-shopping-cart' : (p.category === 'mobile' ? 'fa-mobile-screen' : 'fa-code'))
+            }));
+
+            // Merge avoiding exact duplicate titles
+            const allProjects = [...customMapped];
+            defaultProjects.forEach(dp => {
+                if (!allProjects.some(p => p.title === dp.title)) {
+                    allProjects.push(dp);
+                }
+            });
+
+            const container = document.getElementById('projectsContainer');
+            if (!container) return;
+
+            const catLabels = {
+                'edu': 'منصة تعليمية',
+                'store': 'متجر إلكتروني',
+                'web': 'منصة ويب',
+                'mobile': 'تطبيق جوال'
+            };
+
+            container.innerHTML = allProjects.map(p => `
+                <div class="project-card" data-category="${p.category}">
+                    <div class="project-preview">
+                        <span class="project-type-tag">${catLabels[p.category] || 'مشروع تقني'}</span>
+                        ${p.image ? `<img src="${p.image}" alt="${p.title}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">` : ''}
+                        <i class="fa-solid ${p.icon || 'fa-code'} icon-badge" style="${p.image ? 'display:none;' : ''}"></i>
+                    </div>
+                    <div class="project-body">
+                        <div>
+                            <h3>${p.title}</h3>
+                            <p>${p.description}</p>
+                            <div class="tags-list">
+                                ${(p.tags || []).map(t => `<span class="tag-pill">${t}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="contact.html">اطلب مشروعاً مماثلاً &larr;</a>
+                            <span style="font-size: 0.8rem; color: var(--primary); font-weight:700;">${p.metric || ''}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            attachFilterHandlers();
+        }
+
+        function attachFilterHandlers() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const cards = document.querySelectorAll('.project-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const cat = btn.getAttribute('data-filter');
+
+                    cards.forEach(card => {
+                        const cardCat = card.getAttribute('data-category');
+                        if (cat === 'all' || cardCat === cat) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
                 });
             });
+        }
+
+        function syncSocialLinks() {
+            const data = DataManager.getData();
+            const s = data.siteSettings || {};
+            
+            function fmtTele(val) {
+                if (!val) return 'https://t.me/etech_solutions';
+                val = val.trim();
+                if (val.startsWith('http://') || val.startsWith('https://')) return val;
+                if (val.startsWith('@')) val = val.substring(1);
+                if (val.startsWith('t.me/')) return 'https://' + val;
+                return 'https://t.me/' + val;
+            }
+
+            function fmtInsta(val) {
+                if (!val) return 'https://instagram.com/etech_solutions';
+                val = val.trim();
+                if (val.startsWith('http://') || val.startsWith('https://')) return val;
+                if (val.startsWith('@')) val = val.substring(1);
+                if (val.startsWith('instagram.com/')) return 'https://' + val;
+                return 'https://instagram.com/' + val;
+            }
+
+            const dockWa = document.getElementById('dockWhatsapp');
+            if (dockWa && s.whatsapp) dockWa.href = 'https://wa.me/' + s.whatsapp.replace(/[^0-9]/g, '');
+
+            const dockTele = document.getElementById('dockTelegram');
+            if (dockTele) dockTele.href = fmtTele(s.telegram);
+
+            const dockInsta = document.getElementById('dockInstagram');
+            if (dockInsta) dockInsta.href = fmtInsta(s.instagram);
+        }
+
+        renderPortfolio();
+        syncSocialLinks();
+
+        // Listen for localStorage changes from Admin Dashboard
+        window.addEventListener('storage', () => {
+            renderPortfolio();
+            syncSocialLinks();
         });
     </script>
 </body>
