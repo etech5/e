@@ -649,30 +649,83 @@
             <!-- TAB 7: SITE SETTINGS -->
             <div id="tab-settings" class="content-section">
                 <div class="section-bar">
-                    <h3>الإعدادات العامة للموقع</h3>
+                    <div>
+                        <h3 style="margin-bottom:0.3rem;">الإعدادات العامة وحسابات التواصل</h3>
+                        <p style="font-size:0.85rem; color:var(--text-muted);">تحكم في معلومات الموقع الأساسية، بيانات الاتصال، وروابط الانستجرام والتيليجرام</p>
+                    </div>
                 </div>
-                <form id="siteSettingsForm" style="max-width: 650px;">
-                    <div class="form-group">
-                        <label>عنوان الموقع (Title)</label>
-                        <input type="text" id="setSiteTitle" class="form-control" required>
+                <form id="siteSettingsForm" style="max-width: 700px;">
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-globe"></i> المعلومات الأساسية للموقع
+                        </h4>
+                        <div class="form-group">
+                            <label>عنوان الموقع (Title)</label>
+                            <input type="text" id="setSiteTitle" class="form-control" required>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>وصف الموقع (Description)</label>
+                            <textarea id="setSiteDesc" class="form-control" rows="3"></textarea>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>وصف الموقع (Description)</label>
-                        <textarea id="setSiteDesc" class="form-control" rows="3"></textarea>
+
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-address-book"></i> بيانات الاتصال المباشر
+                        </h4>
+                        <div class="form-group">
+                            <label>رقم هاتف التواصل</label>
+                            <input type="text" id="setSitePhone" class="form-control" dir="ltr" placeholder="+20 11 48296986">
+                        </div>
+                        <div class="form-group">
+                            <label>البريد الإلكتروني الرسمي</label>
+                            <input type="email" id="setSiteEmail" class="form-control" dir="ltr" placeholder="etechn3l3gy@gmail.com">
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label>رقم الواتساب (بدون علامة + أو مسافات)</label>
+                            <input type="text" id="setSiteWhatsapp" class="form-control" dir="ltr" placeholder="201148296986">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>رقم هاتف التواصل</label>
-                        <input type="text" id="setSitePhone" class="form-control" dir="ltr">
+
+                    <div style="background:var(--bg-surface-elevated); padding:1.25rem; border-radius:14px; border:1px solid var(--border-color); margin-bottom:1.5rem;">
+                        <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem;">
+                            <i class="fa-solid fa-share-nodes"></i> منصات وقنوات التواصل الاجتماعي (Social Media)
+                        </h4>
+                        <div class="form-group">
+                            <label style="display:flex; align-items:center; justify-content:space-between;">
+                                <span style="display:flex; align-items:center; gap:0.5rem;">
+                                    <i class="fa-brands fa-telegram" style="color:#229ED9; font-size:1.15rem;"></i>
+                                    <span>رابط التيليجرام (Telegram Link)</span>
+                                </span>
+                                <a id="previewTelegramLink" href="#" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem; color:var(--primary); text-decoration:none; display:none; align-items:center; gap:0.3rem;">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الرابط وتجربته
+                                </a>
+                            </label>
+                            <input type="url" id="setSiteTelegram" class="form-control" dir="ltr" placeholder="https://t.me/etech_solutions">
+                            <small style="color:var(--text-muted); font-size:0.8rem; margin-top:0.35rem; display:block;">
+                                رابط قناة أو حساب التيليجرام الكامل (مثال: https://t.me/etech_solutions)
+                            </small>
+                        </div>
+                        <div class="form-group" style="margin-bottom:0;">
+                            <label style="display:flex; align-items:center; justify-content:space-between;">
+                                <span style="display:flex; align-items:center; gap:0.5rem;">
+                                    <i class="fa-brands fa-instagram" style="color:#E1306C; font-size:1.15rem;"></i>
+                                    <span>رابط الانستجرام (Instagram Link)</span>
+                                </span>
+                                <a id="previewInstagramLink" href="#" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem; color:var(--primary); text-decoration:none; display:none; align-items:center; gap:0.3rem;">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الرابط وتجربته
+                                </a>
+                            </label>
+                            <input type="url" id="setSiteInstagram" class="form-control" dir="ltr" placeholder="https://instagram.com/etech_solutions">
+                            <small style="color:var(--text-muted); font-size:0.8rem; margin-top:0.35rem; display:block;">
+                                رابط صفحة الانستجرام الكامل (مثال: https://instagram.com/etech_solutions)
+                            </small>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>البريد الإلكتروني الرسمي</label>
-                        <input type="email" id="setSiteEmail" class="form-control" dir="ltr">
-                    </div>
-                    <div class="form-group">
-                        <label>رقم الواتساب (بدون علامة +)</label>
-                        <input type="text" id="setSiteWhatsapp" class="form-control" dir="ltr">
-                    </div>
-                    <button type="submit" class="btn btn-primary">حفظ الإعدادات</button>
+
+                    <button type="submit" class="btn btn-primary" style="padding:0.85rem 2rem;">
+                        <i class="fa-solid fa-floppy-disk"></i> حفظ كافة الإعدادات
+                    </button>
                 </form>
             </div>
 
@@ -822,6 +875,8 @@
                             phone: '+20 11 48296986',
                             email: 'etechn3l3gy@gmail.com',
                             whatsapp: '201148296986',
+                            telegram: 'https://t.me/etech_solutions',
+                            instagram: 'https://instagram.com/etech_solutions',
                             groqApiKey: ''
                         },
                         services: [
@@ -852,6 +907,15 @@
                         }
                         if (!parsed.plans || !parsed.plans.length) {
                             parsed.plans = defaultPlansTemplate;
+                            updated = true;
+                        }
+                        if (!parsed.siteSettings) { parsed.siteSettings = {}; updated = true; }
+                        if (!parsed.siteSettings.telegram) {
+                            parsed.siteSettings.telegram = 'https://t.me/etech_solutions';
+                            updated = true;
+                        }
+                        if (!parsed.siteSettings.instagram) {
+                            parsed.siteSettings.instagram = 'https://instagram.com/etech_solutions';
                             updated = true;
                         }
                         if (updated) {
@@ -1085,6 +1149,9 @@
             document.getElementById('setSitePhone').value = settings.phone || '';
             document.getElementById('setSiteEmail').value = settings.email || '';
             document.getElementById('setSiteWhatsapp').value = settings.whatsapp || '';
+            document.getElementById('setSiteTelegram').value = settings.telegram || 'https://t.me/etech_solutions';
+            document.getElementById('setSiteInstagram').value = settings.instagram || 'https://instagram.com/etech_solutions';
+            updateSocialPreviewLinks();
         }
 
         // Delete handlers
@@ -1183,6 +1250,33 @@
             }
         });
 
+        function updateSocialPreviewLinks() {
+            const teleVal = (document.getElementById('setSiteTelegram')?.value || '').trim();
+            const prevTele = document.getElementById('previewTelegramLink');
+            if (prevTele) {
+                if (teleVal) {
+                    prevTele.href = teleVal.startsWith('http') ? teleVal : ('https://' + teleVal);
+                    prevTele.style.display = 'inline-flex';
+                } else {
+                    prevTele.style.display = 'none';
+                }
+            }
+
+            const instaVal = (document.getElementById('setSiteInstagram')?.value || '').trim();
+            const prevInsta = document.getElementById('previewInstagramLink');
+            if (prevInsta) {
+                if (instaVal) {
+                    prevInsta.href = instaVal.startsWith('http') ? instaVal : ('https://' + instaVal);
+                    prevInsta.style.display = 'inline-flex';
+                } else {
+                    prevInsta.style.display = 'none';
+                }
+            }
+        }
+
+        document.getElementById('setSiteTelegram')?.addEventListener('input', updateSocialPreviewLinks);
+        document.getElementById('setSiteInstagram')?.addEventListener('input', updateSocialPreviewLinks);
+
         // Save General Settings
         document.getElementById('siteSettingsForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -1193,10 +1287,13 @@
                 description: document.getElementById('setSiteDesc').value,
                 phone: document.getElementById('setSitePhone').value,
                 email: document.getElementById('setSiteEmail').value,
-                whatsapp: document.getElementById('setSiteWhatsapp').value
+                whatsapp: document.getElementById('setSiteWhatsapp').value,
+                telegram: document.getElementById('setSiteTelegram').value.trim(),
+                instagram: document.getElementById('setSiteInstagram').value.trim()
             };
             DataManager.saveData(data);
-            showToast('تم حفظ إعدادات الموقع بنجاح.');
+            updateSocialPreviewLinks();
+            showToast('تم حفظ إعدادات الموقع وروابط التواصل بنجاح.');
         });
 
         // Change Password Form

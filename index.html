@@ -1814,16 +1814,19 @@
                 </a>
             </div>
             <div class="panel-quick-contacts">
-                <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" title="WhatsApp" aria-label="WhatsApp">
+                <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkWhatsapp" title="WhatsApp" aria-label="WhatsApp">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
-                <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" title="Telegram" aria-label="Telegram">
+                <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkTelegram" title="Telegram" aria-label="Telegram">
                     <i class="fa-brands fa-telegram"></i>
                 </a>
-                <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn" title="Email" aria-label="Email">
+                <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkInstagram" title="Instagram" aria-label="Instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn" id="panelLinkEmail" title="Email" aria-label="Email">
                     <i class="fa-solid fa-envelope"></i>
                 </a>
-                <a href="tel:+201148296986" class="panel-quick-btn" title="Phone" aria-label="Phone">
+                <a href="tel:+201148296986" class="panel-quick-btn" id="panelLinkPhone" title="Phone" aria-label="Phone">
                     <i class="fa-solid fa-phone"></i>
                 </a>
             </div>
@@ -2363,10 +2366,11 @@
 
                         <div class="column">
                             <h4 id="footerHeadingContact">قنوات التواصل</h4>
-                            <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer">واتساب (WhatsApp)</a>
-                            <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer">تيليجرام (Telegram)</a>
-                            <a href="mailto:etechn3l3gy@gmail.com">البريد الإلكتروني</a>
-                            <a href="tel:+201148296986">اتصال مباشر</a>
+                            <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" id="footerLinkWhatsapp">واتساب (WhatsApp)</a>
+                            <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" id="footerLinkTelegram">تيليجرام (Telegram)</a>
+                            <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" id="footerLinkInstagram">انستغرام (Instagram)</a>
+                            <a href="mailto:etechn3l3gy@gmail.com" id="footerLinkEmail">البريد الإلكتروني</a>
+                            <a href="tel:+201148296986" id="footerLinkPhone">اتصال مباشر</a>
                         </div>
 
                         <div class="column">
@@ -2454,6 +2458,8 @@
                             phone: '+20 11 48296986',
                             email: 'etechn3l3gy@gmail.com',
                             whatsapp: '201148296986',
+                            telegram: 'https://t.me/etech_solutions',
+                            instagram: 'https://instagram.com/etech_solutions',
                             groqApiKey: ''
                         },
                         siteStats: {
@@ -2701,7 +2707,7 @@
                 footerServicesTitle: 'خدماتنا البرمجية',
                 footerServicesLinks: ['المنصات التعليمية', 'المتاجر الإلكترونية', 'مواقع الويب المخصصة', 'تطبيقات الموبايل', 'خطط الأسعار'],
                 footerContactTitle: 'قنوات التواصل',
-                footerContactLinks: ['واتساب (WhatsApp)', 'تيليجرام (Telegram)', 'البريد الإلكتروني', 'اتصال مباشر'],
+                footerContactLinks: ['واتساب (WhatsApp)', 'تيليجرام (Telegram)', 'انستغرام (Instagram)', 'البريد الإلكتروني', 'اتصال مباشر'],
                 footerCompanyTitle: 'عن الشركة',
                 footerCompanyLinks: ['من نحن', 'معرض الأعمال', 'الأسعار والباقات', 'المدونة والتقنية'],
                 watermarkTagline: 'حلول برمجية ومنصات رقمية متطورة',
@@ -2823,7 +2829,7 @@
                 footerServicesTitle: 'Software Services',
                 footerServicesLinks: ['Educational Platforms (LMS)', 'E-Commerce Stores', 'Custom Web Applications', 'Mobile Applications', 'Pricing Plans'],
                 footerContactTitle: 'Connect With Us',
-                footerContactLinks: ['WhatsApp Direct', 'Telegram Channel', 'Email Inquiry', 'Direct Phone Call'],
+                footerContactLinks: ['WhatsApp Direct', 'Telegram Channel', 'Instagram Page', 'Email Inquiry', 'Direct Phone Call'],
                 footerCompanyTitle: 'Company',
                 footerCompanyLinks: ['About Us', 'Portfolio Showcases', 'Pricing & Packages', 'Tech Blog'],
                 watermarkTagline: 'Advanced Digital Platforms & Software Solutions',
@@ -3069,18 +3075,46 @@
             compLinks.forEach((a, i) => { if (t.footerCompanyLinks && t.footerCompanyLinks[i]) a.textContent = t.footerCompanyLinks[i]; });
 
             if (siteSettings.phone) {
-                const phoneEl = document.querySelector('.footer-card a[href^="tel:"]');
+                const phoneEl = document.getElementById('footerLinkPhone') || document.querySelector('.footer-card a[href^="tel:"]');
                 if (phoneEl) {
                     phoneEl.href = 'tel:' + siteSettings.phone;
-                    phoneEl.textContent = siteSettings.phone;
                 }
+                const panelPhone = document.getElementById('panelLinkPhone');
+                if (panelPhone) panelPhone.href = 'tel:' + siteSettings.phone;
             }
             if (siteSettings.email) {
-                const mailEl = document.querySelector('.footer-card a[href^="mailto:"]');
+                const mailEl = document.getElementById('footerLinkEmail') || document.querySelector('.footer-card a[href^="mailto:"]');
                 if (mailEl) {
                     mailEl.href = 'mailto:' + siteSettings.email;
-                    mailEl.textContent = siteSettings.email;
                 }
+                const panelMail = document.getElementById('panelLinkEmail');
+                if (panelMail) panelMail.href = 'mailto:' + siteSettings.email;
+            }
+            if (siteSettings.whatsapp) {
+                const waHref = 'https://wa.me/' + siteSettings.whatsapp;
+                const footWa = document.getElementById('footerLinkWhatsapp');
+                if (footWa) footWa.href = waHref;
+                const panelWa = document.getElementById('panelLinkWhatsapp');
+                if (panelWa) panelWa.href = waHref;
+                const hintWa = document.querySelector('.hint.mail a[href*="wa.me"]');
+                if (hintWa) {
+                    hintWa.href = waHref;
+                    hintWa.textContent = '+' + siteSettings.whatsapp;
+                }
+            }
+            if (siteSettings.telegram) {
+                const telHref = siteSettings.telegram.startsWith('http') ? siteSettings.telegram : ('https://' + siteSettings.telegram);
+                const footTel = document.getElementById('footerLinkTelegram');
+                if (footTel) footTel.href = telHref;
+                const panelTel = document.getElementById('panelLinkTelegram');
+                if (panelTel) panelTel.href = telHref;
+            }
+            if (siteSettings.instagram) {
+                const instaHref = siteSettings.instagram.startsWith('http') ? siteSettings.instagram : ('https://' + siteSettings.instagram);
+                const footInsta = document.getElementById('footerLinkInstagram');
+                if (footInsta) footInsta.href = instaHref;
+                const panelInsta = document.getElementById('panelLinkInstagram');
+                if (panelInsta) panelInsta.href = instaHref;
             }
 
             // Footer Bottom Brand Watermark & Copyright

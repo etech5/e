@@ -827,10 +827,11 @@
         <div class="panel-bottom">
             <a href="tel:+201148296986" class="btn-submit" style="text-decoration:none;" data-i18n="btnCallNow">اتصال فوري</a>
             <div class="panel-quick-contacts">
-                <a href="https://wa.me/201148296986" target="_blank" class="panel-quick-btn"><i class="fa-brands fa-whatsapp"></i></a>
-                <a href="https://t.me/etech_solutions" target="_blank" class="panel-quick-btn"><i class="fa-brands fa-telegram"></i></a>
-                <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn"><i class="fa-solid fa-envelope"></i></a>
-                <a href="tel:+201148296986" class="panel-quick-btn"><i class="fa-solid fa-phone"></i></a>
+                <a href="https://wa.me/201148296986" target="_blank" class="panel-quick-btn" id="panelLinkWhatsapp" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                <a href="https://t.me/etech_solutions" target="_blank" class="panel-quick-btn" id="panelLinkTelegram" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                <a href="https://instagram.com/etech_solutions" target="_blank" class="panel-quick-btn" id="panelLinkInstagram" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn" id="panelLinkEmail" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                <a href="tel:+201148296986" class="panel-quick-btn" id="panelLinkPhone" title="Phone"><i class="fa-solid fa-phone"></i></a>
             </div>
             <div class="panel-watermark">
                 <img src="../assets/logo.png" alt="E-TECH" class="panel-watermark-logo">
@@ -889,7 +890,17 @@
                     <div class="info-text">
                         <h4 id="infoTitleTelegram">قناة ودعم التيليجرام</h4>
                         <p id="infoSubTelegram">تواصل فوري وتحديثات المشاريع والعروض</p>
-                        <span class="info-value">@etech_solutions</span>
+                        <span class="info-value" id="valTelegram">@etech_solutions</span>
+                    </div>
+                </a>
+
+                <!-- Instagram -->
+                <a href="https://instagram.com/etech_solutions" target="_blank" class="info-card" id="cardInstagram">
+                    <div class="info-icon" style="color:#e1306c;"><i class="fa-brands fa-instagram"></i></div>
+                    <div class="info-text">
+                        <h4 id="infoTitleInstagram">حساب الانستجرام الرسمي</h4>
+                        <p id="infoSubInstagram">كواليس المشاريع، التصاميم، وأحدث التقنيات</p>
+                        <span class="info-value" id="valInstagram">@etech_solutions</span>
                     </div>
                 </a>
 
@@ -989,10 +1000,11 @@
                 </div>
                 <div class="column">
                     <h4 id="fContact">قنوات التواصل</h4>
-                    <a href="https://wa.me/201148296986" target="_blank">واتساب (WhatsApp)</a>
-                    <a href="https://t.me/etech_solutions" target="_blank">تيليجرام (Telegram)</a>
-                    <a href="mailto:etechn3l3gy@gmail.com">البريد الإلكتروني</a>
-                    <a href="tel:+201148296986">اتصال مباشر</a>
+                    <a href="https://wa.me/201148296986" target="_blank" id="fLinkWhatsapp">واتساب (WhatsApp)</a>
+                    <a href="https://t.me/etech_solutions" target="_blank" id="fLinkTelegram">تيليجرام (Telegram)</a>
+                    <a href="https://instagram.com/etech_solutions" target="_blank" id="fLinkInstagram">انستغرام (Instagram)</a>
+                    <a href="mailto:etechn3l3gy@gmail.com" id="fLinkEmail">البريد الإلكتروني</a>
+                    <a href="tel:+201148296986" id="fLinkPhone">اتصال مباشر</a>
                 </div>
                 <div class="column">
                     <h4 id="fCompany">عن الشركة</h4>
@@ -1100,6 +1112,28 @@
         if (settings.whatsapp) {
             const btnWa = document.getElementById('btnWa');
             if (btnWa) btnWa.href = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent('مرحباً E-TECH، أود الاستفسار عن مشروع برمجي جديد')}`;
+            const pWa = document.getElementById('panelLinkWhatsapp');
+            if (pWa) pWa.href = `https://wa.me/${settings.whatsapp}`;
+            const fWa = document.getElementById('fLinkWhatsapp');
+            if (fWa) fWa.href = `https://wa.me/${settings.whatsapp}`;
+        }
+        if (settings.telegram) {
+            const telHref = settings.telegram.startsWith('http') ? settings.telegram : ('https://' + settings.telegram);
+            const cTele = document.getElementById('cardTelegram');
+            if (cTele) cTele.href = telHref;
+            const pTele = document.getElementById('panelLinkTelegram');
+            if (pTele) pTele.href = telHref;
+            const fTele = document.getElementById('fLinkTelegram');
+            if (fTele) fTele.href = telHref;
+        }
+        if (settings.instagram) {
+            const instaHref = settings.instagram.startsWith('http') ? settings.instagram : ('https://' + settings.instagram);
+            const cInsta = document.getElementById('cardInstagram');
+            if (cInsta) cInsta.href = instaHref;
+            const pInsta = document.getElementById('panelLinkInstagram');
+            if (pInsta) pInsta.href = instaHref;
+            const fInsta = document.getElementById('fLinkInstagram');
+            if (fInsta) fInsta.href = instaHref;
         }
 
         // Auto select plan from URL query if present
@@ -1127,6 +1161,8 @@
                 infoSubEmail: 'أرسل كراسة الشروط أو طلبات التعاقد المؤسسي',
                 infoTitleTelegram: 'قناة ودعم التيليجرام',
                 infoSubTelegram: 'تواصل فوري وتحديثات المشاريع والعروض',
+                infoTitleInstagram: 'حساب الانستجرام الرسمي',
+                infoSubInstagram: 'كواليس المشاريع، التصاميم، وأحدث التقنيات',
                 waTitle: 'محادثة واتساب فورية 24/7',
                 waDesc: 'تفضل المحادثة المباشرة؟ تحدث الآن مع مستشارنا التقني عبر واتساب لمناقشة التفاصيل فوراً.',
                 waBtnText: 'تواصل عبر واتساب الآن',
@@ -1158,6 +1194,8 @@
                 infoSubEmail: 'Send tenders, RFPs, or enterprise inquiries',
                 infoTitleTelegram: 'Telegram Channel & Support',
                 infoSubTelegram: 'Direct messaging and continuous milestone updates',
+                infoTitleInstagram: 'Official Instagram Page',
+                infoSubInstagram: 'Behind the scenes, design showcases, & tech insights',
                 waTitle: 'Instant 24/7 WhatsApp Chat',
                 waDesc: 'Prefer instant chat? Connect directly with our lead software architect on WhatsApp now.',
                 waBtnText: 'Chat on WhatsApp Now',
@@ -1216,6 +1254,8 @@
             const ise = document.getElementById('infoSubEmail'); if (ise) ise.textContent = t.infoSubEmail;
             const itt = document.getElementById('infoTitleTelegram'); if (itt) itt.textContent = t.infoTitleTelegram;
             const ist = document.getElementById('infoSubTelegram'); if (ist) ist.textContent = t.infoSubTelegram;
+            const iti = document.getElementById('infoTitleInstagram'); if (iti) iti.textContent = t.infoTitleInstagram;
+            const isi = document.getElementById('infoSubInstagram'); if (isi) isi.textContent = t.infoSubInstagram;
 
             const wt = document.getElementById('waTitle'); if (wt) wt.textContent = t.waTitle;
             const wd = document.getElementById('waDesc'); if (wd) wd.textContent = t.waDesc;
