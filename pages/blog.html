@@ -5,75 +5,377 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>المدونة التقنية | E-TECH Solutions</title>
     <link rel="icon" type="image/png" href="../assets/logo.png">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --bg-base: #fbf7ef;
-            --bg-surface: #f4eee2;
-            --bg-surface-elevated: #ffffff;
-            --border-color: #e7dcc5;
-            --primary: #1f7a42;
-            --accent-glow: rgba(31, 122, 66, 0.12);
-            --text-main: #1c1712;
-            --text-muted: #6e6455;
+            --bg-base: #090c10;
+            --bg-surface: #0f141d;
+            --bg-surface-elevated: #151b26;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(184, 240, 34, 0.25);
+            --primary: #b8f022;
+            --primary-dark: #9ed212;
+            --accent-glow: rgba(184, 240, 34, 0.18);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --font-ar: 'Cairo', system-ui, sans-serif;
+            --font-en: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
-        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
 
-        /* Floating Navbar */
-        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
-        .navbar-bar { background: rgba(16, 19, 24, 0.85); backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6); }
-        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
-        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 0 10px var(--accent-glow)); }
-        .nav-links { display: flex; gap: 0.75rem; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: all 0.2s; }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary); background: rgba(182, 255, 0, 0.1); }
-        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
-        .btn-cta:hover { transform: scale(1.05); }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: var(--font-ar);
+            background: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .ambient-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 15% 15%, rgba(184, 240, 34, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(184, 240, 34, 0.04) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 1.25rem;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        .navbar-bar {
+            background: rgba(15, 20, 29, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.5rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 980px;
+            width: 100%;
+            box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        .brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            background: rgba(184, 240, 34, 0.1);
+        }
+        .btn-cta {
+            background: var(--primary);
+            color: #090c10;
+            box-shadow: 0 0 20px var(--accent-glow);
+            padding: 0.55rem 1.3rem;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-cta:hover {
+            background: #fff;
+            transform: scale(1.04);
+            box-shadow: 0 0 25px rgba(255,255,255,0.4);
+        }
 
         /* Hero */
-        .hero { padding: 9rem 0 3.5rem; text-align: center; }
-        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
-        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
-        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+        .hero {
+            padding: 9rem 0 3.5rem;
+            text-align: center;
+        }
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            background: rgba(184, 240, 34, 0.08);
+            border: 1px solid rgba(184, 240, 34, 0.2);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            line-height: 1.25;
+        }
+        .hero h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(184, 240, 34, 0.2);
+        }
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
 
         /* Articles Grid */
-        .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-bottom: 5rem; }
-        .article-card { background: var(--bg-surface); border: 1px solid var(--border-color); border-radius: 22px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s; }
-        .article-card:hover { transform: translateY(-5px); border-color: rgba(182, 255, 0, 0.35); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-        .article-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; font-size: 0.8rem; color: var(--text-muted); }
-        .article-meta span.cat-badge { background: rgba(182, 255, 0, 0.1); color: var(--primary); font-weight: 700; padding: 0.25rem 0.6rem; border-radius: 9999px; }
-        .article-card h3 { font-size: 1.25rem; font-weight: 700; color: #1c1712; margin-bottom: 0.75rem; line-height: 1.5; }
-        .article-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.5rem; }
-        .article-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color); padding-top: 1rem; }
-        .article-footer a { color: var(--primary); text-decoration: none; font-size: 0.88rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem; }
+        .articles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 2rem;
+            margin-bottom: 5rem;
+        }
+        .article-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+        }
+        .article-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(184, 240, 34, 0.35);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(184, 240, 34, 0.08);
+        }
+        .article-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .article-meta span.cat-badge {
+            background: rgba(184, 240, 34, 0.1);
+            color: var(--primary);
+            font-weight: 700;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(184, 240, 34, 0.2);
+        }
+        .article-card h3 {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+        .article-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .article-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.2rem;
+        }
+        .article-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        .article-footer a:hover {
+            gap: 0.8rem;
+            transform: translateX(-4px);
+        }
 
         /* Newsletter Box */
-        .newsletter-box { background: var(--bg-surface-elevated); border: 1px solid rgba(182, 255, 0, 0.25); border-radius: 28px; padding: 3.5rem 2.5rem; margin-bottom: 6rem; text-align: center; }
-        .newsletter-box h2 { font-size: 2rem; font-weight: 800; color: #1c1712; margin-bottom: 0.5rem; }
-        .newsletter-box p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
-        .newsletter-form { display: flex; max-width: 500px; margin: 0 auto; gap: 0.6rem; }
-        .newsletter-input { flex-grow: 1; background: #080a0d; border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.8rem 1.4rem; color: #fff; font-family: var(--font-ar); outline: none; font-size: 0.9rem; }
-        .newsletter-input:focus { border-color: var(--primary); }
-        .newsletter-btn { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); font-weight: 800; border: none; border-radius: 9999px; padding: 0.8rem 1.8rem; cursor: pointer; font-family: var(--font-ar); transition: transform 0.2s; }
-        .newsletter-btn:hover { transform: scale(1.04); }
+        .newsletter-box {
+            background: linear-gradient(135deg, #0f141d 0%, #151b26 100%);
+            border: 1px solid rgba(184, 240, 34, 0.25);
+            border-radius: 28px;
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 6rem;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .newsletter-box h2 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+        .newsletter-box p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+        .newsletter-form {
+            display: flex;
+            max-width: 520px;
+            margin: 0 auto;
+            gap: 0.75rem;
+        }
+        .newsletter-input {
+            flex-grow: 1;
+            background: #090c10;
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.85rem 1.4rem;
+            color: #fff;
+            font-family: var(--font-ar);
+            outline: none;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        .newsletter-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(184, 240, 34, 0.2);
+        }
+        .newsletter-btn {
+            background: var(--primary);
+            color: #090c10;
+            box-shadow: 0 0 20px var(--accent-glow);
+            font-weight: 800;
+            border: none;
+            border-radius: 9999px;
+            padding: 0.85rem 1.8rem;
+            cursor: pointer;
+            font-family: var(--font-ar);
+            transition: var(--transition);
+        }
+        .newsletter-btn:hover {
+            background: #fff;
+            transform: scale(1.04);
+        }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--primary); text-decoration: none; }
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: var(--bg-surface);
+        }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Floating Social Dock */
+        .floating-social-dock {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 999;
+        }
+        .social-dock-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.3rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+        .social-dock-btn:hover {
+            transform: scale(1.15) translateX(4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+        }
+        .dock-whatsapp { background: #25d366; }
+        .dock-telegram { background: #0088cc; }
+        .dock-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
 
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .articles-grid { grid-template-columns: 1fr; }
             .newsletter-form { flex-direction: column; }
+            .floating-social-dock { bottom: 1rem; left: 1rem; }
         }
     </style>
 </head>
 <body>
+    <div class="ambient-glow"></div>
+
+    <!-- Floating Social Dock -->
+    <div class="floating-social-dock">
+        <a id="floating-whatsapp" href="https://wa.me/201021468153" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-whatsapp" title="تواصل عبر واتساب">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a id="floating-telegram" href="https://t.me/etech5" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-telegram" title="قناتنا على تيليجرام">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a id="floating-instagram" href="https://instagram.com/etech5" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-instagram" title="حسابنا على انستغرام">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+    <!-- Floating Navbar -->
     <nav class="navbar">
         <div class="navbar-bar">
             <a href="../index.html" class="brand">
@@ -88,113 +390,134 @@
                 <li><a href="about.html">من نحن</a></li>
                 <li><a href="contact.html">تواصل معنا</a></li>
             </ul>
-            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+            <a href="contact.html" class="btn-cta">
+                <span>تواصل الآن</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
         </div>
     </nav>
 
+    <!-- Hero -->
     <div class="hero">
         <div class="container">
-            <span class="hero-tag">رؤى وأفكار برمجية حديثة</span>
-            <h1>مدونة E-TECH الهندسية والتقنية</h1>
+            <span class="hero-tag">
+                <i class="fa-solid fa-newspaper"></i>
+                <span>رؤى وأفكار برمجية حديثة</span>
+            </span>
+            <h1>مدونة E-TECH <span>الهندسية والتقنية</span></h1>
             <p>مقالات وأدلة عملية لمساعدتك على اتخاذ أفضل القرارات التقنية وتطوير مشروعك الرقمي بأحدث الأدوات والمعايير.</p>
         </div>
     </div>
 
+    <!-- Articles Grid -->
     <div class="container">
         <div class="articles-grid">
-            <!-- Article 1 -->
             <div class="article-card">
                 <div>
                     <div class="article-meta">
-                        <span class="cat-badge">التعليم الإلكتروني</span>
+                        <span class="cat-badge">المنصات التعليمية</span>
                         <span>12 أكتوبر 2026</span>
                     </div>
-                    <h3>كيف تختار المنصة التعليمية المناسبة لأكاديميتك في 2026؟</h3>
-                    <p>دليل شامل يستعرض الفروقات بين المنصات الجاهزة وتطوير منصة مخصصة مع معايير حماية الفيديوهات من التسجيل والاختراق.</p>
+                    <h3>كيف تحمي فيديوهات كورساتك من التسريب وتصوير الشاشة؟</h3>
+                    <p>دليل شامل للتقنيات المستخدمة في حماية المحتوى المرئي مثل DRM، تشفير HLS، والعلامات المائية التفاعلية.</p>
                 </div>
                 <div class="article-footer">
-                    <a href="contact.html">استشر خبير المنصات &larr;</a>
-                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 4 دقائق</span>
+                    <a href="educational-platforms.html">اقرأ المقال بالكامل &larr;</a>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 5 دقائق</span>
                 </div>
             </div>
 
-            <!-- Article 2 -->
             <div class="article-card">
                 <div>
                     <div class="article-meta">
                         <span class="cat-badge">التجارة الإلكترونية</span>
                         <span>08 أكتوبر 2026</span>
                     </div>
-                    <h3>أسرار مضاعفة مبيعات المتجر عبر تسريع وقت الاستجابة بنقرة واحدة</h3>
-                    <p>كيف تؤثر كل ثانية تأخير في سرعة تحميل متجرك على انخفاض معدل التحويل وما هي أفضل ممارسات التحسين الحديثة.</p>
+                    <h3>أسرار مضاعفة مبيعات متجرك الإلكتروني عبر تجربة الدفع السريع</h3>
+                    <p>تحليل لأسباب ترك السلات وطرق تقليل خطوات إتمام الطلب إلى نقرة واحدة لتحقيق أعلى معدل تحويل للزوار.</p>
                 </div>
                 <div class="article-footer">
-                    <a href="contact.html">فحص سرعة متجرك &larr;</a>
-                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 5 دقائق</span>
+                    <a href="ecommerce-solutions.html">اقرأ المقال بالكامل &larr;</a>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 4 دقائق</span>
                 </div>
             </div>
 
-            <!-- Article 3 -->
             <div class="article-card">
                 <div>
                     <div class="article-meta">
                         <span class="cat-badge">تطبيقات الجوال</span>
                         <span>01 أكتوبر 2026</span>
                     </div>
-                    <h3>مقارنة شاملة بين Flutter و React Native في المشاريع التجارية</h3>
-                    <p>أي الإطارين يوفر تكلفة تطوير أقل وأداءً أعلى لتطبيقك، وكيف تختار التقنية المناسبة لطبيعة عملك وفريقك.</p>
+                    <h3>مقارنة بين Flutter و React Native: أيهما تختار لتطبيقك في 2026؟</h3>
+                    <p>مراجعة تقنية شاملة للأداء، سهولة الصيانة، ودعم المكتبات لمساعدتك في اتخاذ القرار الأمثل لمشروعك.</p>
                 </div>
                 <div class="article-footer">
-                    <a href="contact.html">مناقشة تطبيقك &larr;</a>
-                    <span style="font-size: 0.78rem; color: #64748b;">قراءة 6 دقائق</span>
+                    <a href="mobile-applications.html">اقرأ المقال بالكامل &larr;</a>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);"><i class="fa-regular fa-clock"></i> 6 دقائق</span>
                 </div>
             </div>
         </div>
 
         <!-- Newsletter -->
         <div class="newsletter-box">
-            <h2>اشترك في النشرة البرمجية الأسبوعية</h2>
-            <p>احصل على أحدث المقالات والنصائح التقنية لتحسين وتنمية أعمالك الرقمية مباشرة في بريدك.</p>
-            <div id="newsletterSuccess" style="display:none; color: var(--primary); font-weight:700; margin-bottom:1rem;">
-                <i class="fa-solid fa-circle-check"></i> شكراً لاشتراكك! تم تسجيل بريدك الإلكتروني بنجاح.
-            </div>
-            <form id="blogNewsletterForm" class="newsletter-form">
-                <input type="email" id="nlEmailInput" class="newsletter-input" placeholder="أدخل بريدك الإلكتروني..." required>
-                <button type="submit" class="newsletter-btn">اشتراك</button>
+            <h2>اشترك في نشرتنا البرمجية الأسبوعية</h2>
+            <p>احصل على أفضل النصائح التقنية وآخر تحديثات هندسة البرمجيات مباشرة إلى بريدك الإلكتروني.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('شكراً لاشتراكك في نشرة E-TECH!');">
+                <input type="email" required placeholder="أدخل بريدك الإلكتروني..." class="newsletter-input">
+                <button type="submit" class="newsletter-btn">اشتراك الآن</button>
             </form>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
         </div>
     </footer>
 
+    <!-- Social Links Sync Script -->
     <script>
-        document.getElementById('blogNewsletterForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('nlEmailInput');
-            const email = emailInput.value.trim();
-            if (!email) return;
-
+        function syncSocialLinks() {
             try {
-                let siteData = {};
-                const stored = localStorage.getItem('etech_data');
-                if (stored) siteData = JSON.parse(stored);
-                if (!siteData.subscribers) siteData.subscribers = [];
-                if (!siteData.subscribers.includes(email)) {
-                    siteData.subscribers.push(email);
-                    localStorage.setItem('etech_data', JSON.stringify(siteData));
-                    localStorage.setItem('etech_site_data', JSON.stringify(siteData));
+                let settings = {};
+                const localData = localStorage.getItem('etech_data');
+                if (localData) {
+                    const parsed = JSON.parse(localData);
+                    if (parsed.siteSettings) settings = parsed.siteSettings;
                 }
-            } catch(err) {
-                console.warn(err);
-            }
 
-            document.getElementById('newsletterSuccess').style.display = 'block';
-            this.style.display = 'none';
-        });
+                const waPhone = settings.whatsapp || '201021468153';
+                const tgHandle = settings.telegram || 'etech5';
+                const igHandle = settings.instagram || 'etech5';
+
+                const waBtn = document.getElementById('floating-whatsapp');
+                if (waBtn) waBtn.href = `https://wa.me/${waPhone.replace(/[^0-9]/g, '')}`;
+
+                const tgBtn = document.getElementById('floating-telegram');
+                if (tgBtn) {
+                    let tgUrl = tgHandle.trim();
+                    if (!tgUrl.startsWith('http://') && !tgUrl.startsWith('https://')) {
+                        tgUrl = `https://t.me/${tgUrl.replace(/^@/, '')}`;
+                    }
+                    tgBtn.href = tgUrl;
+                }
+
+                const igBtn = document.getElementById('floating-instagram');
+                if (igBtn) {
+                    let igUrl = igHandle.trim();
+                    if (!igUrl.startsWith('http://') && !igUrl.startsWith('https://')) {
+                        igUrl = `https://instagram.com/${igUrl.replace(/^@/, '')}`;
+                    }
+                    igBtn.href = igUrl;
+                }
+            } catch (e) {
+                console.warn('Social dock sync error:', e);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', syncSocialLinks);
+        window.addEventListener('storage', syncSocialLinks);
     </script>
 </body>
 </html>

@@ -3,64 +3,385 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خدماتنا البرمجية | E-TECH Solutions</title>
+    <title>خدماتنا البرمجية المتقدمة | E-TECH Solutions</title>
     <link rel="icon" type="image/png" href="../assets/logo.png">
+    
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         :root {
-            --bg-base: #fbf7ef;
-            --bg-surface: #f4eee2;
-            --bg-surface-elevated: #ffffff;
-            --border-color: #e7dcc5;
-            --primary: #1f7a42;
-            --accent-glow: rgba(31, 122, 66, 0.12);
-            --text-main: #1c1712;
-            --text-muted: #6e6455;
+            /* Futuristic Titanium & Cyberpunk Palette — Matches index.html */
+            --bg-base: #090c10;
+            --bg-surface: #0f141d;
+            --bg-surface-elevated: #151b26;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-glow: rgba(184, 240, 34, 0.25);
+            --primary: #b8f022;
+            --primary-dark: #9ed212;
+            --accent-glow: rgba(184, 240, 34, 0.18);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
             --font-ar: 'Cairo', system-ui, sans-serif;
+            --font-en: 'Plus Jakarta Sans', system-ui, sans-serif;
+            --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
         }
+
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { font-family: var(--font-ar); background: var(--bg-base); color: var(--text-main); line-height: 1.6; min-height: 100vh; }
-        .container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
-        
-        /* Floating Navbar */
-        .navbar { position: fixed; top: 1.25rem; left: 0; width: 100%; z-index: 1000; display: flex; justify-content: center; padding: 0 1rem; }
-        .navbar-bar { background: rgba(244, 238, 226, 0.92); backdrop-filter: blur(18px); border: 1px solid var(--border-color); border-radius: 9999px; padding: 0.4rem 1.2rem; display: flex; align-items: center; justify-content: space-between; max-width: 960px; width: 100%; box-shadow: 0 10px 30px rgba(28, 23, 18, 0.06); }
-        .brand { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: #1c1712; font-weight: 800; }
-        .brand img { width: 36px; height: 36px; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(31, 122, 66, 0.25)); }
-        .nav-links { display: flex; gap: 1rem; list-style: none; }
-        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 9999px; transition: color 0.2s; }
-        .nav-links a:hover { color: #1c1712; background: rgba(255, 255, 255, 0.8); }
-        .nav-links a.active { color: #ffffff !important; background: #1c1712 !important; box-shadow: 0 2px 8px rgba(28, 23, 18, 0.15); }
-        .btn-cta { background: var(--primary); color: #ffffff; box-shadow: 0 4px 14px rgba(31, 122, 66, 0.25); padding: 0.5rem 1.2rem; border-radius: 9999px; font-weight: 700; font-size: 0.85rem; text-decoration: none; transition: transform 0.2s; }
-        .btn-cta:hover { transform: scale(1.05); }
+        body {
+            font-family: var(--font-ar);
+            background: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Ambient Glowing Background Effect */
+        .ambient-glow {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at 15% 15%, rgba(184, 240, 34, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 85% 85%, rgba(184, 240, 34, 0.04) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Floating Glass Navbar */
+        .navbar {
+            position: fixed;
+            top: 1.25rem;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            padding: 0 1rem;
+        }
+        .navbar-bar {
+            background: rgba(15, 20, 29, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border-color);
+            border-radius: 9999px;
+            padding: 0.5rem 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 980px;
+            width: 100%;
+            box-shadow: 0 16px 40px -10px rgba(0,0,0,0.6);
+        }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+        .brand img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-glow));
+        }
+        .nav-links {
+            display: flex;
+            gap: 0.5rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 0.45rem 0.9rem;
+            border-radius: 9999px;
+            transition: var(--transition);
+        }
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+            background: rgba(184, 240, 34, 0.1);
+        }
+        .btn-cta {
+            background: var(--primary);
+            color: #090c10;
+            box-shadow: 0 0 20px var(--accent-glow);
+            padding: 0.55rem 1.3rem;
+            border-radius: 9999px;
+            font-weight: 800;
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        .btn-cta:hover {
+            background: #fff;
+            transform: scale(1.04);
+            box-shadow: 0 0 25px rgba(255,255,255,0.4);
+        }
 
         /* Page Hero */
-        .hero { padding: 9rem 0 3.5rem; text-align: center; }
-        .hero-tag { display: inline-block; color: var(--primary); font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; }
-        .hero h1 { font-size: 2.8rem; font-weight: 800; color: #1c1712; margin-bottom: 1rem; }
-        .hero p { max-width: 650px; margin: 0 auto; color: var(--text-muted); font-size: 1.05rem; }
+        .hero {
+            padding: 9rem 0 3.5rem;
+            text-align: center;
+        }
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 1rem;
+            border-radius: 9999px;
+            background: rgba(184, 240, 34, 0.08);
+            border: 1px solid rgba(184, 240, 34, 0.2);
+            color: var(--primary);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.25rem;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            line-height: 1.25;
+            letter-spacing: -0.5px;
+        }
+        .hero h1 span {
+            color: var(--primary);
+            text-shadow: 0 0 20px rgba(184, 240, 34, 0.2);
+        }
+        .hero p {
+            max-width: 680px;
+            margin: 0 auto;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
 
         /* Services Grid */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; padding: 2rem 0 6rem; }
-        .service-card { background: #ffffff; backdrop-filter: blur(16px); border: 1px solid var(--border-color); border-radius: 22px; padding: 2.2rem; display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(28, 23, 18, 0.05); }
-        .service-card:hover { border-color: #1f7a42; transform: translateY(-5px); box-shadow: 0 12px 32px rgba(28, 23, 18, 0.09); }
-        .service-icon { width: 54px; height: 54px; border-radius: 14px; background: #e8f5e9; color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 1.5rem; border: 1px solid #c8e6c9; }
-        .service-card h3 { font-size: 1.35rem; font-weight: 700; color: #1c1712; margin-bottom: 0.75rem; }
-        .service-card p { color: var(--text-muted); font-size: 0.92rem; line-height: 1.7; margin-bottom: 1.5rem; }
-        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
-        .feature-list li { color: #4a3e35; font-size: 0.86rem; display: flex; align-items: center; gap: 0.5rem; }
-        .feature-list li::before { content: ""; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--primary); box-shadow: 0 0 6px var(--primary); }
-        .card-link { color: var(--primary); text-decoration: none; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0 5rem;
+        }
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 2.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: var(--transition);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .service-card:hover {
+            border-color: rgba(184, 240, 34, 0.35);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(184, 240, 34, 0.08);
+        }
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 16px;
+            background: rgba(184, 240, 34, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(184, 240, 34, 0.2);
+            transition: var(--transition);
+        }
+        .service-card:hover .service-icon {
+            background: var(--primary);
+            color: #090c10;
+            box-shadow: 0 0 20px var(--accent-glow);
+            transform: scale(1.05);
+        }
+        .service-card h3 {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+        }
+        .service-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            margin-bottom: 2rem;
+        }
+        .feature-list li {
+            color: #cbd5e1;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .feature-list li i {
+            color: var(--primary);
+            font-size: 0.8rem;
+        }
+        .card-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(184, 240, 34, 0.08);
+            border: 1px solid rgba(184, 240, 34, 0.2);
+            width: fit-content;
+            transition: var(--transition);
+        }
+        .card-link:hover {
+            background: var(--primary);
+            color: #090c10;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--accent-glow);
+            gap: 0.8rem;
+            transform: translateX(-4px);
+        }
+
+        /* Banner CTA */
+        .cta-banner {
+            background: linear-gradient(135deg, #0f141d 0%, #151b26 100%);
+            border: 1px solid rgba(184, 240, 34, 0.25);
+            border-radius: 28px;
+            padding: 3.5rem 2.5rem;
+            margin-bottom: 6rem;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .cta-banner h2 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+        .cta-banner p {
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 2.2rem;
+            font-size: 1.05rem;
+        }
 
         /* Footer */
-        footer { border-top: 1px solid var(--border-color); padding: 3rem 0; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--primary); text-decoration: none; }
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            background: var(--bg-surface);
+        }
+        footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        footer a:hover { text-decoration: underline; }
+
+        /* Floating Social Dock */
+        .floating-social-dock {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            z-index: 999;
+        }
+        .social-dock-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-size: 1.3rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            backdrop-filter: blur(10px);
+        }
+        .social-dock-btn:hover {
+            transform: scale(1.15) translateX(4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+        }
+        .dock-whatsapp { background: #25d366; }
+        .dock-telegram { background: #0088cc; }
+        .dock-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.2rem; }
+            .grid { grid-template-columns: 1fr; }
+            .floating-social-dock { bottom: 1rem; left: 1rem; }
+        }
     </style>
 </head>
 <body>
+    <div class="ambient-glow"></div>
+
+    <!-- Floating Social Dock -->
+    <div class="floating-social-dock">
+        <a id="floating-whatsapp" href="https://wa.me/201021468153" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-whatsapp" title="تواصل عبر واتساب">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a id="floating-telegram" href="https://t.me/etech5" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-telegram" title="قناتنا على تيليجرام">
+            <i class="fa-brands fa-telegram"></i>
+        </a>
+        <a id="floating-instagram" href="https://instagram.com/etech5" target="_blank" rel="noopener noreferrer" class="social-dock-btn dock-instagram" title="حسابنا على انستغرام">
+            <i class="fa-brands fa-instagram"></i>
+        </a>
+    </div>
+
+    <!-- Floating Navbar -->
     <nav class="navbar">
         <div class="navbar-bar">
             <a href="../index.html" class="brand">
@@ -75,110 +396,179 @@
                 <li><a href="about.html">من نحن</a></li>
                 <li><a href="contact.html">تواصل معنا</a></li>
             </ul>
-            <a href="contact.html" class="btn-cta">تواصل الآن</a>
+            <a href="contact.html" class="btn-cta">
+                <span>تواصل الآن</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
         </div>
     </nav>
 
+    <!-- Page Hero -->
     <div class="hero">
         <div class="container">
-            <span class="hero-tag">حلول رقمية متكاملة</span>
-            <h1>خدماتنا البرمجية المتقدمة</h1>
+            <span class="hero-tag">
+                <i class="fa-solid fa-bolt"></i>
+                <span>حلول رقمية متكاملة وفائقة الأداء</span>
+            </span>
+            <h1>خدماتنا البرمجية <span>المتقدمة</span></h1>
             <p>نطور حلولاً برمجية تواكب أعلى المعايير العالمية لتمكين الشركات والمؤسسات من تحقيق التحول الرقمي والتفوق التنافسي.</p>
         </div>
     </div>
 
+    <!-- Main Grid -->
     <div class="container">
         <div class="grid">
+            <!-- Card 1 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-code"></i></div>
                     <h3>تطوير مواقع الويب المخصصة</h3>
                     <p>مواقع عصرية وفائقة السرعة مبنية بتقنيات React و Next.js مع تهيئة محركات البحث SEO وتوافق تام مع كافة الهواتف والشاشات.</p>
                     <ul class="feature-list">
-                        <li>تصميم متجاوب وسرعة تحميل فائقة</li>
-                        <li>لوحة تحكم مرنة وسهلة الاستخدام</li>
-                        <li>حماية سحابية وشهادات SSL مجانية</li>
+                        <li><i class="fa-solid fa-check"></i> تصميم متجاوب وسرعة تحميل فائقة</li>
+                        <li><i class="fa-solid fa-check"></i> لوحة تحكم مرنة وسهلة الاستخدام</li>
+                        <li><i class="fa-solid fa-check"></i> حماية سحابية وشهادات SSL مجانية</li>
                     </ul>
                 </div>
-                <a href="contact.html" class="card-link">ابدأ موقعك الآن &larr;</a>
+                <a href="contact.html?plan=starter" class="card-link">ابدأ موقعك الآن &larr;</a>
             </div>
 
+            <!-- Card 2 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-graduation-cap"></i></div>
                     <h3>المنصات التعليمية LMS</h3>
                     <p>أنظمة تعليم إلكتروني شاملة للمدرسين والأكاديميات مع حماية الفيديو من التحميل، اختبارات مؤتمتة، وتقارير تفصيلية.</p>
                     <ul class="feature-list">
-                        <li>بث فيديو مشفر ومضاد للتسريب</li>
-                        <li>بنوك أسئلة وتصحيح آلي فوري</li>
-                        <li>ربط الدفع الإلكتروني (فيزا، فوري، ميزة)</li>
+                        <li><i class="fa-solid fa-check"></i> بث فيديو مشفر ومضاد للتسريب (DRM)</li>
+                        <li><i class="fa-solid fa-check"></i> بنوك أسئلة وتصحيح آلي فوري</li>
+                        <li><i class="fa-solid fa-check"></i> ربط الدفع الإلكتروني (فيزا، فوري، ميزة)</li>
                     </ul>
                 </div>
                 <a href="educational-platforms.html" class="card-link">تفاصيل المنصات التعليمية &larr;</a>
             </div>
 
+            <!-- Card 3 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-cart-shopping"></i></div>
                     <h3>المتاجر الإلكترونية وحلول التجارة</h3>
                     <p>متاجر احترافية لبيع المنتجات الرقمية والمادية تدعم إدارة المخزون، الشحن الآلي، بوابات الدفع الإلكترونية السريعة.</p>
                     <ul class="feature-list">
-                        <li>تجربة تسوق بنقرة واحدة سريعة</li>
-                        <li>تتبع الطلبات عبر واتساب والرسائل</li>
-                        <li>ربط مباشر مع شركات الشحن والجمارك</li>
+                        <li><i class="fa-solid fa-check"></i> تجربة تسوق بنقرة واحدة سريعة (1-Click)</li>
+                        <li><i class="fa-solid fa-check"></i> تتبع الطلبات عبر واتساب والرسائل</li>
+                        <li><i class="fa-solid fa-check"></i> ربط مباشر مع شركات الشحن والجمارك</li>
                     </ul>
                 </div>
                 <a href="ecommerce-solutions.html" class="card-link">تفاصيل المتاجر الإلكترونية &larr;</a>
             </div>
 
+            <!-- Card 4 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-mobile-screen"></i></div>
                     <h3>تطبيقات الهواتف الذكية</h3>
                     <p>تطبيقات عالية الجودة تعمل بكفاءة على منصتي Android و iOS باستخدام Flutter و React Native مع أداء وسلاسة لا تضاهى.</p>
                     <ul class="feature-list">
-                        <li>تطبيقات موحدة للنظامين iOS & Android</li>
-                        <li>إشعارات فورية مخصصة للعملاء</li>
-                        <li>نشر رسمي على Google Play و App Store</li>
+                        <li><i class="fa-solid fa-check"></i> تطبيقات موحدة للنظامين iOS & Android</li>
+                        <li><i class="fa-solid fa-check"></i> إشعارات فورية مخصصة للعملاء (Push)</li>
+                        <li><i class="fa-solid fa-check"></i> نشر رسمي على Google Play و App Store</li>
                     </ul>
                 </div>
                 <a href="mobile-applications.html" class="card-link">تفاصيل تطبيقات الموبايل &larr;</a>
             </div>
 
+            <!-- Card 5 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-gears"></i></div>
                     <h3>تطوير واجهات REST APIs والأتمتة</h3>
                     <p>بناء واجهات برمجية آمنة وسريعة للربط بين الأنظمة، مع برمجة بوتات أتمتة لتقليل تكاليف العمليات والتشغيل.</p>
                     <ul class="feature-list">
-                        <li>تكامل مع أنظمة CRM و ERP</li>
-                        <li>بوابات API موثقة بتوثيق Swagger</li>
-                        <li>بنية تحتية سحابية على Cloudflare Workers</li>
+                        <li><i class="fa-solid fa-check"></i> تكامل مع أنظمة CRM و ERP</li>
+                        <li><i class="fa-solid fa-check"></i> بوابات API موثقة بتوثيق Swagger</li>
+                        <li><i class="fa-solid fa-check"></i> بنية تحتية سحابية عالية الاستقرار</li>
                     </ul>
                 </div>
-                <a href="contact.html" class="card-link">استشر خبير الأتمتة &larr;</a>
+                <a href="contact.html?plan=custom" class="card-link">استشر خبير الأتمتة &larr;</a>
             </div>
 
+            <!-- Card 6 -->
             <div class="service-card">
                 <div>
                     <div class="service-icon"><i class="fa-solid fa-headset"></i></div>
                     <h3>الدعم الفني والصيانة المستمرة</h3>
                     <p>خدمات إدارة الخوادم، النسخ الاحتياطي الدوري، التحديثات الأمنية، والمراقبة على مدار الساعة لضمان استقرار مشروعك.</p>
                     <ul class="feature-list">
-                        <li>مراقبة السيرفرات 24/7 دون توقف</li>
-                        <li>نسخ احتياطي يومي آمن ومستقل</li>
-                        <li>تحسين وتحديث أمني مستمر للأنظمة</li>
+                        <li><i class="fa-solid fa-check"></i> مراقبة السيرفرات 24/7 دون توقف</li>
+                        <li><i class="fa-solid fa-check"></i> نسخ احتياطي يومي آمن ومستقل</li>
+                        <li><i class="fa-solid fa-check"></i> تحسين وتحديث أمني مستمر للأنظمة</li>
                     </ul>
                 </div>
                 <a href="contact.html" class="card-link">تواصل للدعم الفني &larr;</a>
             </div>
         </div>
+
+        <!-- Banner CTA -->
+        <div class="cta-banner">
+            <h2>هل لديك فكرة مشروع مخصصة؟</h2>
+            <p>نقدم استشارات برمجية ودراسات جدوى تقنية مجانية لمساعدتك على اختيار البنية التحتية الأنسب لمشروعك.</p>
+            <a href="contact.html" class="btn-cta" style="padding: 0.85rem 2.4rem; font-size: 1rem;">
+                <span>احجز استشارتك التقنية المجانية</span>
+                <i class="fa-solid fa-arrow-left"></i>
+            </a>
+        </div>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
             <p>© 2026 E-TECH Solutions. جميع الحقوق محفوظة | <a href="../index.html">العودة للرئيسية</a></p>
         </div>
     </footer>
+
+    <!-- Social Links Sync Script -->
+    <script>
+        function syncSocialLinks() {
+            try {
+                let settings = {};
+                const localData = localStorage.getItem('etech_data');
+                if (localData) {
+                    const parsed = JSON.parse(localData);
+                    if (parsed.siteSettings) settings = parsed.siteSettings;
+                }
+
+                const waPhone = settings.whatsapp || '201021468153';
+                const tgHandle = settings.telegram || 'etech5';
+                const igHandle = settings.instagram || 'etech5';
+
+                const waBtn = document.getElementById('floating-whatsapp');
+                if (waBtn) waBtn.href = `https://wa.me/${waPhone.replace(/[^0-9]/g, '')}`;
+
+                const tgBtn = document.getElementById('floating-telegram');
+                if (tgBtn) {
+                    let tgUrl = tgHandle.trim();
+                    if (!tgUrl.startsWith('http://') && !tgUrl.startsWith('https://')) {
+                        tgUrl = `https://t.me/${tgUrl.replace(/^@/, '')}`;
+                    }
+                    tgBtn.href = tgUrl;
+                }
+
+                const igBtn = document.getElementById('floating-instagram');
+                if (igBtn) {
+                    let igUrl = igHandle.trim();
+                    if (!igUrl.startsWith('http://') && !igUrl.startsWith('https://')) {
+                        igUrl = `https://instagram.com/${igUrl.replace(/^@/, '')}`;
+                    }
+                    igBtn.href = igUrl;
+                }
+            } catch (e) {
+                console.warn('Social dock sync error:', e);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', syncSocialLinks);
+        window.addEventListener('storage', syncSocialLinks);
+    </script>
 </body>
 </html>
