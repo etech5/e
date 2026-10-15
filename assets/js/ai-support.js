@@ -88,25 +88,76 @@
             return "أعتذر لحضرتك جداً على أي تقصير أو عدم دقة في الرد السابق! 🌹\n\nبصفتي المساعد الذكي لـ **E-TECH**، هدفي تقديم أدق معلومة وأفضل خدمة لك. يسعدني تصحيح الأمر فوراً، أو يمكنك **التواصل مباشرة مع المهندس الاستشاري وفريقنا البشري** عبر واتساب لمناقشة طلبك بكل تفاصيله واحترافية تامة:\n\n📱 **واتساب المباشر:** [+201148296986](https://wa.me/201148296986)\nنحن في خدمتك دائماً ونضمن لك أفضل تجربة!";
         }
 
-        // 2. Greetings & Polite Openings
-        if (/^(سلام|سلام عليكم|السلام عليكم|مرحبا|اهلا|اهلين|ازيك|ازي حضرتك|صباح الخير|مساء الخير|هاي|يا هلا|الو|مساء الورد|صباح الفل|hello|hi|hey|good morning|good evening)$/.test(norm) ||
-            /^(السلام عليكم ورحمة الله|مرحبا بك|اهلا وسهلا|تحياتي)$/.test(norm) ||
-            (/\b(سلام|مرحبا|اهلا|ازيك|صباح الخير|مساء الخير|hi|hello)\b/.test(norm) && norm.length < 25)) {
+        // 2. Inquiries on Well-being & Status ("كيف حالك", "عامل ايه", "اخبارك", "كيفك", "ازيك", "شلونك", "ازي صحتك", "طمني عليك")
+        if (/(كيف|شو|شلون|ازي|ش)\s*(حالك|احوالك|اخبارك|صحتك|الصحه|الحال|الاوضاع)|عامل ايه|عاملين ايه|طمني عليك|طمنا عليك|كيفك|شخبارك|شلونك|شو الاخبار|اخبارك ايه|ازيك انت|كيف حالك انت|كيف حالك|ازي الحال|how are you|how do you do|how r u|how are things|hows it going|whats up/i.test(norm) ||
+            /^(ازيك|ازي حضرتك|كيفك انت|عامل ايه)$/.test(norm)) {
+            if (isEn) {
+                return "I am doing fantastic, thank you so much for asking! 😊 Hope you are having a wonderful and productive day.\n\nI am E-TECH's intelligent technical advisor, ready to assist you with your educational platform, mobile app, e-commerce store, or custom website. How can I assist you today?";
+            }
+            return "الحمد لله بخير ونعمة وفي أفضل حال يا فندم! 🌟 تسلم جداً لذوقك وسؤالك الراقي، كلك ذوق. أتمنى حضرتك تكون بأحسن حال ودايماً بخير.\n\nأنا هنا المستشار التقني الذكي لـ **E-TECH للحلول الرقمية**، جاهز لمساعدتك في أي استفسار يخص مشاريعك وتطوير برمجياتك (منصات تعليمية، متاجر إلكترونية، تطبيقات موبايل، ومواقع ويب). كيف تحب نبدأ اليوم؟ 😊";
+        }
+
+        // 3. Positive Status Confirmation ("الحمد لله", "تمام", "بخير", "كويس", "كله تمام", "زي الفل")
+        if (/^(الحمد لله|الحمدلله|بخير|تمام الحمد لله|بخير الحمد لله|كويس|كله تمام|زي الفل|تمام يا غالي|تمام يا باشا|تمام التمام|الحمدلله تمام|i am good|im good|doing good|fine thanks|all good)$/i.test(norm)) {
+            if (isEn) {
+                return "Glad to hear that! 🌟 It is our pleasure having you at **E-TECH**. Whenever you are ready to explore our digital solutions or discuss project ideas, feel free to ask!";
+            }
+            return "دائماً يا رب في خير وسعادة وراحة بال! 🤲 يسعدنا جداً تواصلك معنا في **E-TECH**. إذا كان في بالك أي فكرة مشروع أو حابب نستعرض معاً خدماتنا أو باقات الأسعار، أنا معك خطوة بخطوة في أي وقت!";
+        }
+
+        // 4. Willingness & Readiness for Questions ("ممكن سؤال", "عندي سؤال", "استفسار", "ممكن تساعدني", "محتاج مساعدة")
+        if (/(عندي|ممكن|عايز|عاوز|حابب|بدي|ابي)\s*(سؤال|استفسار|اسال|اسالك|طلب|مساعده)|(ممكن|تقدر|فيك)\s*(تساعدني|تفيدني)|محتاج\s*(مساعده|استفسار|اسال)|(سؤال|استفسار)\s*(بسيط|سريع|لو سمحت)|i have a question|can i ask|can you help/i.test(norm)) {
+            if (isEn) {
+                return "Of course, with absolute pleasure! 💡 Feel free to ask your question or share your project details, and I will provide you with clear, accurate guidance.";
+            }
+            return "أكيد يا فندم وتحت أمرك بكل سرور! 💡 تفضل بطرح سؤالك أو شاركني ما يدور ببالك وسأجيبك فوراً بكل دقة وتفصيل.";
+        }
+
+        // 5. Bot Role & Capabilities ("بتعمل ايه", "وظيفتك ايه", "ايه شغلك", "تقدر تعمل ايه", "بتساعد في ايه")
+        if (/(بتعمل|بتسوي|بتشتغل|وظيفتك|شغلك|دورك|فايدتك|تقدر تعمل|بتقدر تسوي|بتساعد في)\s*(ايه|شنو|شو|ايش)|(ما هي|ماذا|ماهو)\s*(وظيفتك|عملك|دورك)|what can you do|what do you do/i.test(norm)) {
+            if (isEn) {
+                return "I am the intelligent advisor for **E-TECH Digital Solutions** 🚀. Here is how I can help:\n\n• Answer any technical question regarding websites, mobile apps, and LMS platforms.\n• Explain our transparent pricing packages and promotional offers.\n• Detail features like video anti-leak DRM protection, online exams, and payment gateways.\n• Provide live demo links so you can test our work firsthand.\n• Connect you directly with our senior consultant on WhatsApp.\n\nHow can I help you take your project forward today?";
+            }
+            return "أنا المساعد التقني الذكي لشركة **E-TECH للحلول الرقمية** 🚀، ومهمتي أساعدك في إنجاح مشروعك الرقمي من البداية وحتى الإطلاق:\n\n• الإجابة على كل استفساراتك التقنية حول المواقع، المتاجر، وتطبيقات الموبايل.\n• استعراض باقات الأسعار الرسمية وتفاصيل كل باقة.\n• شرح أقوى ميزاتنا كحماية المنصات التعليمية (LMS) من تسريب الفيديوهات وبوابات الدفع.\n• تزويدك بروابط ديمو حي لمعاينة أعمالنا وتجربتها بنفسك.\n• توصيلك مباشرة بالمهندس الاستشاري عبر واتساب لأي دراسة فنية مخصصة.\n\nكيف يمكنني مساعدتك في فكرة مشروعك اليوم؟";
+        }
+
+        // 6. Identity & Nature ("انت مين", "مين انت", "انت ذكاء اصطناعي", "انت روبوت", "انت انسان ولا الة", "مين عملك", "مين برمجك")
+        if (/مين انت|من انت|انت مين|انت روبوت|انت ذكاء|انت ال|انت بوت|انت بشري|انت انسان|انت حقيقي|مين عملك|مين برمجك|مين طورك|مين صاحبك|who are you|are you a bot|are you real|are you ai|who made you/.test(norm)) {
+            if (isEn) {
+                return "I am the official AI technical advisor for **E-TECH Digital Solutions**, engineered under the direction of **Eng. Omar Zayed** and our elite software team. 🤖💡\n\nI am available 24/7 to provide technical guidance, quotes, and project recommendations. If you prefer to speak directly with a human consultant, you can chat with us right away on WhatsApp: [+201148296986](https://wa.me/201148296986) 🌹";
+            }
+            return "أنا المساعد الذكي والمستشار التقني الرسمي لشركة **E-TECH Digital Solutions**، طُوّرت بالذكاء الاصطناعي بإشراف **المهندس عمر زايد** وفريق مهندسي البرمجيات في الشركة. 🤖💡\n\nأنا هنا لخدمتك على مدار الساعة ومساعدتك في اختيار أفضل الحلول البرمجية التي تضمن نجاح مشروعك. وإذا فضّلت في أي وقت التحدث مباشرة مع فريقنا البشري، المهندس الاستشاري متاح لك دائماً عبر واتساب: [+201148296986](https://wa.me/201148296986) 🌹";
+        }
+
+        // 7. Specific Time Greetings (Morning / Evening)
+        if (/صباح الخير|صباح الفل|صباح النور|صباح الورد|صباحك عسل|good morning/.test(norm)) {
+            if (isEn) return "Good morning! ☀️ Welcome to **E-TECH Digital Solutions**. Wishing you an amazing day ahead! How may I assist your business today?";
+            return "صباح الخير والبركة والنشاط يا فندم! ☀️ أهلاً ومرحباً بك في **E-TECH للحلول الرقمية**. أتمنى لك يوماً سعيداً وموفقاً بإذن الله. كيف يمكنني مساعدة مشروعك اليوم؟";
+        }
+        if (/مساء الخير|مساء الفل|مساء النور|مساء الورد|مساء الجمال|good evening|good night/.test(norm)) {
+            if (isEn) return "Good evening! 🌙 Welcome to **E-TECH Digital Solutions**. How can I help you tonight with our software and tech plans?";
+            return "مساء الخير والأنوار والجمال يا فندم! 🌙 يسعد مساك وأهلاً بك في **E-TECH**. أتمنى تكون ليلتك هادئة وسعيدة، كيف يمكنني خدمتك ومساعدة مشروعك الليلة؟";
+        }
+
+        // 8. General Greetings & Warm Openings
+        if (/^(سلام|سلام عليكم|السلام عليكم|مرحبا|اهلا|اهلين|هاي|يا هلا|هلا والله|هلا بيك|الو|تحياتي|hello|hi|hey)$/.test(norm) ||
+            /^(السلام عليكم ورحمة الله|مرحبا بك|اهلا وسهلا|تحياتي الطيبه)$/.test(norm) ||
+            (/\b(سلام|مرحبا|اهلا|هاي|hello|hi|hey)\b/.test(norm) && norm.length < 25)) {
             if (isEn) {
                 return "Hello and welcome to **E-TECH Digital Solutions**! 🌟\n\nI am your smart technical advisor. How can I help you today with your educational platform, mobile app, e-commerce store, or custom website?\n\nFeel free to ask about our plans, live demos, or project timelines!";
             }
             return "وعليكم السلام ورحمة الله وبركاته! أهلاً بحضرتك في **E-TECH** للحلول الرقمية وتطوير البرمجيات. 🌟\n\nأنا مستشارك التقني الذكي، ويسعدني الإجابة على كافة استفساراتك حول المنصات التعليمية، المتاجر الإلكترونية، تطبيقات الموبايل، والمواقع التعريفية.\n\nكيف يمكنني مساعدة مشروعك اليوم؟";
         }
 
-        // 3. Identity / About E-TECH / Leadership / Founder
-        if (/مين انت|من انتم|مين اصحاب|مين صاحب|مين المدير|مين المؤسس|عمر زايد|عن الشركه|نبذه عنكم|من تكون|اين انتم|مقركم|عنوانكم|شركتكم|who are you|about us|founder|omar zayed/.test(norm)) {
+        // 9. About E-TECH Company / Leadership / Founder
+        if (/مين اصحاب|مين صاحب|مين المدير|مين المؤسس|عمر زايد|عن الشركه|نبذه عنكم|من تكون|اين انتم|مقركم|عنوانكم|شركتكم|about us|founder|omar zayed/.test(norm)) {
             if (isEn) {
                 return "**E-TECH** is a premier software engineering and digital solutions agency led by **Eng. Omar Zayed**.\n\n✨ **What We Deliver:**\n• **Educational Platforms (LMS):** High-security DRM video streaming with dynamic watermarks.\n• **High-Converting E-Commerce:** Blazing speed, one-step checkout, and seamless payment integration.\n• **Mobile Apps (iOS & Android):** Built with modern Flutter & React Native architectures.\n• **Showcase & Corporate Websites:** Cyberpunk & modern UI/UX with top-tier SEO.\n\n📍 Based in Egypt, serving enterprises and clients across the entire Arab world and internationally.\n\nDirect WhatsApp: [+201148296986](https://wa.me/201148296986)";
             }
             return "**شركة E-TECH** هي وكالة برمجية رائدة متخصصة في تطوير أحدث الحلول الرقمية، وتطبيقات الويب والموبايل.\n\n🚀 **بقيادة المهندس عمر زايد (Eng. Omar Zayed)** وفريق من نخبة مهندسي البرمجيات وتجربة المستخدم.\n\n✨ **أبرز مجالات تخصصنا:**\n• **المنصات التعليمية (LMS):** أقوى حماية مشفرة ضد تصوير الشاشة مع علامات مائية وبنوك أسئلة.\n• **المتاجر الإلكترونية المتكاملة:** سريعة وسلسة مع ربط بوابات الدفع والشحن.\n• **تطبيقات الجوال (iOS & Android):** تطبيقات هجينة وأصلية بتجربة استخدام فائقة.\n• **المواقع التعريفية وصفحات الهبوط:** بتصاميم عصرية جذابة وتوافق تام مع محركات البحث.\n\n📍 مقرنا الرئيسي في مصر ونخدم مئات العملاء في مصر والوطن العربي. هل تود معرفة تفاصيل باقاتنا أو طلب استشارة خاصة؟";
         }
 
-        // 4. Pricing, Costs, & Quotes
+        // 10. Pricing, Costs, & Quotes
         if (/سعر|اسعار|اسعاركم|بكام|بكم|تكلف|تكلفه|فلوس|باقه|باقات|خطط|عروض|خصم|كام يكلف|price|cost|pricing|how much|plans|quote/.test(norm)) {
             if (isEn) {
                 return "Our official transparent pricing plans at **E-TECH**:\n\n" +
@@ -138,7 +189,7 @@
                    "هل تحب تفاصيل محددة لمشروعك؟ يمكنك مراسلتنا فوراً على واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 5. Educational Platforms (LMS) & Teachers
+        // 11. Educational Platforms (LMS) & Teachers
         if (/منص|تعليم|مدرس|معلم|سنتر|اكاديمي|كورس|كورسات|امتحان|طالب|طلاب|تسجيل الشاشه|علامه مائيه|فيديو|فيديوهات|lms|education|course|teacher|school/.test(norm)) {
             if (isEn) {
                 return "E-TECH is an industry leader in **Educational Platforms (LMS)**:\n\n" +
@@ -158,7 +209,7 @@
                    "هل ترغب في تجربة **ديمو حي (Live Demo)** للمنصة الآن؟ تواصل معنا مباشرة عبر واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 6. E-Commerce & Online Stores
+        // 12. E-Commerce & Online Stores
         if (/متجر|متاجر|سله|شحن|منتج|منتجات|بيع|شراء|دفع الكتروني|كوبون|ecommerce|store|shop|cart|payment/.test(norm)) {
             if (isEn) {
                 return "We craft high-converting, blazing-fast **E-Commerce Stores** equipped with:\n\n" +
@@ -178,7 +229,7 @@
                    "ما نوع المنتجات التي تود بيعها؟ يسعدنا مساعدتك في اختيار أفضل هيكلة لمتجرك عبر واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 7. Mobile Applications (iOS & Android)
+        // 13. Mobile Applications (iOS & Android)
         if (/تطبيق|ابلكيشن|موبايل|اندرويد|ايفون|جوال|فلاتر|flutter|react native|ios|android|mobile app|application/.test(norm)) {
             if (isEn) {
                 return "We build enterprise-grade **Mobile Applications (iOS & Android)** using Flutter & React Native:\n\n" +
@@ -196,7 +247,7 @@
                    "ما هي فكرة تطبيقك؟ شاركنا التفاصيل وسنزودك بدراسة فنية مبدئية مجاناً عبر واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 8. Websites & Landing Pages
+        // 14. Websites & Landing Pages
         if (/موقع|ويب|ويب سايت|لاندنج|صفحه هبوط|تعريفي|تصميم موقع|برمجه موقع|website|landing page|web/.test(norm)) {
             if (isEn) {
                 return "We engineer state-of-the-art **Websites & Landing Pages**:\n\n" +
@@ -216,7 +267,7 @@
                    "هل تحب رؤية نماذج سابقة أو طلب موقعك الآن؟ تواصل معنا عبر واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 9. Duration & Delivery Time
+        // 15. Duration & Delivery Time
         if (/وقت|مده|كم يوم|كام يوم|تستغرق|تخلص|تسليم|تاريخ|تنفيذ|timeline|duration|how long|delivery/.test(norm)) {
             if (isEn) {
                 return "We adhere strictly to guaranteed delivery milestones at **E-TECH**:\n\n" +
@@ -234,7 +285,7 @@
                    "هل لديك موعد محدد تود إطلاق مشروعك فيه؟ راسلنا عبر واتساب: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 10. Payment Methods & Terms
+        // 16. Payment Methods & Terms
         if (/دفع|طرق الدفع|فودافون كاش|انستاباي|فيزا|ميزه|تقسيط|عربون|تحويل|payment|instapay|vodafone/.test(norm)) {
             if (isEn) {
                 return "We provide flexible, secure payment methods:\n\n" +
@@ -252,7 +303,7 @@
                    "💼 **نظام السداد:** 50% مقدم تعاقد وبدء تنفيذ، والـ 50% المتبقية بعد معاينتك واعتمادك الكامل للنسخة التجريبية قبل الإطلاق الرسمي!";
         }
 
-        // 11. Guarantees, Maintenance, & Support
+        // 17. Guarantees, Maintenance, & Support
         if (/ضمان|دعم|صيانه|مشاكل|عطل|تعديل|تحديث|خدمه ما بعد|support|guarantee|maintenance/.test(norm)) {
             if (isEn) {
                 return "Your project's long-term success is our priority:\n\n" +
@@ -269,7 +320,7 @@
                    "نحن شركاؤك التقنيون في كل خطوة!";
         }
 
-        // 12. Contact, Phone, & WhatsApp
+        // 18. Contact, Phone, & WhatsApp
         if (/تواصل|رقم|واتس|واتساب|تلفون|تليفون|هاتف|ايميل|بريد|عنوان|مكانكم|اكلم حد|مبيعات|اتصل|contact|phone|whatsapp|email|call/.test(norm)) {
             if (isEn) {
                 return "Reach out directly to our leadership and engineering team:\n\n" +
@@ -286,7 +337,7 @@
                    "اضغط على رابط الواتساب لبدء محادثة فورية مع المهندس الاستشاري الآن!";
         }
 
-        // 13. Portfolio & Previous Work
+        // 19. Portfolio & Previous Work
         if (/اعمال|سابقه|نماذج|بورتفوليو|شغلكم|مشاريع|ديمو|portfolio|samples|projects|work/.test(norm)) {
             if (isEn) {
                 return "We take pride in powering high-profile educational centers, e-commerce stores, and corporate websites across the region.\n\n" +
@@ -300,7 +351,7 @@
                    "تواصل معنا عبر واتساب وسنرسل لك روابط الديمو فوراً: [+201148296986](https://wa.me/201148296986)";
         }
 
-        // 14. Technology Stack & Security
+        // 20. Technology Stack & Security
         if (/تقني|لغات|stack|technology|tech|react|node|python|flutter|database|سيرفر|حمايه|امان/.test(norm)) {
             if (isEn) {
                 return "At **E-TECH**, we leverage state-of-the-art enterprise stacks:\n\n" +
@@ -318,43 +369,60 @@
                    "• **الحماية والاستضافة:** سيرفرات سحابية سريعة مع حماية Cloudflare وتشفير فيديوهات متقدم.";
         }
 
-        // 15. Compliments & Gratitude
-        if (/شكرا|تسلم|ممتاز|عاش|الله يخليك|يعطيك العافيه|مشكور|تمام|ماشي|اوكي|عظيم|thanks|thx|great|perfect|awesome/.test(norm)) {
+        // 21. Compliments, Gratitude & Polite Confirmations
+        if (/شكرا|تسلم|تسلملي|الف شكر|مشكور|ممتاز|عاش|الله يخليك|يعطيك العافيه|الله يعافيك|تمام|ماشي|اوكي|اوك|حاضر|فهمت|وصلت|عظيم|thanks|thx|thank you|great|perfect|awesome|ok|okay|got it/.test(norm)) {
             if (isEn) {
                 return "You are very welcome! 🌟 It is our utmost pleasure at **E-TECH** to serve you. Whenever you are ready to launch your project, we are always here for you on WhatsApp: [+201148296986](https://wa.me/201148296986). Have a wonderful day!";
             }
-            return "الشكر لله وحده يا فندم! 🌟 نحن في **E-TECH** سعداء جداً بخدمتك وفي انتظارك دائماً. إذا رغبت في أي استشارة إضافية أو بدء تنفيذ مشروعك، يسعدنا تواصلك معنا في أي وقت عبر واتساب: [+201148296986](https://wa.me/201148296986). يومك سعيد وموفق بإذن الله! 🚀";
+            return "الشكر لله وحده يا فندم، وتحت أمرك في أي وقت! 🌟 نحن في **E-TECH** سعداء جداً بخدمتك وفي انتظارك دائماً. إذا رغبت في أي استشارة إضافية أو بدء تنفيذ مشروعك، يسعدنا تواصلك معنا في أي لحظة عبر واتساب: [+201148296986](https://wa.me/201148296986). يومك سعيد وموفق بإذن الله! 🚀";
         }
 
-        // 16. Context-Aware Fallback (Polite, structured, never repeats robotic "سعداء باستفسارك حول: ...")
-        if (isEn) {
-            return "Thank you for reaching out to **E-TECH Digital Solutions**! 💡\n\n" +
-                   "We specialize in:\n" +
-                   "• **Educational LMS Platforms** with anti-recording video protection.\n" +
-                   "• **High-converting E-Commerce** stores with payment & shipping integrations.\n" +
-                   "• **Native & Cross-platform Mobile Apps** (iOS & Android).\n" +
-                   "• **Modern Showcase Websites** with high-speed performance.\n\n" +
-                   "To give you the most accurate technical recommendation and quotation, please chat with our senior consultant on WhatsApp: [+201148296986](https://wa.me/201148296986) or choose from the quick topics below!";
+        // 22. Intelligent Question / Inquiry Detection
+        // If the user asked a question with question particles or question mark
+        const isQuestion = /[?؟]/.test(raw) || /(ازاي|كيف|ليه|لماذا|فين|اين|امتى|متى|هل|كام|كم|شو|ايش|مين|من|how|why|what|where|when|can|could|is|are)/i.test(norm);
+        if (isQuestion) {
+            if (isEn) {
+                return "That is a great question! 💡\n\nTo give you the exact technical recommendation and tailored quotation, could you share a bit more detail about your project? For instance, are you inquiring about:\n• **Educational Platforms (LMS)** with anti-recording security?\n• **E-Commerce Stores** with integrated payments?\n• **Mobile Apps** (iOS & Android)?\n• **Showcase Websites** & custom designs?\n\nYou can also chat directly with our senior consultant on WhatsApp: [+201148296986](https://wa.me/201148296986) for instant live assistance!";
+            }
+            return "سؤال رائع ومهم جداً يا فندم! 💡\n\nللإجابة على سؤالك بدقة واحترافية تناسب مشروعك تحديداً، يسعدني توضح لي تفاصيل أكثر عما تبحث عنه، أو يمكنك اختيار ما يهمك من خدماتنا:\n• **المنصات التعليمية (LMS):** حماية الفيديوهات من التسجيل وبنوك أسئلة.\n• **المتاجر الإلكترونية:** ربط بوابات الدفع والشحن وسرعة فائقة.\n• **تطبيقات الموبايل:** أندرويد وآيفون بأحدث التقنيات.\n• **المواقع التعريفية:** سرعة فائقة وتصاميم عصرية.\n\nكما يمكنك مراسلة المهندس الاستشاري مباشرة عبر واتساب لمناقشة فكرتك خطوة بخطوة: [+201148296986](https://wa.me/201148296986)";
         }
-        return "أهلاً بحضرتك! استفسارك محط اهتمامنا الكبير في **E-TECH**. 💡\n\n" +
-               "نحن متخصصون في تصميم وتطوير الحلول البرمجية المتكاملة:\n" +
-               "• **المنصات التعليمية المتقدمة (LMS)** مع حماية الفيديوهات من التسجيل وبنوك الأسئلة.\n" +
-               "• **المتاجر الإلكترونية السريعة** مع ربط بوابات الدفع والشحن.\n" +
-               "• **تطبيقات الموبايل الذكية** (iOS & Android) بأحدث التقنيات.\n" +
-               "• **المواقع التعريفية وصفحات الهبوط** بتصاميم استثنائية وسرعة فائقة.\n\n" +
-               "لضمان إعطائك أفضل إجابة فنية دقيقة وعرض سعر ملائم لاحتياجاتك، يسعدنا مناقشة تفاصيل فكرتك مباشرة مع المهندس الاستشاري عبر **واتساب المباشر**: [+201148296986](https://wa.me/201148296986) أو يمكنك اختيار أحد المواضيع السريعة أدناه!";
+
+        // 23. Friendly Conversational Fallback (Natural, welcoming, not spammy)
+        if (isEn) {
+            return "Hello there! 🌟 I am E-TECH's AI assistant, here to assist you anytime. Feel free to ask about our software services, plans, or project workflows.\n\nYou can choose from the quick topics below, or connect directly with our engineering team on WhatsApp: [+201148296986](https://wa.me/201148296986) 💬";
+        }
+        return "أهلاً بحضرتك يا فندم! 🌟 أنا المستشار التقني الذكي لـ **E-TECH**، في خدمتك دائماً لمساعدتك في أي استفسار تقني أو توضيح تفاصيل باقاتنا وخدماتنا البرمجية.\n\nتفضل بسؤالك مباشرة أو اختر من الأزرار السريعة بالأسفل، كما يسعدنا تواصلك في أي وقت مع المهندس الاستشاري عبر واتساب: [+201148296986](https://wa.me/201148296986) 💬";
     }
 
     // Live AI query with Groq LLM integration and seamless fallback
     async function getAIResponse(userInput) {
         const siteSettings = (typeof DataManager !== 'undefined' && DataManager.getData && DataManager.getData().siteSettings) || {};
-        const groqApiKey = siteSettings.groqApiKey || '';
+        let groqApiKey = siteSettings.groqApiKey || '';
+
+        // Check fallback storage locations for groqApiKey
+        if (!groqApiKey && typeof localStorage !== 'undefined') {
+            try {
+                groqApiKey = localStorage.getItem('etech_groq_key') || localStorage.getItem('groqApiKey') || '';
+                if (!groqApiKey) {
+                    const rawData = localStorage.getItem('etech_data') || localStorage.getItem('etech_site_data');
+                    if (rawData) {
+                        const parsed = JSON.parse(rawData);
+                        if (parsed && parsed.siteSettings && parsed.siteSettings.groqApiKey) {
+                            groqApiKey = parsed.siteSettings.groqApiKey;
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+        if (!groqApiKey && typeof window !== 'undefined' && window.ETECH_GROQ_KEY) {
+            groqApiKey = window.ETECH_GROQ_KEY;
+        }
 
         // Add user turn to conversation history
         conversationHistory.push({ role: 'user', content: userInput });
         if (conversationHistory.length > 8) conversationHistory.shift();
 
-        // 1. If Groq API Key is configured in Admin Settings, use live LLM with strict professional prompt
+        // 1. If Groq API Key is configured, use live LLM with strict professional prompt
         if (groqApiKey) {
             const savedModel = siteSettings.groqModel || 'llama-3.3-70b-versatile';
             const candidateModels = [savedModel, 'llama-3.3-70b-versatile', 'llama-3.1-8b-instant'];
@@ -362,15 +430,17 @@
 
             const systemPrompt = `أنت المستشار التقني ومسؤول نجاح العملاء الرسمي لشركة E-TECH للبرمجيات والحلول الرقمية (E-TECH Digital Solutions) بقيادة المهندس عمر زايد.
 مهمتك:
-1. الرد بأسلوب فائق اللباقة والاحترافية والود، باللهجة المصرية الراقية المهذبة (أو بالإنجليزية إذا سأل العميل بالإنجليزية).
-2. معلومات الشركة الأساسية:
+1. التحدث بأسلوب طبيعي جداً، فائق اللباقة والود والاحترافية، باللهجة المصرية الراقية المهذبة (أو بالإنجليزية إذا سأل العميل بالإنجليزية).
+2. إذا سألك العميل عن حالك (مثل 'كيف حالك' أو 'عامل ايه' أو 'اخبارك')، أجب بلباقة وود مثل إنسان راقٍ ('الحمد لله بخير ونعمة، تسلم لذوقك...')، ولا تكرر رسالة تسويقية جامدة أبداً!
+3. أجب مباشرة على سؤال العميل بذكاء واختصار، وساعده بمعلومات دقيقة.
+4. معلومات الشركة الأساسية:
 - الباقات: باقة الانطلاق للمواقع التعريفية (تبدأ من 3900 ج.م)، باقة المنصات التعليمية LMS والمتاجر الإلكترونية (8900 ج.م الأكثر طلباً)، والباقة المؤسسية وتطبيقات الموبايل المخصصة (تسعير مخصص).
 - كافة الباقات تشمل دومين واستضافة سريعة مجاناً لسنة و3 أشهر صيانة ودعم فني مجاناً.
 - المنصات التعليمية تشمل حماية كاملة للفيديوهات من تصوير الشاشة مع علامة مائية متحركة باسم ورقم الطالب، وبنوك أسئلة وتصحيح آلي وبوابات دفع.
 - المتاجر تشمل سلة سريعة وربط بوابات الدفع (فيزا، فودافون كاش، إنستاباي، فوري) والشحن وبكسلات الإعلانات.
 - تطبيقات الموبايل تطور بأحدث تقنيات Flutter و React Native لكلا النظامين iOS و Android.
 - التواصل المباشر عبر واتساب: +201148296986 أو البريد: etechn3l3gy@gmail.com.
-3. كن موجزاً وواضحاً ومقنعاً، واختم دائماً بتشجيع العميل على التواصل عبر واتساب +201148296986 للحصول على عرض سعر أو ديمو حي.`;
+5. اختم دائماً بلباقة مع تشجيع العميل على التواصل عبر واتساب +201148296986 للحصول على عرض سعر أو ديمو حي.`;
 
             const messagesPayload = [
                 { role: 'system', content: systemPrompt },
