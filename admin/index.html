@@ -819,9 +819,9 @@
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الرابط وتجربته
                                 </a>
                             </label>
-                            <input type="url" id="setSiteTelegram" class="form-control" dir="ltr" placeholder="https://t.me/etech_solutions">
+                            <input type="url" id="setSiteTelegram" class="form-control" dir="ltr" placeholder="https://t.me/etech_studio">
                             <small style="color:var(--text-muted); font-size:0.8rem; margin-top:0.35rem; display:block;">
-                                رابط قناة أو حساب التيليجرام الكامل (مثال: https://t.me/etech_solutions)
+                                رابط قناة أو حساب التيليجرام الكامل (مثال: https://t.me/etech_studio)
                             </small>
                         </div>
                         <div class="form-group" style="margin-bottom:0;">
@@ -834,9 +834,9 @@
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i> فتح الرابط وتجربته
                                 </a>
                             </label>
-                            <input type="url" id="setSiteInstagram" class="form-control" dir="ltr" placeholder="https://instagram.com/etech_solutions">
+                            <input type="url" id="setSiteInstagram" class="form-control" dir="ltr" placeholder="https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1">
                             <small style="color:var(--text-muted); font-size:0.8rem; margin-top:0.35rem; display:block;">
-                                رابط صفحة الانستجرام الكامل (مثال: https://instagram.com/etech_solutions)
+                                رابط صفحة الانستجرام الكامل (مثال: https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1)
                             </small>
                         </div>
                     </div>
@@ -993,8 +993,8 @@
                             phone: '+20 11 48296986',
                             email: 'etechn3l3gy@gmail.com',
                             whatsapp: '201148296986',
-                            telegram: 'https://t.me/etech_solutions',
-                            instagram: 'https://instagram.com/etech_solutions',
+                            telegram: 'https://t.me/etech_studio',
+                            instagram: 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1',
                             groqApiKey: ''
                         },
                         services: [
@@ -1068,11 +1068,11 @@
                         }
                         if (!parsed.siteSettings) { parsed.siteSettings = {}; updated = true; }
                         if (!parsed.siteSettings.telegram) {
-                            parsed.siteSettings.telegram = 'https://t.me/etech_solutions';
+                            parsed.siteSettings.telegram = 'https://t.me/etech_studio';
                             updated = true;
                         }
                         if (!parsed.siteSettings.instagram) {
-                            parsed.siteSettings.instagram = 'https://instagram.com/etech_solutions';
+                            parsed.siteSettings.instagram = 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1';
                             updated = true;
                         }
                         if (!parsed.siteStats) {
@@ -1346,14 +1346,15 @@
 
             // Populate Settings Forms
             const settings = data.siteSettings || {};
+            document.getElementById('inputGeminiApiKey').value = settings.geminiApiKey || '';
             document.getElementById('inputApiKey').value = settings.groqApiKey || '';
             document.getElementById('setSiteTitle').value = settings.title || '';
             document.getElementById('setSiteDesc').value = settings.description || '';
             document.getElementById('setSitePhone').value = settings.phone || '';
             document.getElementById('setSiteEmail').value = settings.email || '';
             document.getElementById('setSiteWhatsapp').value = settings.whatsapp || '';
-            document.getElementById('setSiteTelegram').value = settings.telegram || 'https://t.me/etech_solutions';
-            document.getElementById('setSiteInstagram').value = settings.instagram || 'https://instagram.com/etech_solutions';
+            document.getElementById('setSiteTelegram').value = settings.telegram || 'https://t.me/etech_studio';
+            document.getElementById('setSiteInstagram').value = settings.instagram || 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1';
             updateSocialPreviewLinks();
 
             // Populate Testimonials Grid

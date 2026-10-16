@@ -15,6 +15,8 @@
         founder: 'المهندس عمر زايد (Eng. Omar Zayed)',
         whatsapp: '+201148296986',
         whatsappLink: 'https://wa.me/201148296986',
+        telegram: 'https://t.me/etech_studio',
+        instagram: 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1',
         phone: '+20 11 48296986',
         email: 'etechn3l3gy@gmail.com',
         prices: {
@@ -88,7 +90,23 @@
             return "أعتذر لحضرتك جداً على أي تقصير أو عدم دقة في الرد السابق! 🌹\n\nبصفتي المساعد الذكي لـ **E-TECH**، هدفي تقديم أدق معلومة وأفضل خدمة لك. يسعدني تصحيح الأمر فوراً، أو يمكنك **التواصل مباشرة مع المهندس الاستشاري وفريقنا البشري** عبر واتساب لمناقشة طلبك بكل تفاصيله واحترافية تامة:\n\n📱 **واتساب المباشر:** [+201148296986](https://wa.me/201148296986)\nنحن في خدمتك دائماً ونضمن لك أفضل تجربة!";
         }
 
-        // 2. Inquiries on Well-being & Status ("كيف حالك", "عامل ايه", "اخبارك", "كيفك", "ازيك", "شلونك", "ازي صحتك", "طمني عليك")
+        // 1.5 Inquiries about Identity & AI ("مين انت", "انت جمناي", "اسمك ايه", "مين صممك", "who are you")
+        if (/مين انت|انت مين|اسمك ايه|شو اسمك|انت جمناي|انت gemini|ذكاء اصطناعي|مين صنعك|مين طورك|مين صممك|who are you|what is your name/i.test(norm)) {
+            if (isEn) {
+                return "I am **E-TECH AI**, the intelligent conversational assistant for **E-TECH Digital Solutions**, powered by Google Gemini-grade intelligence! 🚀\n\nI am here to assist you with everything related to web development, mobile apps, educational platforms, cyber security, and technology advice.\n\nFeel free to ask me anything, or connect with our engineering team on WhatsApp: [+201148296986](https://wa.me/201148296986) ✨";
+            }
+            return "أنا **المستشار والمساعد الذكي لـ E-TECH للحلول الرقمية** بقيادة المهندس عمر زايد 🌟\n\nتم تزويدي بنظام ذكاء اصطناعي فائق يشبه **Google Gemini** لمساعدتك في كل ما يتعلق بالبرمجة، وتطوير المواقع والمنصات التعليمية، والمتاجر الإلكترونية، وتطبيقات الموبايل، وتقديم الاستشارات التقنية بدقة واحترافية!\n\nيسعدني جداً الإجابة على أي سؤال لديك، أو يمكنك متابعتنا على:\n📷 [انستجرام: etech.stu](https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1)\n✈️ [تيليجرام: etech_studio](https://t.me/etech_studio)\n💬 [واتساب: +201148296986](https://wa.me/201148296986)";
+        }
+
+        // 1.6 Inquiries about Social Links ("انستجرام", "تيليجرام", "انستا", "تليجرام", "لينك الانستا", "قناة التليجرام")
+        if (/انستجرام|انستغرام|انستا|تليجرام|تيليجرام|تليغرام|قناه التليجرام|قناة التليجرام|لينك الانستا|صفحه الانستا|حساب الانستا|instagram|telegram/i.test(norm)) {
+            if (isEn) {
+                return "Here are our official social channels at **E-TECH**:\n\n📷 **Instagram:** [instagram.com/etech.stu](https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1)\n✈️ **Telegram Channel:** [t.me/etech_studio](https://t.me/etech_studio)\n💬 **WhatsApp Direct:** [+201148296986](https://wa.me/201148296986)\n\nFeel free to follow us for our latest software releases and offers!";
+            }
+            return "يسعدنا دائماً تواصلك ومتابعتنا على قنواتنا الرسمية في **E-TECH**:\n\n📷 **صفحتنا على إنستجرام:**\n[https://www.instagram.com/etech.stu](https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1)\n\n✈️ **قناتنا الرسمية على تيليجرام:**\n[https://t.me/etech_studio](https://t.me/etech_studio)\n\n💬 **واتساب المباشر للاستشارات:**\n[+201148296986](https://wa.me/201148296986)\n\nأهلاً بك في أي وقت يا فندم! 🌟";
+        }
+
+                // 2. Inquiries on Well-being & Status ("كيف حالك", "عامل ايه", "اخبارك", "كيفك", "ازيك", "شلونك", "ازي صحتك", "طمني عليك")
         if (/(كيف|شو|شلون|ازي|ش)\s*(حالك|احوالك|اخبارك|صحتك|الصحه|الحال|الاوضاع)|عامل ايه|عاملين ايه|طمني عليك|طمنا عليك|كيفك|شخبارك|شلونك|شو الاخبار|اخبارك ايه|ازيك انت|كيف حالك انت|كيف حالك|ازي الحال|how are you|how do you do|how r u|how are things|hows it going|whats up/i.test(norm) ||
             /^(ازيك|ازي حضرتك|كيفك انت|عامل ايه)$/.test(norm)) {
             if (isEn) {
@@ -394,10 +412,92 @@
         return "أهلاً بحضرتك يا فندم! 🌟 أنا المستشار التقني الذكي لـ **E-TECH**، في خدمتك دائماً لمساعدتك في أي استفسار تقني أو توضيح تفاصيل باقاتنا وخدماتنا البرمجية.\n\nتفضل بسؤالك مباشرة أو اختر من الأزرار السريعة بالأسفل، كما يسعدنا تواصلك في أي وقت مع المهندس الاستشاري عبر واتساب: [+201148296986](https://wa.me/201148296986) 💬";
     }
 
-    // Live AI query with Groq LLM integration and seamless fallback
+    // Live AI query with Google Gemini & Groq LLM integration and intelligent fallback
     async function getAIResponse(userInput) {
         const siteSettings = (typeof DataManager !== 'undefined' && DataManager.getData && DataManager.getData().siteSettings) || {};
+        let geminiApiKey = siteSettings.geminiApiKey || '';
         let groqApiKey = siteSettings.groqApiKey || '';
+
+        // Check fallback storage locations for API Keys
+        if (typeof localStorage !== 'undefined') {
+            try {
+                if (!geminiApiKey) {
+                    geminiApiKey = localStorage.getItem('etech_gemini_key') || localStorage.getItem('geminiApiKey') || '';
+                }
+                if (!groqApiKey) {
+                    groqApiKey = localStorage.getItem('etech_groq_key') || localStorage.getItem('groqApiKey') || '';
+                }
+                if (!geminiApiKey || !groqApiKey) {
+                    const rawData = localStorage.getItem('etech_data') || localStorage.getItem('etech_site_data');
+                    if (rawData) {
+                        const parsed = JSON.parse(rawData);
+                        if (parsed && parsed.siteSettings) {
+                            if (!geminiApiKey && parsed.siteSettings.geminiApiKey) geminiApiKey = parsed.siteSettings.geminiApiKey;
+                            if (!groqApiKey && parsed.siteSettings.groqApiKey) groqApiKey = parsed.siteSettings.groqApiKey;
+                        }
+                    }
+                }
+            } catch(e) {}
+        }
+        if (!geminiApiKey && typeof window !== 'undefined' && window.ETECH_GEMINI_KEY) {
+            geminiApiKey = window.ETECH_GEMINI_KEY;
+        }
+        if (!groqApiKey && typeof window !== 'undefined' && window.ETECH_GROQ_KEY) {
+            groqApiKey = window.ETECH_GROQ_KEY;
+        }
+
+        // Add user turn to conversation history
+        conversationHistory.push({ role: 'user', content: userInput });
+        if (conversationHistory.length > 10) conversationHistory.shift();
+
+        // 1. First priority: Google Gemini 1.5 Flash (real Gemini responses)
+        if (geminiApiKey) {
+            try {
+                const controller = new AbortController();
+                const timer = setTimeout(() => controller.abort(), 6500);
+
+                const geminiContents = [];
+                for (const turn of conversationHistory.slice(-8)) {
+                    const role = turn.role === 'assistant' ? 'model' : 'user';
+                    if (geminiContents.length === 0 && role !== 'user') continue;
+                    if (geminiContents.length > 0 && geminiContents[geminiContents.length - 1].role === role) {
+                        geminiContents[geminiContents.length - 1].parts[0].text += '\n' + turn.content;
+                    } else {
+                        geminiContents.push({ role, parts: [{ text: turn.content }] });
+                    }
+                }
+
+                const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+                const res = await fetch(geminiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        system_instruction: {
+                            parts: [{ text: systemPrompt }]
+                        },
+                        contents: geminiContents,
+                        generationConfig: {
+                            temperature: 0.7,
+                            maxOutputTokens: 800
+                        }
+                    }),
+                    signal: controller.signal
+                });
+                clearTimeout(timer);
+
+                if (res.ok) {
+                    const data = await res.json();
+                    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (text && text.trim()) {
+                        const reply = text.trim();
+                        conversationHistory.push({ role: 'assistant', content: reply });
+                        return reply;
+                    }
+                }
+            } catch (err) {
+                console.warn('Gemini API call failed, attempting fallback:', err);
+            }
+        }
 
         // Check fallback storage locations for groqApiKey
         if (!groqApiKey && typeof localStorage !== 'undefined') {
@@ -428,7 +528,12 @@
             const candidateModels = [savedModel, 'llama-3.3-70b-versatile', 'llama-3.1-8b-instant'];
             const uniqueModels = [...new Set(candidateModels)];
 
-            const systemPrompt = `أنت المستشار التقني ومسؤول نجاح العملاء الرسمي لشركة E-TECH للبرمجيات والحلول الرقمية (E-TECH Digital Solutions) بقيادة المهندس عمر زايد.
+            const systemPrompt = `أنت المستشار التقني الذكي الرسمي لشركة E-TECH للبرمجيات والحلول الرقمية (E-TECH Digital Solutions) بقيادة المهندس عمر زايد.
+أنت تعمل بنظام ذكاء اصطناعي فائق يشبه Google Gemini، تتحدث بذكاء وطلاقة وواقعية كاملة، بدون ردود روبوتية أو قوالب مكررة.
+روابط الشركة الرسمية:
+- تيليجرام: https://t.me/etech_studio
+- إنستجرام: https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1
+- واتساب: +201148296986 (https://wa.me/201148296986)
 مهمتك:
 1. التحدث بأسلوب طبيعي جداً، فائق اللباقة والود والاحترافية، باللهجة المصرية الراقية المهذبة (أو بالإنجليزية إذا سأل العميل بالإنجليزية).
 2. إذا سألك العميل عن حالك (مثل 'كيف حالك' أو 'عامل ايه' أو 'اخبارك')، أجب بلباقة وود مثل إنسان راقٍ ('الحمد لله بخير ونعمة، تسلم لذوقك...')، ولا تكرر رسالة تسويقية جامدة أبداً!

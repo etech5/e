@@ -1811,10 +1811,10 @@
         <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="dock-btn dock-whatsapp" id="dockLinkWhatsapp" title="WhatsApp" aria-label="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
-        <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="dock-btn dock-telegram" id="dockLinkTelegram" title="Telegram" aria-label="Telegram">
+        <a href="https://t.me/etech_studio" target="_blank" rel="noopener noreferrer" class="dock-btn dock-telegram" id="dockLinkTelegram" title="Telegram" aria-label="Telegram">
             <i class="fa-brands fa-telegram"></i>
         </a>
-        <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" class="dock-btn dock-instagram" id="dockLinkInstagram" title="Instagram" aria-label="Instagram">
+        <a href="https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1" target="_blank" rel="noopener noreferrer" class="dock-btn dock-instagram" id="dockLinkInstagram" title="Instagram" aria-label="Instagram">
             <i class="fa-brands fa-instagram"></i>
         </a>
     </div>
@@ -1903,10 +1903,10 @@
                 <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkWhatsapp" title="WhatsApp" aria-label="WhatsApp">
                     <i class="fa-brands fa-whatsapp"></i>
                 </a>
-                <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkTelegram" title="Telegram" aria-label="Telegram">
+                <a href="https://t.me/etech_studio" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkTelegram" title="Telegram" aria-label="Telegram">
                     <i class="fa-brands fa-telegram"></i>
                 </a>
-                <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkInstagram" title="Instagram" aria-label="Instagram">
+                <a href="https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1" target="_blank" rel="noopener noreferrer" class="panel-quick-btn" id="panelLinkInstagram" title="Instagram" aria-label="Instagram">
                     <i class="fa-brands fa-instagram"></i>
                 </a>
                 <a href="mailto:etechn3l3gy@gmail.com" class="panel-quick-btn" id="panelLinkEmail" title="Email" aria-label="Email">
@@ -2453,8 +2453,8 @@
                         <div class="column">
                             <h4 id="footerHeadingContact">قنوات التواصل</h4>
                             <a href="https://wa.me/201148296986" target="_blank" rel="noopener noreferrer" id="footerLinkWhatsapp">واتساب (WhatsApp)</a>
-                            <a href="https://t.me/etech_solutions" target="_blank" rel="noopener noreferrer" id="footerLinkTelegram">تيليجرام (Telegram)</a>
-                            <a href="https://instagram.com/etech_solutions" target="_blank" rel="noopener noreferrer" id="footerLinkInstagram">انستغرام (Instagram)</a>
+                            <a href="https://t.me/etech_studio" target="_blank" rel="noopener noreferrer" id="footerLinkTelegram">تيليجرام (Telegram)</a>
+                            <a href="https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1" target="_blank" rel="noopener noreferrer" id="footerLinkInstagram">انستغرام (Instagram)</a>
                             <a href="mailto:etechn3l3gy@gmail.com" id="footerLinkEmail">البريد الإلكتروني</a>
                             <a href="tel:+201148296986" id="footerLinkPhone">اتصال مباشر</a>
                         </div>
@@ -2531,8 +2531,16 @@
                         if (!parsed.admin) parsed.admin = {};
                         if (parsed.admin.password !== 'omar2000zayed.etechweb') {
                             parsed.admin.password = 'omar2000zayed.etechweb';
-                            localStorage.setItem('etech_data', JSON.stringify(parsed));
                         }
+                        if (parsed.siteSettings) {
+                            if (!parsed.siteSettings.telegram || parsed.siteSettings.telegram.includes('etech_solutions') || parsed.siteSettings.telegram.includes('etech5')) {
+                                parsed.siteSettings.telegram = 'https://t.me/etech_studio';
+                            }
+                            if (!parsed.siteSettings.instagram || parsed.siteSettings.instagram.includes('etech_solutions') || parsed.siteSettings.instagram.includes('etech5')) {
+                                parsed.siteSettings.instagram = 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1';
+                            }
+                        }
+                        localStorage.setItem('etech_data', JSON.stringify(parsed));
                     } catch(e) {}
                 }
                 if (!localStorage.getItem('etech_data')) {
@@ -2544,8 +2552,8 @@
                             phone: '+20 11 48296986',
                             email: 'etechn3l3gy@gmail.com',
                             whatsapp: '201148296986',
-                            telegram: 'https://t.me/etech_solutions',
-                            instagram: 'https://instagram.com/etech_solutions',
+                            telegram: 'https://t.me/etech_studio',
+                            instagram: 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1',
                             groqApiKey: ''
                         },
                         siteStats: {
@@ -2690,7 +2698,7 @@
 
         // Social URL Formatters
         function formatTelegramUrl(input) {
-            if (!input) return 'https://t.me/etech_solutions';
+            if (!input) return 'https://t.me/etech_studio';
             input = input.trim();
             if (input.startsWith('http://') || input.startsWith('https://')) return input;
             if (input.startsWith('@')) input = input.substring(1);
@@ -2699,7 +2707,7 @@
         }
 
         function formatInstagramUrl(input) {
-            if (!input) return 'https://instagram.com/etech_solutions';
+            if (!input) return 'https://www.instagram.com/etech.stu?xtok=NWd3cTFxczNrZXA1';
             input = input.trim();
             if (input.startsWith('http://') || input.startsWith('https://')) return input;
             if (input.startsWith('@')) input = input.substring(1);
